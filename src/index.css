@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+:root {
+  --theme-highlight-color: #ffffff;
+}
+
+.theme-highlight-root .text-white {
+  color: var(--theme-highlight-color) !important;
+}

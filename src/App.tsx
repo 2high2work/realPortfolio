@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   PROJECTS, 
   SKILLS, 
@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 
 type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT';
+type CookieConsent = 'accepted' | 'rejected' | null;
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('LANDING');
@@ -33,17 +34,70 @@ export const App: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
 
+  // Cookie consent state
+  const [cookieConsent, setCookieConsent] = useState<CookieConsent>(null);
+  const [showCookieDialog, setShowCookieDialog] = useState(false);
+
+  // Load cookie consent from localStorage on mount
+  useEffect(() => {
+    const savedConsent = localStorage.getItem('cookieConsent') as CookieConsent;
+    if (savedConsent) {
+      setCookieConsent(savedConsent);
+    } else {
+      setShowCookieDialog(true);
+    }
+  }, []);
+
+  // Load initial tab from URL hash
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '').toUpperCase();
+    if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT'].includes(hash)) {
+      setActiveTab(hash as Tab);
+    }
+  }, []);
+
+  // Listen for hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '').toUpperCase();
+      if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT'].includes(hash)) {
+        setActiveTab(hash as Tab);
+        setSelectedProject(null);
+        setSelectedSkill(null);
+        setSelectedExperience(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Handle cookie consent
+  const handleCookieAccept = () => {
+    setCookieConsent('accepted');
+    localStorage.setItem('cookieConsent', 'accepted');
+    setShowCookieDialog(false);
+  };
+
+  const handleCookieReject = () => {
+    setCookieConsent('rejected');
+    localStorage.setItem('cookieConsent', 'rejected');
+    setShowCookieDialog(false);
+  };
+
   // Helper to switch tabs and reset selected detail views
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     setSelectedProject(null);
     setSelectedSkill(null);
     setSelectedExperience(null);
+    window.location.hash = tab.toLowerCase();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-mono flex flex-col selection:bg-white selection:text-black">
+    <div className="theme-highlight-root min-h-screen bg-black text-white font-mono flex flex-col selection:bg-white selection:text-black">
       {/* Accessibility Skip Link */}
       <a 
         href="#main-content" 
@@ -64,13 +118,17 @@ export const App: React.FC = () => {
               2HIGH2WORK
             </h1>
             <p className="text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
-              // RAW ASCII PORTFOLIO & ARCHITECTURE
+              // JACK OF ALL TRADES, MASTER OF ALL
             </p>
           </div>
 
           <div className="flex items-center gap-3 bg-white text-black px-3 py-1 text-xs font-bold self-start sm:self-auto shadow-md">
             <span className="inline-block w-2 h-2 bg-black animate-ping" />
-            <span>NO MODERN BLOAT // PURE B&W</span>
+            <span>
+              {cookieConsent === 'rejected' 
+                ? "WE CAN'T STEAL YOUR DATA ANYMORE" 
+                : 'PLEASE STAND BY: STEALING YOUR DATA'}
+            </span>
           </div>
         </div>
 
@@ -143,7 +201,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
 
               <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed max-w-4xl border-t border-white pt-6">
                 <p className="font-bold text-white tracking-wide">
-                  Welcome to the terminal base of <span className="bg-white text-black px-1 py-0.5">2High2Work</span>.
+                  Welcome to <span className="bg-white text-black px-1 py-0.5">2High2Work</span>'s Portfolio.
                 </p>
                 <p className="text-gray-300">
                   We engineer uncompromising software systems designed to run without failure, garbage collection latency, or modern UI fluff. Pure high-contrast execution.
@@ -214,10 +272,8 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 <PortraitOutline 
                   label="FOUNDER // LEAD ARCHITECT" 
                   height="min-h-[340px]" 
+                  imageUrl='/images/founder.webp'
                 />
-                <p className="text-[11px] text-gray-400 text-center italic">
-                  [ Outline reserved for custom founder portrait ]
-                </p>
               </div>
             </div>
 
@@ -274,10 +330,12 @@ ________  ___ ___ .__       .__     ________  __      __             __
                   </p>
                 </div>
 
-                {/* ASCII Art Representation */}
+                {/* ASCII Art Representation (lets center the ASCII) */}
                 <div className="bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
                   <span className="sr-only">ASCII diagram representation of {selectedProject.title}</span>
-                  {selectedProject.asciiArt}
+                  <div className="flex justify-center">
+                    {selectedProject.asciiArt}
+                  </div>
                 </div>
 
                 {/* Description */}
@@ -299,7 +357,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 {/* Metrics & Stack */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-white pt-6">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// PERFORMANCE METRICS</h4>
+                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// SKILLS</h4>
                     <ul className="space-y-2" aria-label="Performance Metrics">
                       {selectedProject.metrics.map((m, index) => (
                         <li key={index} className="flex items-center gap-2 text-xs font-bold">
@@ -663,16 +721,16 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 </div>
               </div>
 
-              {/* Portrait Placeholders Stack */}
+              {/* Portrait Stack - RIGHT SIDE */}
               <div className="space-y-6">
-                <PortraitOutline 
-                  label="PORTRAIT #1 // TERMINAL_VIEW" 
-                  height="min-h-[260px]" 
-                />
-                <PortraitOutline 
-                  label="PORTRAIT #2 // WORKSPACE_SETUP" 
-                  height="min-h-[260px]" 
-                />
+                <div className="border-2 border-white overflow-hidden bg-black aspect-[3/4] group">
+                  <img 
+                    src="/images/portrait1.webp" 
+                    alt="Portrait 1 - Terminal View" 
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
               </div>
             </div>
 
@@ -784,13 +842,13 @@ ________  ___ ___ .__       .__     ________  __      __             __
                   <div className="space-y-4 text-xs sm:text-sm">
                     <div className="flex items-center justify-between border-b border-gray-800 pb-2">
                       <span className="text-gray-400">EMAIL:</span>
-                      <a href="mailto:contact@2high2work.io" className="font-extrabold text-white underline hover:text-gray-300">
-                        contact@2high2work.io
+                      <a href="mailto:info.2high2work@gmail.com" className="font-extrabold text-white underline hover:text-gray-300">
+                        info.2high2work@gmail.com
                       </a>
                     </div>
                     <div className="flex items-center justify-between border-b border-gray-800 pb-2">
                       <span className="text-gray-400">GITHUB:</span>
-                      <a href="https://github.com/example" target="_blank" rel="noopener noreferrer" className="font-extrabold text-white underline hover:text-gray-300 flex items-center gap-1">
+                      <a href="https://github.com/2high2work" target="_blank" rel="noopener noreferrer" className="font-extrabold text-white underline hover:text-gray-300 flex items-center gap-1">
                         <span>github.com/2high2work</span>
                         <ExternalLink size={12} />
                       </a>
@@ -804,23 +862,6 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       <span className="font-extrabold text-white">DECENTRALIZED // EARTH</span>
                     </div>
                   </div>
-                </div>
-
-                {/* ASCII Business Card */}
-                <div className="bg-black border-2 border-white p-6 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">ASCII Business Card for 2High2Work</span>
-                  {`
-+------------------------------------------+
-| 2HIGH2WORK // ENGINEERING COLLECTIVE     |
-|                                          |
-| HIGH-THROUGHPUT SYSTEMS & SECURITY       |
-| ROOT@2HIGH2WORK.IO                       |
-|                                          |
-| [!] 100% MONOCHROME                      |
-| [!] ZERO GRADIENTS                       |
-| [!] PURE EXECUTION                       |
-+------------------------------------------+
-                  `}
                 </div>
 
                 <div className="space-y-3">
@@ -853,6 +894,46 @@ ________  ___ ___ .__       .__     ________  __      __             __
 
       {/* Fake AI Chat Widget (Bottom Right Box) */}
       <FakeAiChat />
+
+      {/* Cookie Consent Dialog */}
+      {showCookieDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+          <div className="border-2 border-white bg-black p-6 sm:p-8 max-w-md w-full space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+                COOKIE POLICY
+              </h2>
+              <p className="text-xs text-gray-400 tracking-widest">
+                [ SYSTEM NOTIFICATION ]
+              </p>
+            </div>
+
+            <div className="space-y-4 text-sm leading-relaxed">
+              <p className="text-gray-300">
+                This site does not actually collect cookies.
+              </p>
+              <p className="text-gray-400 text-xs font-mono">
+                // Your choice will be remembered and promptly ignored until you clear your browser cache.
+              </p>
+            </div>
+
+            <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={handleCookieAccept}
+                className="flex-1 bg-white text-black px-4 py-3 font-bold text-xs tracking-widest hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                ACCEPT
+              </button>
+              <button
+                onClick={handleCookieReject}
+                className="flex-1 border border-white text-white px-4 py-3 font-bold text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                REJECT
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

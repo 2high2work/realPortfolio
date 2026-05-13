@@ -6,13 +6,15 @@ interface PortraitOutlineProps {
   className?: string;
   height?: string;
   aspectRatio?: string;
+  imageUrl?: string;
 }
 
 export const PortraitOutline: React.FC<PortraitOutlineProps> = ({
   label = "PORTRAIT PLACEHOLDER",
   className = "",
   height = "min-h-[280px]",
-  aspectRatio = "aspect-[3/4]"
+  aspectRatio = "aspect-[3/4]",
+  imageUrl = "/images/default-profile.jpg"
 }) => {
   return (
     <div 
@@ -30,18 +32,19 @@ export const PortraitOutline: React.FC<PortraitOutlineProps> = ({
         // FRAME_BUFFER_ALLOCATED
       </div>
 
-      <div className="flex flex-col items-center justify-center my-auto p-4 text-center">
-        <div className="border border-dashed border-white p-4 mb-3 group-hover:scale-110 transition-transform">
-          <User size={36} aria-hidden="true" />
-        </div>
-        <p className="font-bold tracking-widest text-sm uppercase mb-1">
+      {/* Image container - properly sized and cropped to fit the frame */}
+      <div className="flex-1 w-full flex items-center justify-center overflow-hidden">
+        <img 
+          src={imageUrl || "/images/default-profile.jpg"} 
+          alt={label} 
+          className="w-full h-full object-cover" 
+          loading="lazy"
+        />
+      </div>
+
+      <div className="w-full text-center border-t border-gray-700 pt-2">
+        <p className="font-bold tracking-widest text-sm uppercase text-gray-300">
           {label}
-        </p>
-        <p className="text-[11px] text-gray-400 max-w-[200px] leading-relaxed">
-          [ Leave this outline to put what you want here ]
-        </p>
-        <p className="text-[10px] bg-white text-black font-bold px-2 py-0.5 mt-3 uppercase tracking-tighter">
-          INSERT &lt;IMG /&gt; HERE
         </p>
       </div>
 

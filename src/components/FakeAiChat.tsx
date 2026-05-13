@@ -9,6 +9,17 @@ const responses = [
   "Huh? Please explain yourself better."
 ];
 
+const HIGHLIGHT_COLOR_BY_SECRET: Record<string, string> = {
+  gathai: 'purple',
+  medici: 'gold',
+  lennox: '#8b0000',
+  helion: '#ffffff'
+};
+
+const applyHighlightColor = (color: string) => {
+  document.documentElement.style.setProperty('--theme-highlight-color', color);
+};
+
 interface Message {
   id: string;
   sender: 'user' | 'ai';
@@ -65,15 +76,38 @@ export const FakeAiChat: React.FC = () => {
     e.preventDefault();
     if (!inputVal.trim() || isLoading) return;
 
+    const trimmedInput = inputVal.trim();
+    const normalizedInput = trimmedInput.toLowerCase();
+    const secretColor = HIGHLIGHT_COLOR_BY_SECRET[normalizedInput];
+
     const userMsg: Message = {
       id: `msg-${Date.now()}`,
       sender: 'user',
-      text: inputVal.trim(),
+      text: trimmedInput,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const aiSecretResponse = secretColor
+      ? {
+          id: `msg-ai-${Date.now()}`,
+          sender: 'ai' as const,
+          text: `SECRET CODE '${normalizedInput}' APPLIED. HIGHLIGHT COLOR UPDATED.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        }
+      : null;
+
+    setMessages((prev) => {
+      const next = [...prev, userMsg];
+      return aiSecretResponse ? [...next, aiSecretResponse] : next;
+    });
+
     setInputVal('');
+
+    if (secretColor) {
+      applyHighlightColor(secretColor);
+      return;
+    }
+
     setIsLoading(true);
 
     // Simulate exactly 10 seconds delay as required

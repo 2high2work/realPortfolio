@@ -9,6 +9,7 @@ export interface Project {
   metrics: string[];
   asciiArt: string;
   placeholderText: string;
+  imageUrl: string;
 }
 
 export interface Skill {
@@ -36,23 +37,42 @@ export interface Experience {
 export const PROJECTS: Project[] = [
   {
     id: "proj-1",
-    title: "NEURAL_SYNAPSE_V2",
-    subtitle: "High-Throughput Task Orchestrator",
+    title: "NIGHT_OF_WOLVES",
+    subtitle: "Videogame Programming",
     externalUrl: "https://store.steampowered.com/app/2393490/Night_of_Wolves/",
     description: "Distributed task runner built on raw sockets. Handles 10M+ events/sec with zero heap allocation.",
-    longDescription: "NEURAL_SYNAPSE_V2 is a high-performance orchestration engine built entirely without garbage-collected runtimes. Designed specifically for edge computing environments where memory footprint must remain under 16MB. Utilizes custom ring buffers and kernel-level epoll multiplexing.",
-    techStack: ["C++20", "Assembly", "eBPF", "POSIX Sockets", "Docker"],
+    longDescription: "Night Of Wolves is a videogame by Gooblin Studio, the game is currently in development, but its updates can be seen in the Steam page.",
+    techStack: ["C#", "Unity", "SourceTree"],
     metrics: ["10M+ Events/sec", "Under 16MB Memory", "0.02ms P99 Latency"],
     asciiArt: `
- +---------------------------------------+
- |  [===]  NEURAL CORE ALIGNED  [===]    |
- |  =================================    |
- |  ( * ) <---> ( * ) <---> ( * )        |
- |    |           |           |          |
- |  [DATA]      [PROC]      [SINK]       |
- +---------------------------------------+
+%#%%#####################################%%%%%%%***%%%%%%#######################******************%
+%#%%%%%#################################%%%###%#+*+#%###%%%###############*****+==+===++--==-=-=++*
+%###%%%*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###%%=..=+#%###%%%%%%%%%%##%%**=+=:-=+==--++===-=--+*+=-=
+%*+***%*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*-=:=-*%%%%%%%%%%%%%%*=#+..:..-+=+:..:-:=+-=---=---+=
+#+-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%#+-+-+*%#%%%%%%%%%%%%++:.:..:..:.--....:.:-----+-==--
+#*-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###%%***%%###%%%%%%%%%%%+.:::.+*=......-..:..--------=-:
+#*--+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%#-.#%#-=%%%%%####%%%%%%%%%%%%%%%%*=*=:-*+*......+-.:-=:-::-----==
+#*-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+=.=%+*%..#=.+*.*%-:#+#+=-.*=*%%#=+-.:.......-++-:.+:::------==*
+#*-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+*%-.=*%.:%+..:.#%:.*:.%%+.%%%%%%==--+***=::-**-::-:+-::---=+--*
+#*--+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+*%%+.+%.:%%#%#.+%*+#=-%%+.%%%%%%*****+-*--=+#+*+*==.:---=--==++
+#*==*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##%%%%%*==#%%#%%%*=:-%%%#=-+%%%%%%%%****+=#%%%%%%%**+#*-=:-====+
+#*--+#%%%%%%%%%%%%%%%%%%%%%+............%%%%%#**:#+:+*%%%%%%%%%%%%%%%%#+***=-*%%*=:=+-.=..::=====+*
+##-=+#%##*##**##*%%%%*==#%%=............#%%%%*=*+*+-%%%%%%%%%%%%%%%%%%%%#***#%%%=:+......:=+++++*##
+#*-=+*#*+==+:.:::-**:...=%%=.:#+:#+:....=#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%++=:..::+*#%###%%%%
+#*-=++-:::=:#=:---.:++==+%%=..*+:*+-.-..-*%=**=.*%-.#%%%..*#+%#:*--%#:+=%%%%%%%%%#+=-:..:*#%%%%%%#%
+#*-=*+*=:=-..:=-=-:**#*#+##=::.%.:#-::.=+#==%%%+.%-.%%%%*.%%+%..=-+%%-.=%%%%%%%%%%#+-=+..:+*#%%#%*#
+#*=++#%****=+@@@@@+%*++*+*#-...*#-+#-..:*%#.#%%=+%-.%%#%#:-+#%*.*%%%+=%:-%%%%%%%%%%#+::+.:=++#*#*+-
+#*-=+#%%+=.-+*=+*#=-:...-##=:.:-.:.:.::-#%%%+=*%%%----#%%%*#%%%#*%%%+#*=*%%%%%%%%%%%%**-#*+*##*+=++
+#*+++####+-..=:--::+*#%%%%%*...-.......:#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%**=-=
+#*++*#+*+*++-+=+++-=++=+*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+--==
+#*+=*+-+--+++=+--::.:.:--+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#+--=-
+#=+++=-*+*--+:==++:=-:::-:*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##**+-=+
+#=**++***=====:-=***-::-*+*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#*#**===--
+#+++**%**-+--+::=*#+==-==+***###########################################################***=:-=-+=+
+*****#*#+=*+*+==****+=++=*##############################################################**====*++++
     `,
-    placeholderText: "[ PROJECT 1 ARCHITECTURE / SCREENSHOT PLACEHOLDER ]"
+    placeholderText: "[ PROJECT 1 ARCHITECTURE / SCREENSHOT PLACEHOLDER ]",
+    imageUrl: "/images/project1.png"
   },
   {
     id: "proj-2",
@@ -72,7 +92,8 @@ export const PROJECTS: Project[] = [
  |   +----------+             +------+   |
  +---------------------------------------+
     `,
-    placeholderText: "[ PROJECT 2 EXCHANGE INTERFACE PLACEHOLDER ]"
+    placeholderText: "[ PROJECT 2 EXCHANGE INTERFACE PLACEHOLDER ]",
+    imageUrl: "/images/project1.png"
   },
   {
     id: "proj-3",
@@ -91,7 +112,8 @@ export const PROJECTS: Project[] = [
  | |_||_|\\___/|_| |___|_|\\_\\|___|___|___||
  +---------------------------------------+
     `,
-    placeholderText: "[ PROJECT 3 TERMINAL BBS PLACEHOLDER ]"
+    placeholderText: "[ PROJECT 3 TERMINAL BBS PLACEHOLDER ]",
+    imageUrl: "/images/project1.png"
   },
   {
     id: "proj-4",
@@ -110,7 +132,8 @@ export const PROJECTS: Project[] = [
  |    /______\\    AUTO-REPAIR: ARMED     |
  +---------------------------------------+
     `,
-    placeholderText: "[ PROJECT 4 DASHBOARD PLACEHOLDER ]"
+    placeholderText: "[ PROJECT 4 DASHBOARD PLACEHOLDER ]",
+    imageUrl: "/images/project1.png"
   }
 ];
 
@@ -264,7 +287,7 @@ export const EXPERIENCE: Experience[] = [
 
 export const ABOUT_DATA = {
   header: "ABOUT // 2HIGH2WORK",
-  tagline: "WE BUILD CODE THAT SURVIVES NUCLEAR WINTER.",
+  tagline: "PROGRAMMER AS A JOB, PROGRAMMER AS A HOBBY.",
   bioParagraphs: [
     "2High2Work is an engineering collective and portfolio identity forged in the fires of raw computing. We reject modern web bloat, endless JavaScript framework churn, and bloated corporate design systems. Instead, we embrace the pure, unadulterated power of black text on a white canvas—or white text on a black terminal.",
     "Our work operates at the nexus of high-throughput backend architecture, rigorous offensive security, and hyper-accessible frontend interfaces. We believe that true accessibility means writing clean, semantic markup that functions perfectly whether viewed on a 4K monitor, a Braille reader, or a 1980s VT100 terminal.",

@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^export NVM_DIR=\"/usr/local/share/nvm\" && \\[ -s \"\\$NVM_DIR/nvm\\.sh\" \\] && \\\\\\. \"\\$NVM_DIR/nvm\\.sh\" && nvm alias default 20$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
