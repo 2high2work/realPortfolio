@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
     id: "proj-1",
     title: "NEURAL_SYNAPSE_V2",
     subtitle: "High-Throughput Task Orchestrator",
-    externalUrl: "https://github.com/example/neural-synapse",
+    externalUrl: "https://store.steampowered.com/app/2393490/Night_of_Wolves/",
     description: "Distributed task runner built on raw sockets. Handles 10M+ events/sec with zero heap allocation.",
     longDescription: "NEURAL_SYNAPSE_V2 is a high-performance orchestration engine built entirely without garbage-collected runtimes. Designed specifically for edge computing environments where memory footprint must remain under 16MB. Utilizes custom ring buffers and kernel-level epoll multiplexing.",
     techStack: ["C++20", "Assembly", "eBPF", "POSIX Sockets", "Docker"],
