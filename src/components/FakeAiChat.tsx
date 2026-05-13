@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, X, Send } from 'lucide-react';
 
+const responses = [
+  "No.",
+  "I'm sorry, I cannot help with offensive requests.",
+  "I'm sorry, I cannot help with illegal requests.",
+  "Hi, how may I help you today?",
+  "Huh? Please explain yourself better."
+];
+
 interface Message {
   id: string;
   sender: 'user' | 'ai';
@@ -76,11 +84,11 @@ export const FakeAiChat: React.FC = () => {
         {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai',
-          text: 'no',
+          text: responses[Math.floor(Math.random() * responses.length)],
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
         }
       ]);
-    }, 10000);
+    }, 3000);
   };
 
   const toggleOpen = () => {
