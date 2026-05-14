@@ -10,6 +10,8 @@ export const VantaBackground = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
     // Initialize Vanta NET effect
     vantaRef.current = NET({
       el: containerRef.current,
@@ -23,7 +25,7 @@ export const VantaBackground = () => {
       scaleMobile: 1,
       color: 0x888888,
       backgroundColor: 0x0,
-      points: 12,
+      points: isMobile ? 6 : 12,
       maxDistance: 16,
       spacing: 12,
     });

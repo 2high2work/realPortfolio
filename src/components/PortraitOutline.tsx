@@ -14,7 +14,7 @@ export const PortraitOutline: React.FC<PortraitOutlineProps> = ({
   className = "",
   height = "min-h-[280px]",
   aspectRatio = "aspect-[3/4]",
-  imageUrl = "/images/default-profile.jpg"
+  imageUrl = "/images/profile1.webp",
 }) => {
   return (
     <div 
@@ -35,7 +35,7 @@ export const PortraitOutline: React.FC<PortraitOutlineProps> = ({
       {/* Image container - properly sized and cropped to fit the frame */}
       <div className="flex-1 w-full flex items-center justify-center overflow-hidden">
         <img 
-          src={imageUrl || "/images/default-profile.jpg"} 
+          src={imageUrl || "/images/images/profile1.webp"} 
           alt={label} 
           className="w-full h-full object-cover" 
           loading="lazy"

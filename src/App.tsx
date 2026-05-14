@@ -122,7 +122,7 @@ export const App: React.FC = () => {
               2HIGH2WORK
             </h1>
             <p className="text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
-              // JACK OF ALL TRADES, MASTER OF ALL
+              PROGRAMMER // GAMEDEV // QA AUTOMATION
             </p>
           </div>
 
@@ -205,13 +205,14 @@ ________  ___ ___ .__       .__     ________  __      __             __
 
               <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed max-w-4xl border-t border-white pt-6">
                 <p className="font-bold text-white tracking-wide">
-                  Welcome to <span className="bg-white text-black px-1 py-0.5">2High2Work</span>'s Portfolio.
+                  Welcome to <span className="bg-white text-black px-1 py-0.5">2High2Work</span>. 
+                  Personal portfolio, development archive, and public identity of 2.2.
                 </p>
                 <p className="text-gray-300">
-                  We engineer uncompromising software systems designed to run without failure, garbage collection latency, or modern UI fluff. Pure high-contrast execution.
+                  I work across web development, QA automation, and videogame development, mainly through Gooblin Studio and personal 2High2Work projects.
                 </p>
                 <p className="text-sm text-gray-400 font-normal">
-                  Our architecture guarantees strict responsiveness, absolute WCAG accessibility compliance for screen readers, and zero gradient pollution.
+                  Most of my work revolves around clean frontend structure, accessible interfaces, gameplay systems, and organized project architecture.
                 </p>
               </div>
 
@@ -224,16 +225,16 @@ ________  ___ ___ .__       .__     ________  __      __             __
               <div className="lg:col-span-2 border border-white p-6 space-y-6 bg-black">
                 <div className="flex items-center gap-2 border-b border-white pb-3">
                   <Code2 size={20} />
-                  <h3 className="font-bold text-lg tracking-widest">// CORE MISSION</h3>
+                  <h3 className="font-bold text-lg tracking-widest">// ABOUT THIS SITE</h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                  In an era where websites download megabytes of unnecessary JavaScript to render a simple article, 2High2Work takes the opposite path. We build bare-metal, socket-driven micro-architectures that prioritize absolute utility, privacy, and speed.
+                  A lot of modern web design feels overly safe to me. I prefer simpler interfaces, stronger contrast, clearer structure, and projects that feel like they were made by a real person.
                 </p>
                 
                 <div className="bg-white text-black p-4 space-y-2">
-                  <p className="font-extrabold text-xs uppercase tracking-widest">// DIRECTIVE</p>
+                  <p className="font-extrabold text-xs uppercase tracking-widest">// NAVIGATION</p>
                   <p className="font-bold text-sm">
-                    &quot;Use the navigation buttons above to explore our Projects, Technical Skills, Engineering Experience, and Contact Vectors.&quot;
+                    &quot;Use the navigation above to explore the portfolio.&quot;
                   </p>
                 </div>
 
@@ -249,7 +250,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                     onClick={() => handleTabChange('CONTACT')}
                     className="border border-white text-white font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
-                    <span>INITIALIZE CONTACT</span>
+                    <span>GET IN TOUCH</span>
                   </button>
                 </div>
               </div>
@@ -265,7 +266,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
             </div>
 
             {/* ASCII System Footer Accent */}
-            <div className="border border-white p-4 text-center text-xs tracking-widest text-gray-400">
+            <div className="border border-white p-4 text-center text-xs tracking-widest text-gray-400 bg-black">
               +---+ [ SECURE TUNNEL ESTABLISHED // RSA-4096 ] +---+
             </div>
           </section>
@@ -723,7 +724,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
 
             {/* Stats row */}
             <div className="border-t-2 border-white pt-8">
-              <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase mb-6">
+              <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase mb-6 bg-black p-4 border border-white inline-block">
                 // TELEMETRY SUMMARY
               </h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -855,6 +856,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                   <PortraitOutline 
                     label="CONTACT // VECTOR PORTRAIT" 
                     height="min-h-[220px]" 
+                    imageUrl='/images/portrait2.webp'
                   />
                 </div>
               </div>
@@ -868,13 +870,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
             <p className="font-extrabold text-white tracking-widest">// 2HIGH2WORK PORTFOLIO</p>
-            <p className="mt-1">Crafted with pure black & white colors. Fully accessible & scalable.</p>
-          </div>
-
-          <div className="flex items-center gap-4 font-bold text-[11px] tracking-widest">
-            <span className="text-white">STATUS: E2EE SECURED</span>
-            <span>|</span>
-            <span className="bg-white text-black px-2 py-0.5">WCAG AAA COMPLIANT</span>
+            <p className="mt-1">Designed and developed by 2.2</p>
           </div>
         </div>
       </footer>

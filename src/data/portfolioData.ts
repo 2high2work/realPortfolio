@@ -38,189 +38,224 @@ export const PROJECTS: Project[] = [
   {
     id: "proj-1",
     title: "NIGHT_OF_WOLVES",
-    subtitle: "Videogame Programming",
+    subtitle: "2D Action Game // Gooblin Studio",
     externalUrl: "https://store.steampowered.com/app/2393490/Night_of_Wolves/",
-    description: "Distributed task runner built on raw sockets. Handles 10M+ events/sec with zero heap allocation.",
-    longDescription: "Night Of Wolves is a videogame by Gooblin Studio, the game is currently in development, but its updates can be seen in the Steam page.",
-    techStack: ["C#", "Unity", "SourceTree"],
-    metrics: ["10M+ Events/sec", "Under 16MB Memory", "0.02ms P99 Latency"],
+    description:
+      "Ongoing commercial videogame project developed by Gooblin Studio inside the Ciudad De Las Nubes universe.",
+    longDescription:
+      "Night Of Wolves is one of the main Gooblin Studio projects currently in development. While the programming is handled by the lead developer, my role revolves around gameplay logic, technical planning, balancing, timing, and system behavior. Every mechanic goes through a process of translating ideas into clear, logical documentation before implementation. The project focuses heavily on atmosphere, combat feel, lore, and handcrafted design.",
+    techStack: ["Unity", "C#", "Git", "Game Design", "QA"],
+    metrics: [
+      "Gameplay Logic Design",
+      "Combat Balancing",
+      "Technical Planning"
+    ],
     asciiArt: `
-%#%%#####################################%%%%%%%***%%%%%%#######################******************%
-%#%%%%%#################################%%%###%#+*+#%###%%%###############*****+==+===++--==-=-=++*
-%###%%%*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###%%=..=+#%###%%%%%%%%%%##%%**=+=:-=+==--++===-=--+*+=-=
-%*+***%*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*-=:=-*%%%%%%%%%%%%%%*=#+..:..-+=+:..:-:=+-=---=---+=
-#+-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%#+-+-+*%#%%%%%%%%%%%%++:.:..:..:.--....:.:-----+-==--
-#*-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###%%***%%###%%%%%%%%%%%+.:::.+*=......-..:..--------=-:
-#*--+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%#-.#%#-=%%%%%####%%%%%%%%%%%%%%%%*=*=:-*+*......+-.:-=:-::-----==
-#*-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+=.=%+*%..#=.+*.*%-:#+#+=-.*=*%%#=+-.:.......-++-:.+:::------==*
-#*-=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+*%-.=*%.:%+..:.#%:.*:.%%+.%%%%%%==--+***=::-**-::-:+-::---=+--*
-#*--+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+*%%+.+%.:%%#%#.+%*+#=-%%+.%%%%%%*****+-*--=+#+*+*==.:---=--==++
-#*==*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##%%%%%*==#%%#%%%*=:-%%%#=-+%%%%%%%%****+=#%%%%%%%**+#*-=:-====+
-#*--+#%%%%%%%%%%%%%%%%%%%%%+............%%%%%#**:#+:+*%%%%%%%%%%%%%%%%#+***=-*%%*=:=+-.=..::=====+*
-##-=+#%##*##**##*%%%%*==#%%=............#%%%%*=*+*+-%%%%%%%%%%%%%%%%%%%%#***#%%%=:+......:=+++++*##
-#*-=+*#*+==+:.:::-**:...=%%=.:#+:#+:....=#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%++=:..::+*#%###%%%%
-#*-=++-:::=:#=:---.:++==+%%=..*+:*+-.-..-*%=**=.*%-.#%%%..*#+%#:*--%#:+=%%%%%%%%%#+=-:..:*#%%%%%%#%
-#*-=*+*=:=-..:=-=-:**#*#+##=::.%.:#-::.=+#==%%%+.%-.%%%%*.%%+%..=-+%%-.=%%%%%%%%%%#+-=+..:+*#%%#%*#
-#*=++#%****=+@@@@@+%*++*+*#-...*#-+#-..:*%#.#%%=+%-.%%#%#:-+#%*.*%%%+=%:-%%%%%%%%%%#+::+.:=++#*#*+-
-#*-=+#%%+=.-+*=+*#=-:...-##=:.:-.:.:.::-#%%%+=*%%%----#%%%*#%%%#*%%%+#*=*%%%%%%%%%%%%**-#*+*##*+=++
-#*+++####+-..=:--::+*#%%%%%*...-.......:#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%**=-=
-#*++*#+*+*++-+=+++-=++=+*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+--==
-#*+=*+-+--+++=+--::.:.:--+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#+--=-
-#=+++=-*+*--+:==++:=-:::-:*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##**+-=+
-#=**++***=====:-=***-::-*+*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#*#**===--
-#+++**%**-+--+::=*#+==-==+***###########################################################***=:-=-+=+
-*****#*#+=*+*+==****+=++=*##############################################################**====*++++
+    [ NIGHT OF WOLVES ]
+      MOONLIGHT // BLOOD // STEEL
     `,
-    placeholderText: "[ PROJECT 1 ARCHITECTURE / SCREENSHOT PLACEHOLDER ]",
+    placeholderText: "[ NIGHT OF WOLVES SCREENSHOT PLACEHOLDER ]",
     imageUrl: "/images/project1.png"
   },
+
   {
     id: "proj-2",
-    title: "DARK_POOL_EXCHANGE",
-    subtitle: "Zero-Knowledge Order Matching System",
-    externalUrl: "https://example.com/dark-pool",
-    description: "Cryptographic order book matching engine guaranteeing trader privacy via zk-SNARK proofs.",
-    longDescription: "A decentralized matching engine where participants can commit buy/sell intentions without revealing price or volume until execution criteria are met. Built with strict audit logging and immutable verification trails.",
-    techStack: ["Rust", "zk-SNARKs", "Solidity", "WebSockets", "LevelDB"],
-    metrics: ["1,200 TPS", "Zero-Knowledge Verification", "Fully Audited"],
+    title: "GOOBLINSTUDIO.COM",
+    subtitle: "Studio Website",
+    externalUrl: "https://gooblinstudio.com",
+    description:
+      "Official web hub for Gooblin Studio and its projects.",
+    longDescription:
+      "I developed the public-facing website for Gooblin Studio as a central place for our games, updates, and identity as a studio. The current version was built quickly and reflects an earlier stage of my web development skills, but it established the foundation for the studio's online presence. A redesign is planned with a stronger focus on structure, identity, and polish.",
+    techStack: ["Next.js", "TypeScript", "HTML", "CSS"],
+    metrics: [
+      "Studio Hub",
+      "Responsive Design",
+      "Static Web Architecture"
+    ],
     asciiArt: `
- +---------------------------------------+
- |   |||||||||| CRYPTO POOL ||||||||||   |
- |   +----------+             +------+   |
- |   | USER A   | ----zk----> |POOL  |   |
- |   | (HIDDEN) |             |MATCH |   |
- |   +----------+             +------+   |
- +---------------------------------------+
+    +----------------------+
+    |   GOOBLIN STUDIO    |
+    |  GAMES // LORE      |
+    +----------------------+
     `,
-    placeholderText: "[ PROJECT 2 EXCHANGE INTERFACE PLACEHOLDER ]",
-    imageUrl: "/images/project1.png"
+    placeholderText: "[ GOOBLIN STUDIO WEBSITE PLACEHOLDER ]",
+    imageUrl: "/images/project2.png"
   },
+
   {
     id: "proj-3",
-    title: "HYPER_GRID_BBS",
-    subtitle: "Retro-Modern Terminal Communication Platform",
-    externalUrl: "https://example.com/hyper-grid",
-    description: "ANSI/ASCII text-based community board with real-time encrypted messaging and file drops.",
-    longDescription: "Reimagining the 1990s BBS culture with modern end-to-end encryption protocols. Fully accessible via Telnet, SSH, or Web Terminal. Features customizable ANSI rendering and automated bot moderation.",
-    techStack: ["Node.js", "TypeScript", "xterm.js", "libsodium", "Redis"],
-    metrics: ["50k Active Users", "100% Terminal Compatible", "E2EE Secured"],
+    title: "VANLIFERENTALS",
+    subtitle: "Fullstack Rental Platform",
+    externalUrl: "",
+    description:
+      "Educational fullstack project focused on modern web architecture and database integration.",
+    longDescription:
+      "VanLifeRentals is a fictional van rental platform developed as a class project. The objective was to build a complete modern web application using a real database structure, authentication flows, backend logic, and dynamic rendering. The project helped solidify my understanding of fullstack development and application organization.",
+    techStack: ["Next.js", "TypeScript", "Prisma", "SQL"],
+    metrics: [
+      "Fullstack Architecture",
+      "Database Integration",
+      "Dynamic Routing"
+    ],
     asciiArt: `
- +---------------------------------------+
- |  _  _ _   _ ___ ___ ___   ___ ___ ___ |
- | | || | | | | . | __| . \\ | . | . | __||
- | | __ | |_| |  _| _||   / | . | . |__ ||
- | |_||_|\\___/|_| |___|_|\\_\\|___|___|___||
- +---------------------------------------+
+     ____________
+    /| VAN LIFE |\\
+   /_|__________|_\\
+      O      O
     `,
-    placeholderText: "[ PROJECT 3 TERMINAL BBS PLACEHOLDER ]",
-    imageUrl: "/images/project1.png"
+    placeholderText: "[ VAN LIFE RENTALS PLACEHOLDER ]",
+    imageUrl: "/images/project3.png"
   },
+
   {
     id: "proj-4",
-    title: "VOID_MONITOR",
-    subtitle: "Autonomous Infrastructure Sentinel",
-    externalUrl: "https://github.com/example/void-monitor",
-    description: "Lightweight daemon that monitors kernel panics and hardware faults in server clusters.",
-    longDescription: "VOID_MONITOR sits quietly in system memory, analyzing kernel logs and hardware telemetry. In the event of catastrophic failure, it automatically triggers failover protocols and dispatches encrypted alerts via mesh networking.",
-    techStack: ["Go", "Linux Kernel", "Systemd", "gRPC", "Prometheus"],
-    metrics: ["99.999% Uptime Guard", "0.1% CPU Usage", "Instant Failover"],
+    title: "VINOTECA",
+    subtitle: "Database-Driven Storefront",
+    externalUrl: "",
+    description:
+      "Mock ecommerce platform centered around wines and beers.",
+    longDescription:
+      "Vinoteca is a school project focused on building a complete store experience with frontend, backend, database management, and product handling. The project uses MongoDB and modern web technologies to simulate a real online shop while emphasizing clean organization and maintainable structure.",
+    techStack: ["MongoDB", "Next.js", "TypeScript", "Node.js"],
+    metrics: [
+      "MongoDB Backend",
+      "Store Logic",
+      "Full CRUD Operations"
+    ],
     asciiArt: `
- +---------------------------------------+
- |       /\\       WARNING: THREAT LEVEL  |
- |      /  \\      STATUS: SECURE         |
- |     / !! \\     NODES ONLINE: 1,024    |
- |    /______\\    AUTO-REPAIR: ARMED     |
- +---------------------------------------+
+     .----------------.
+    |    VINOTECA     |
+    | WINE // BEER    |
+     '----------------'
     `,
-    placeholderText: "[ PROJECT 4 DASHBOARD PLACEHOLDER ]",
-    imageUrl: "/images/project1.png"
+    placeholderText: "[ VINOTECA PLACEHOLDER ]",
+    imageUrl: "/images/project4.png"
+  },
+
+  {
+    id: "proj-5",
+    title: "PONG_IN_CAROTEO",
+    subtitle: "Arcade Game",
+    externalUrl: "https://2high2work.itch.io/pong-in-caroteo",
+    description:
+      "Small Unity game developed entirely under the 2High2Work identity.",
+    longDescription:
+      "Pong In Caroteo is a simple arcade-style project inspired by classic Pong. I programmed the entire game myself as a smaller-scale but fully personal project. While casual in scope, it represents the side of 2High2Work focused on experimentation, learning, and creating games for the sake of making them.",
+    techStack: ["Unity", "C#"],
+    metrics: [
+      "Solo Developed",
+      "Gameplay Programming",
+      "Arcade Prototype"
+    ],
+    asciiArt: `
+     +----+     +----+
+     |    |  o  |    |
+     +----+     +----+
+    `,
+    placeholderText: "[ PONG IN CAROTEO PLACEHOLDER ]",
+    imageUrl: "/images/project5.png"
   }
 ];
 
 export const SKILLS: Skill[] = [
   {
-    id: "skill-sysarch",
-    name: "SYSTEMS_ARCHITECTURE",
-    category: "Engineering",
-    level: "EXPERT // 99%",
-    experienceYears: "8+ Years",
-    description: "Designing fault-tolerant, horizontally scalable backend ecosystems without modern bloat.",
+    id: "skill-1",
+    name: "UNITY & GAMEPLAY_PROGRAMMING",
+    category: "Game Development",
+    level: "VERY ADVANCED",
+    experienceYears: "Several Years",
+    description:
+      "Gameplay systems, logic implementation, balancing, and game structure inside Unity projects.",
     details: [
-      "Micro-kernel and distributed monolith paradigms",
-      "High-concurrency thread management & IPC",
-      "Memory leak prevention and static analysis",
-      "Zero-downtime hot-reloading architectures"
+      "Combat timing and gameplay flow",
+      "Gameplay logic documentation",
+      "2D project architecture",
+      "Rapid prototyping and iteration"
     ],
     asciiIcon: `
-  +===+ +===+ +===+
-  | A | | B | | C |
-  +===+ +===+ +===+
-    \\     |     /  
-  +---------------+
-  |  MASTER BUS   |
-  +---------------+
+      [ UNITY ]
+       > PLAY
     `
   },
+
   {
-    id: "skill-sec",
-    name: "OFFENSIVE_SECURITY",
-    category: "Security",
-    level: "ADVANCED // 92%",
-    experienceYears: "6+ Years",
-    description: "Penetration testing, zero-day mitigation, and hardened cryptography implementation.",
+    id: "skill-2",
+    name: "FULLSTACK_WEB_DEVELOPMENT",
+    category: "Web",
+    level: "INTERMEDIATE",
+    experienceYears: "Several Years",
+    description:
+      "Building structured web applications with a strong focus on maintainability and identity.",
     details: [
-      "Reverse engineering binary executables",
-      "Custom exploit payload development",
-      "Network packet analysis & DPI evasion",
-      "Secure enclave and TPM integration"
+      "Next.js and TypeScript applications",
+      "Responsive layouts and UI systems",
+      "Database integration with Prisma and MongoDB",
+      "Frontend architecture and component organization"
     ],
     asciiIcon: `
-     .--------.    
-    /  #****#  \\   
-   |  #******#  |  
-   |____________|  
-   |   LOCKED   |  
-   +------------+  
+      <html/>
+      { next }
     `
   },
+
   {
-    id: "skill-front",
-    name: "TERMINAL_UI & ACCESSIBILITY",
+    id: "skill-3",
+    name: "QA_AUTOMATION",
+    category: "Testing",
+    level: "ADVANCED",
+    experienceYears: "Professional Experience",
+    description:
+      "Automated and manual testing workflows for professional environments.",
+    details: [
+      "Playwright end-to-end testing",
+      "Manual QA procedures",
+      "Performance testing with K6",
+      "Structured debugging and issue tracking"
+    ],
+    asciiIcon: `
+      [ TEST ]
+      ✓ PASS
+    `
+  },
+
+  {
+    id: "skill-4",
+    name: "FRONTEND_IMPLEMENTATION",
     category: "Frontend",
-    level: "MASTER // 95%",
-    experienceYears: "7+ Years",
-    description: "Building extreme performance, raw aesthetics interfaces with 100% WCAG accessibility compliance.",
+    level: "VERY ADVANCED",
+    experienceYears: "Several Years",
+    description:
+      "Building clean and expressive interfaces without relying on trend-driven design systems.",
     details: [
-      "Monochrome contrast optimization",
-      "Screen-reader DOM ordering & ARIA landmarks",
-      "Zero-latency keyboard navigation pipelines",
-      "Canvas & WebGL high-fidelity ASCII shaders"
+      "Advanced HTML and CSS",
+      "Accessibility-conscious structure",
+      "Keyboard and screen-reader considerations",
+      "Custom visual identity implementation"
     ],
     asciiIcon: `
-   +------------+  
-   | >_ ls -la  |  
-   | #########  |  
-   +------------+  
+      <div>
+        UI
+      </div>
     `
   },
+
   {
-    id: "skill-devops",
-    name: "BARE_METAL_DEVOPS",
-    category: "Infrastructure",
-    level: "SENIOR // 88%",
-    experienceYears: "5+ Years",
-    description: "Managing physical clusters, BGP routing, custom Linux distros, and automated provisioning.",
+    id: "skill-5",
+    name: "GENERAL_PROGRAMMING",
+    category: "Software",
+    level: "ADAPTABLE",
+    experienceYears: "Ongoing",
+    description:
+      "Comfortable working across different technologies depending on project needs.",
     details: [
-      "PXE boot automation & Kickstart scripts",
-      "eBPF network traffic filtering",
-      "Custom Kubernetes operator development",
-      "Immutable infrastructure pipelines"
+      "Python scripting",
+      "C++ fundamentals",
+      "Git workflows",
+      "Learning-oriented mindset"
     ],
     asciiIcon: `
-   [=== SERVER ===]
-   [=== CLUSTER ==]
-   [=== ACTIVE ===]
-   ||||||||||||||||
+      10101010
     `
   }
 ];
@@ -228,81 +263,87 @@ export const SKILLS: Skill[] = [
 export const EXPERIENCE: Experience[] = [
   {
     id: "exp-1",
-    role: "PRINCIPAL ARCHITECT",
-    company: "VOID_LABS INC.",
-    period: "2023 - PRESENT",
-    location: "REMOTE // DISTRIBUTED",
-    summary: "Leading the core engineering team behind decentralized messaging infrastructure. Architecting zero-trust networks.",
+    role: "QA AUTOMATION TESTER",
+    company: "Fundació ITeC",
+    period: "2025 - PRESENT",
+    location: "Barcelona, Spain",
+    summary:
+      "Dual vocational training position focused on automated and manual software testing.",
     achievements: [
-      "Reduced infrastructure latency by 48% across global edge locations",
-      "Designed custom binary serialization protocol saving 300 TB/month in bandwidth",
-      "Mentored a team of 14 senior distributed systems engineers"
+      "Automating testing workflows using Playwright and TypeScript",
+      "Performing manual QA and validation procedures",
+      "Working with K6 for performance and stress testing"
     ],
     asciiBadge: `
- +-------------------+
- | [!] VOID_LABS     |
- | LDR: PRINCIPAL    |
- +-------------------+
+     [ ITeC ]
+     QA // AUTO
     `
   },
+
   {
     id: "exp-2",
-    role: "SENIOR SYSTEMS ENGINEER",
-    company: "CYBER_DYNAMICS",
-    period: "2020 - 2023",
-    location: "TOKYO, JP // HYBRID",
-    summary: "Built high-frequency order routers and low-latency market data parsers for quantitative trading desks.",
+    role: "CO-FOUNDER & DEVELOPER",
+    company: "Gooblin Studio",
+    period: "2019 - PRESENT",
+    location: "Independent Studio",
+    summary:
+      "Co-founder of Gooblin Studio, an independent game studio focused on lore-heavy 2D experiences connected through the Ciudad De Las Nubes universe.",
     achievements: [
-      "Implemented kernel bypass networking using DPDK for sub-microsecond tick processing",
-      "Maintained 100% uptime during high-volatility market flash crash events",
-      "Authored 50+ technical whitepapers on memory barrier optimizations"
+      "Participated in the development planning of Night Of Wolves",
+      "Built the studio's public website",
+      "Helped shape gameplay systems and technical logic documentation"
     ],
     asciiBadge: `
- +-------------------+
- | [!] CYBER_DYN     |
- | ENG: SENIOR SYS   |
- +-------------------+
+     [ GOOBLIN ]
+     DEV // CO-FOUNDER
     `
   },
+
   {
     id: "exp-3",
-    role: "SECURITY RESEARCHER",
-    company: "SEC_OPS_AGENCY",
-    period: "2018 - 2020",
-    location: "BERLIN, DE",
-    summary: "Conducted security audits on mission-critical banking software and embedded IoT controllers.",
+    role: "CREATOR",
+    company: "2High2Work",
+    period: "2022 - PRESENT",
+    location: "Freelance / Personal Brand",
+    summary:
+      "2High2Work is my personal identity as a programmer, developer, and creator. It acts both as a portfolio and as a space for smaller, more personal projects outside the scope of larger Gooblin Studio productions.",
     achievements: [
-      "Discovered and responsibly disclosed 14 CVEs in enterprise virtualization platforms",
-      "Developed automated fuzzing cluster capable of testing 1,000 binaries simultaneously",
-      "Spoke at major security conferences on hardware side-channel attacks"
+      "Developed independent Unity projects",
+      "Built personal and collaborative web projects",
+      "Maintained a consistent technical and artistic identity"
     ],
     asciiBadge: `
- +-------------------+
- | [!] SEC_OPS       |
- | RSH: AUDITOR      |
- +-------------------+
+     [ 2.2 ]
+     TOO HIGH TO WORK
     `
   }
 ];
 
 export const ABOUT_DATA = {
   header: "ABOUT // 2HIGH2WORK",
-  tagline: "PROGRAMMER AS A JOB, PROGRAMMER AS A HOBBY.",
+
+  tagline:
+    "PROGRAMMER AS A JOB AND AS A HOBBY",
+
   bioParagraphs: [
-    "2High2Work is an engineering collective and portfolio identity forged in the fires of raw computing. We reject modern web bloat, endless JavaScript framework churn, and bloated corporate design systems. Instead, we embrace the pure, unadulterated power of black text on a white canvas—or white text on a black terminal.",
-    "Our work operates at the nexus of high-throughput backend architecture, rigorous offensive security, and hyper-accessible frontend interfaces. We believe that true accessibility means writing clean, semantic markup that functions perfectly whether viewed on a 4K monitor, a Braille reader, or a 1980s VT100 terminal.",
-    "When we aren't optimizing assembly pipelines or auditing smart contracts, we are researching decentralized communication protocols and archiving early internet history."
+    "I'm 2.2, the person behind 2High2Work. Programming started as a hobby long before it became work, and even now I still approach it more like an artform than a career ladder. The name itself is intentionally unserious. It is a fast way of separating myself from the polished corporate image most portfolios try to imitate.",
+
+    "I work across videogames, web development, and QA automation. Professionally, I currently work with automated and manual testing using Playwright, TypeScript, and K6. Outside of work, most of my time goes into Unity projects, gameplay systems, and web experiments. I care a lot about structure and maintainability because messy projects always become bigger problems later.",
+
+    "I'm also co-founder of Gooblin Studio, where I work on gameplay logic, technical planning, and game development inside the shared universe of Ciudad De Las Nubes. Through 2High2Work, I release smaller and more personal projects that lean more into experimentation, learning, and creative freedom."
   ],
+
   stats: [
-    { label: "LINES OF CODE", value: "14,502,891" },
-    { label: "COFFEE CONSUMED", value: "8,402 L" },
-    { label: "SERVERS CRASHED", value: "0" },
-    { label: "ACCESSIBILITY SCORE", value: "100%" }
+    { label: "MAIN STACK", value: "UNITY // TS // PLAYWRIGHT" },
+    { label: "FAVORITE TOOL", value: "UNITY" },
+    { label: "CURRENT FOCUS", value: "QA + GAMEDEV" },
+    { label: "DESIGN PHILOSOPHY", value: "FUNCTION FIRST" }
   ],
+
   philosophy: [
-    "1. MONOCHROME PURITY: Color is a distraction from structure.",
-    "2. RAW SPEED: If it takes more than 100ms to load, it is broken.",
-    "3. ABSOLUTE CLARITY: Accessible to screen readers, keyboards, and humans alike.",
-    "4. NO COMPROMISE: We do not ship broken code."
+    "1. CONSISTENT PROJECT STRUCTURE.",
+    "2. ACCESSIBILITY AS A BASELINE.",
+    "3. TESTING AND VALIDATION MATTER.",
+    "4. LONG-TERM MAINTAINABILITY."
   ]
 };
