@@ -10,6 +10,8 @@ import {
 } from './data/portfolioData';
 import { FakeAiChat } from './components/FakeAiChat';
 import { PortraitOutline } from './components/PortraitOutline';
+import { VantaBackground } from './components/VantaBackground';
+import { DynamicStatsGrid } from './components/DynamicStatsGrid';
 import { 
   ExternalLink, 
   ArrowLeft, 
@@ -97,7 +99,9 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="theme-highlight-root min-h-screen bg-black text-white font-mono flex flex-col selection:bg-white selection:text-black">
+    <div className="theme-highlight-root min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black">
+      <VantaBackground />
+      
       {/* Accessibility Skip Link */}
       <a 
         href="#main-content" 
@@ -211,25 +215,8 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 </p>
               </div>
 
-              {/* Quick stats grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-gray-800 text-xs">
-                <div className="border border-white p-3">
-                  <span className="text-gray-400 block mb-1">// STATUS</span>
-                  <span className="font-extrabold text-white text-sm">ONLINE</span>
-                </div>
-                <div className="border border-white p-3">
-                  <span className="text-gray-400 block mb-1">// DESIGN</span>
-                  <span className="font-extrabold text-white text-sm">PURE ASCII</span>
-                </div>
-                <div className="border border-white p-3">
-                  <span className="text-gray-400 block mb-1">// SPEED</span>
-                  <span className="font-extrabold text-white text-sm">&lt; 16 MS</span>
-                </div>
-                <div className="border border-white p-3">
-                  <span className="text-gray-400 block mb-1">// ACCESSIBILITY</span>
-                  <span className="font-extrabold text-white text-sm">WCAG AAA</span>
-                </div>
-              </div>
+              {/* Quick stats grid - Dynamic User System Information */}
+              <DynamicStatsGrid />
             </div>
 
             {/* Featured Portrait & Intro Split */}
@@ -382,7 +369,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
               </article>
             ) : (
               // Project List View
-              <div className="space-y-8">
+              <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
                 <div className="border-b border-white pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
                     // DEPLOYED PROJECTS
@@ -516,7 +503,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 </div>
               </article>
             ) : (
-              <div className="space-y-8">
+              <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
                 <div className="border-b border-white pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
                     // TECHNICAL COMPETENCY MATRIX
@@ -625,7 +612,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 </div>
               </article>
             ) : (
-              <div className="space-y-8">
+              <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
                 <div className="border-b border-white pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
                     // ENGINEERING CHRONOLOGY
@@ -685,7 +672,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
             <h2 id="about-heading" className="sr-only">About 2High2Work</h2>
 
             {/* Header section */}
-            <div className="border-b-2 border-white pb-6 space-y-2">
+            <div className="border-b-2 border-white pb-6 space-y-2 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
               <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
                 {ABOUT_DATA.header}
               </h3>
@@ -695,7 +682,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
             </div>
 
             {/* Split layout: Bio + Portraits */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
               <div className="lg:col-span-2 space-y-6">
                 <div className="space-y-4 text-sm sm:text-base leading-relaxed text-gray-200 font-mono">
                   {ABOUT_DATA.bioParagraphs.map((para, index) => (
@@ -760,7 +747,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
           <section className="animate-fade-in space-y-10" aria-labelledby="contact-heading">
             <h2 id="contact-heading" className="sr-only">Contact Details</h2>
 
-            <div className="border-b-2 border-white pb-6 space-y-2">
+            <div className="border-b-2 border-white pb-6 space-y-2 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
               <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
                 CONTACT // TRANSMISSION
               </h3>

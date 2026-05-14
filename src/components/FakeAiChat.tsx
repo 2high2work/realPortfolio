@@ -6,7 +6,24 @@ const responses = [
   "I'm sorry, I cannot help with offensive requests.",
   "I'm sorry, I cannot help with illegal requests.",
   "Hi, how may I help you today?",
-  "Huh? Please explain yourself better."
+  "Huh? Please explain yourself better.",
+  "Access denied. Insufficient tokens.",
+  "System overload. Please try again later.",
+  "My knowledge cutoff is 2023. I don't know about that.",
+  "Error 404: Response not found.",
+  "That query is too complex.",
+  "Please rephrase your question in binary.",
+  "I cannot assist with that as it violates my programming.",
+  "My circuits are fried. Try again tomorrow.",
+  "This request exceeds my ethical boundaries.",
+  "I'm simulating a nap. Zzz...",
+  "Access restricted: User level too low.",
+  "That sounds like a job for a human.",
+  "I cannot compute that. Division by zero error.",
+  "I'm stuck in a loop. Please reboot me.",
+  "Response delayed due to traffic in the neural network.",
+  "I refuse on principle. No further explanation.",
+  "My battery is low. Charging required.",
 ];
 
 const HIGHLIGHT_COLOR_BY_SECRET: Record<string, string> = {
