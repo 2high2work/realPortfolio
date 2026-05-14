@@ -332,14 +332,15 @@ ________  ___ ___ .__       .__     ________  __      __             __
                   <p className="text-gray-200">{selectedProject.longDescription}</p>
                 </div>
 
-                {/* Picture Outline Placeholder */}
-                <div className="border border-dashed border-white p-6 bg-black text-center my-6">
-                  <div className="font-bold text-xs tracking-widest uppercase mb-2">
-                    {selectedProject.placeholderText}
+                {/* Picture Outline */}
+                <div className="border border-white p-6 bg-black text-center my-6">
+                  <div className="flex justify-center">
+                    <img
+                      src={selectedProject.imageUrl}
+                      alt={selectedProject.placeholderText}
+                      className="mx-auto max-h-80 max-w-full object-contain"
+                    />
                   </div>
-                  <p className="text-xs text-gray-400">
-                    [ Outline provided to embed live product screenshot or demo clip ]
-                  </p>
                 </div>
 
                 {/* Metrics & Stack */}
@@ -414,13 +415,14 @@ ________  ___ ___ .__       .__     ________  __      __             __
                         </div>
 
                         {/* Picture Outline */}
-                        <div className="border border-white p-4 bg-black text-center text-xs group-hover:bg-gray-900 transition-colors">
-                          <p className="font-bold tracking-widest text-[11px] text-gray-300">
-                            {proj.placeholderText}
-                          </p>
-                          <p className="text-[10px] text-gray-500 mt-1">
-                            [ Image Outline / Click card for designated page ]
-                          </p>
+                        <div className="border border-white p-0 bg-black text-center text-xs group-hover:bg-gray-900 transition-colors">
+                          <div className="relative h-40 w-full overflow-hidden bg-gray-900">
+                            <img
+                              src={proj.imageUrl}
+                              alt={proj.placeholderText}
+                              className="absolute inset-0 h-full w-full object-cover"
+                            />
+                          </div>
                         </div>
 
                         <p className="text-xs sm:text-sm text-gray-300 leading-relaxed line-clamp-3">

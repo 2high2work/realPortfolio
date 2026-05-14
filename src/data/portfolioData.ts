@@ -50,12 +50,16 @@ export const PROJECTS: Project[] = [
       "Combat Balancing",
       "Technical Planning"
     ],
-    asciiArt: `
-    [ NIGHT OF WOLVES ]
-      MOONLIGHT // BLOOD // STEEL
+    asciiArt: String.raw`
+ _______  .__       .__     __    ________   _____   __      __      .__                      
+ \      \ |__| ____ |  |___/  |_  \_____  \_/ ____\ /  \    /  \____ |  |___  __ ____   ______
+ /   |   \|  |/ ___\|  |  \   __\  /   |   \   __\  \   \/\/   /  _ \|  |\  \/ // __ \ /  ___/
+/    |    \  / /_/  >   Y  \  |   /    |    \  |     \        (  <_> )  |_\   /\  ___/ \___ \ 
+\____|__  /__\___  /|___|  /__|   \_______  /__|      \__/\  / \____/|____/\_/  \___  >____  >
+        \/  /_____/      \/               \/               \/                       \/     \/ 
     `,
     placeholderText: "[ NIGHT OF WOLVES SCREENSHOT PLACEHOLDER ]",
-    imageUrl: "/images/project1.png"
+    imageUrl: "/images/project1.webp"
   },
 
   {
@@ -73,14 +77,16 @@ export const PROJECTS: Project[] = [
       "Responsive Design",
       "Static Web Architecture"
     ],
-    asciiArt: `
-    +----------------------+
-    |   GOOBLIN STUDIO    |
-    |  GAMES // LORE      |
-    +----------------------+
+    asciiArt: String.raw`
+  ________             ___.   .__  .__           _________ __            .___.__        
+ /  _____/  ____   ____\_ |__ |  | |__| ____    /   _____//  |_ __ __  __| _/|__| ____  
+/   \  ___ /  _ \ /  _ \| __ \|  | |  |/    \   \_____  \\   __\  |  \/ __ | |  |/  _ \ 
+\    \_\  (  <_> |  <_> ) \_\ \  |_|  |   |  \  /        \|  | |  |  / /_/ | |  (  <_> )
+ \______  /\____/ \____/|___  /____/__|___|  / /_______  /|__| |____/\____ | |__|\____/ 
+        \/                  \/             \/          \/                 \/            
     `,
     placeholderText: "[ GOOBLIN STUDIO WEBSITE PLACEHOLDER ]",
-    imageUrl: "/images/project2.png"
+    imageUrl: "/images/project2.webp"
   },
 
   {
@@ -98,14 +104,16 @@ export const PROJECTS: Project[] = [
       "Database Integration",
       "Dynamic Routing"
     ],
-    asciiArt: `
-     ____________
-    /| VAN LIFE |\\
-   /_|__________|_\\
-      O      O
+    asciiArt: String.raw`
+____   ____               .____    .__  _____        __________               __         .__          
+\   \ /   /____    ____   |    |   |__|/ ____\____   \______   \ ____   _____/  |______  |  |   ______
+ \   Y   /\__  \  /    \  |    |   |  \   __\/ __ \   |       _// __ \ /    \   __\__  \ |  |  /  ___/
+  \     /  / __ \|   |  \ |    |___|  ||  | \  ___/   |    |   \  ___/|   |  \  |  / __ \|  |__\___ \ 
+   \___/  (____  /___|  / |_______ \__||__|  \___  >  |____|_  /\___  >___|  /__| (____  /____/____  >
+               \/     \/          \/             \/          \/     \/     \/          \/          \/ 
     `,
     placeholderText: "[ VAN LIFE RENTALS PLACEHOLDER ]",
-    imageUrl: "/images/project3.png"
+    imageUrl: "/images/project3.webp"
   },
 
   {
@@ -123,14 +131,16 @@ export const PROJECTS: Project[] = [
       "Store Logic",
       "Full CRUD Operations"
     ],
-    asciiArt: `
-     .----------------.
-    |    VINOTECA     |
-    | WINE // BEER    |
-     '----------------'
+    asciiArt: String.raw`
+____   ____.__               __                        
+\   \ /   /|__| ____   _____/  |_  ____   ____ _____   
+ \   Y   / |  |/    \ /  _ \   __\/ __ \_/ ___\\__  \  
+  \     /  |  |   |  (  <_> )  | \  ___/\  \___ / __ \_
+   \___/   |__|___|  /\____/|__|  \___  >\___  >____  /
+                   \/                 \/     \/     \/ 
     `,
     placeholderText: "[ VINOTECA PLACEHOLDER ]",
-    imageUrl: "/images/project4.png"
+    imageUrl: "/images/project4.webp"
   },
 
   {
@@ -148,13 +158,16 @@ export const PROJECTS: Project[] = [
       "Gameplay Programming",
       "Arcade Prototype"
     ],
-    asciiArt: `
-     +----+     +----+
-     |    |  o  |    |
-     +----+     +----+
+    asciiArt: String.raw`
+__________                       .__         _________                      __                
+\______   \____   ____    ____   |__| ____   \_   ___ \_____ _______  _____/  |_  ____  ____  
+ |     ___/  _ \ /    \  / ___\  |  |/    \  /    \  \/\__  \\_  __ \/  _ \   __\/ __ \/  _ \ 
+ |    |  (  <_> )   |  \/ /_/  > |  |   |  \ \     \____/ __ \|  | \(  <_> )  | \  ___(  <_> )
+ |____|   \____/|___|  /\___  /  |__|___|  /  \______  (____  /__|   \____/|__|  \___  >____/ 
+                     \//_____/           \/          \/     \/                       \/       
     `,
     placeholderText: "[ PONG IN CAROTEO PLACEHOLDER ]",
-    imageUrl: "/images/project5.png"
+    imageUrl: "/images/project5.webp"
   }
 ];
 
@@ -173,9 +186,13 @@ export const SKILLS: Skill[] = [
       "2D project architecture",
       "Rapid prototyping and iteration"
     ],
-    asciiIcon: `
-      [ UNITY ]
-       > PLAY
+    asciiIcon: String.raw`
+ ____ ___      .__  __          
+|    |   \____ |__|/  |_ ___.__.
+|    |   /    \|  \   __<   |  |
+|    |  /   |  \  ||  |  \___  |
+|______/|___|  /__||__|  / ____|
+             \/          \/     
     `
   },
 
@@ -193,9 +210,13 @@ export const SKILLS: Skill[] = [
       "Database integration with Prisma and MongoDB",
       "Frontend architecture and component organization"
     ],
-    asciiIcon: `
-      <html/>
-      { next }
+    asciiIcon: String.raw`
+___________    .__  .__            __                 __    
+\_   _____/_ __|  | |  |   _______/  |______    ____ |  | __
+ |    __)|  |  \  | |  |  /  ___/\   __\__  \ _/ ___\|  |/ /
+ |     \ |  |  /  |_|  |__\___ \  |  |  / __ \\  \___|    < 
+ \___  / |____/|____/____/____  > |__| (____  /\___  >__|_ \
+     \/                       \/            \/     \/     \/
     `
   },
 
@@ -213,9 +234,13 @@ export const SKILLS: Skill[] = [
       "Performance testing with K6",
       "Structured debugging and issue tracking"
     ],
-    asciiIcon: `
-      [ TEST ]
-      ✓ PASS
+    asciiIcon: String.raw`
+________      _____       _____          __                         __  .__               
+\_____  \    /  _  \     /  _  \  __ ___/  |_  ____   _____ _____ _/  |_|__| ____   ____  
+ /  / \  \  /  /_\  \   /  /_\  \|  |  \   __\/  _ \ /     \\__  \\   __\  |/  _ \ /    \ 
+/   \_/.  \/    |    \ /    |    \  |  /|  | (  <_> )  Y Y  \/ __ \|  | |  (  <_> )   |  \
+\_____\ \_/\____|__  / \____|__  /____/ |__|  \____/|__|_|  (____  /__| |__|\____/|___|  /
+       \__>        \/          \/                         \/     \/                    \/ 
     `
   },
 
@@ -233,10 +258,13 @@ export const SKILLS: Skill[] = [
       "Keyboard and screen-reader considerations",
       "Custom visual identity implementation"
     ],
-    asciiIcon: `
-      <div>
-        UI
-      </div>
+    asciiIcon: String.raw`
+___________                     __                     .___
+\_   _____/______  ____   _____/  |_  ____   ____    __| _/
+ |    __) \_  __ \/  _ \ /    \   __\/ __ \ /    \  / __ | 
+ |     \   |  | \(  <_> )   |  \  | \  ___/|   |  \/ /_/ | 
+ \___  /   |__|   \____/|___|  /__|  \___  >___|  /\____ | 
+     \/                      \/          \/     \/      \/ 
     `
   },
 
@@ -254,7 +282,7 @@ export const SKILLS: Skill[] = [
       "Git workflows",
       "Learning-oriented mindset"
     ],
-    asciiIcon: `
+    asciiIcon: String.raw`
       10101010
     `
   }
@@ -274,9 +302,13 @@ export const EXPERIENCE: Experience[] = [
       "Performing manual QA and validation procedures",
       "Working with K6 for performance and stress testing"
     ],
-    asciiBadge: `
-     [ ITeC ]
-     QA // AUTO
+    asciiBadge: String.raw`
+.______________    _________  
+|   \__    ___/___ \_   ___ \ 
+|   | |    |_/ __ \/    \  \/ 
+|   | |    |\  ___/\     \____
+|___| |____| \___  >\______  /
+                 \/        \/ 
     `
   },
 
@@ -293,9 +325,13 @@ export const EXPERIENCE: Experience[] = [
       "Built the studio's public website",
       "Helped shape gameplay systems and technical logic documentation"
     ],
-    asciiBadge: `
-     [ GOOBLIN ]
-     DEV // CO-FOUNDER
+    asciiBadge: String.raw`
+  ________             ___.   .__  .__           _________ __            .___.__        
+ /  _____/  ____   ____\_ |__ |  | |__| ____    /   _____//  |_ __ __  __| _/|__| ____  
+/   \  ___ /  _ \ /  _ \| __ \|  | |  |/    \   \_____  \\   __\  |  \/ __ | |  |/  _ \ 
+\    \_\  (  <_> |  <_> ) \_\ \  |_|  |   |  \  /        \|  | |  |  / /_/ | |  (  <_> )
+ \______  /\____/ \____/|___  /____/__|___|  / /_______  /|__| |____/\____ | |__|\____/ 
+        \/                  \/             \/          \/                 \/            
     `
   },
 
@@ -312,9 +348,20 @@ export const EXPERIENCE: Experience[] = [
       "Built personal and collaborative web projects",
       "Maintained a consistent technical and artistic identity"
     ],
-    asciiBadge: `
-     [ 2.2 ]
-     TOO HIGH TO WORK
+    asciiBadge: String.raw`
+      ,----,           ,----,   
+    .'   .' \        .'   .' \  
+  ,----,'    |     ,----,'    | 
+  |    :  .  ;     |    :  .  ; 
+  ;    |.'  /      ;    |.'  /  
+  '----'/  ;       '----'/  ;   
+    /  ;  /          /  ;  /    
+   ;  /  /-,        ;  /  /-,   
+  /  /  /.'|       /  /  /.'|   
+./__;      :___  ./__;      :   
+|   :    .'/  .\ |   :    .'    
+;   | .'   \  ; |;   | .'       
+'---'       '--" '---'          
     `
   }
 ];
