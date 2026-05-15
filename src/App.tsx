@@ -24,6 +24,7 @@ import {
   ChevronRight,
   Code2
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT';
 type CookieConsent = 'accepted' | 'rejected' | null;
@@ -919,6 +920,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
           </div>
         </div>
       )}
+      <Analytics />
     </div>
   );
 };
