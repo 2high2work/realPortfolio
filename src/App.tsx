@@ -36,6 +36,13 @@ export const App: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
 
+  // Contact form state
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [contactError, setContactError] = useState<string | null>(null);
+
   // Cookie consent state
   const [cookieConsent, setCookieConsent] = useState<CookieConsent>(null);
   const [showCookieDialog, setShowCookieDialog] = useState(false);
@@ -86,6 +93,40 @@ export const App: React.FC = () => {
     setCookieConsent('rejected');
     localStorage.setItem('cookieConsent', 'rejected');
     setShowCookieDialog(false);
+  };
+
+  const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setContactStatus('sending');
+    setContactError(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: contactName,
+          email: contactEmail,
+          message: contactMessage,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        throw new Error(errorBody?.message || 'Failed to send message');
+      }
+
+      setContactStatus('success');
+      setContactName('');
+      setContactEmail('');
+      setContactMessage('');
+    } catch (error) {
+      console.error('Contact submit failed', error);
+      setContactError(error instanceof Error ? error.message : 'Unknown error');
+      setContactStatus('error');
+    }
   };
 
   // Helper to switch tabs and reset selected detail views
@@ -767,13 +808,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                   <span className="text-gray-400">ENCRYPTION: REQUIRED</span>
                 </div>
 
-                <form 
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    alert("TRANSMISSION LOGGED. WE WILL RESPOND VIA SECURE CHANNELS.");
-                  }}
-                  className="space-y-4"
-                >
+                <form onSubmit={handleContactSubmit} className="space-y-4">
                   <div className="space-y-1">
                     <label htmlFor="contact-name" className="block text-xs font-bold text-gray-300">
                       IDENTIFIER [NAME]
@@ -782,8 +817,11 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       id="contact-name"
                       type="text"
                       required
+                      value={contactName}
+                      onChange={(event) => setContactName(event.target.value)}
+                      disabled={contactStatus === 'sending'}
                       placeholder="e.g. ARCHITECT_01"
-                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono"
+                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
                     />
                   </div>
 
@@ -795,8 +833,11 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       id="contact-email"
                       type="email"
                       required
+                      value={contactEmail}
+                      onChange={(event) => setContactEmail(event.target.value)}
+                      disabled={contactStatus === 'sending'}
                       placeholder="e.g. secure@domain.com"
-                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono"
+                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
                     />
                   </div>
 
@@ -808,16 +849,32 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       id="contact-message"
                       rows={5}
                       required
+                      value={contactMessage}
+                      onChange={(event) => setContactMessage(event.target.value)}
+                      disabled={contactStatus === 'sending'}
                       placeholder="ENTER TRANSMISSION DATA HERE..."
-                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono resize-none"
+                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono resize-none disabled:opacity-50"
                     />
                   </div>
 
+                  {contactStatus === 'success' && (
+                    <div className="rounded border border-emerald-500 bg-emerald-950/30 p-3 text-emerald-200 text-xs font-bold">
+                      TRANSMISSION SUCCESSFUL. 2High2Work has received your message.
+                    </div>
+                  )}
+
+                  {contactStatus === 'error' && contactError && (
+                    <div className="rounded border border-amber-500 bg-amber-950/30 p-3 text-amber-200 text-xs font-bold">
+                      FAILED TO SEND: {contactError}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full bg-white text-black font-extrabold py-3 text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-white cursor-pointer shadow-md"
+                    disabled={contactStatus === 'sending'}
+                    className="w-full bg-white text-black font-extrabold py-3 text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-white cursor-pointer shadow-md disabled:opacity-50"
                   >
-                    [ TRANSMIT PAYLOAD ]
+                    {contactStatus === 'sending' ? '[ TRANSMITTING ... ]' : '[ TRANSMIT PAYLOAD ]'}
                   </button>
                 </form>
               </div>
