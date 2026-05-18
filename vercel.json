@@ -1,0 +1,19 @@
+{
+  "version": 3,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    },
+    {
+      "src": "api/contact.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/contact",
+      "dest": "/api/contact.ts"
+    }
+  ]
+}
