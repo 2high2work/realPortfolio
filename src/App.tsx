@@ -37,6 +37,14 @@ export const App: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
 
+  // Glitch mode state
+  const [glitchMode, setGlitchMode] = useState(false);
+  const handleSecretCode = (code: string) => {
+    if (code === 'glitch') {
+      setGlitchMode(true);
+    }
+  };
+
   // Contact form state
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -141,7 +149,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="theme-highlight-root min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black">
+    <div className={`theme-highlight-root ${glitchMode ? 'glitch-root' : ''} min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black`}>
       <VantaBackground />
       
       {/* Accessibility Skip Link */}
@@ -302,7 +310,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 <PortraitOutline 
                   label="FOUNDER // LEAD ARCHITECT" 
                   height="min-h-[340px]" 
-                  imageUrl='/images/founder.webp'
+                  imageUrl={glitchMode ? '/images/founder-glitch.webp' : '/images/founder.webp'}
                 />
               </div>
             </div>
@@ -936,7 +944,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
       </footer>
 
       {/* Fake AI Chat Widget (Bottom Right Box) */}
-      <FakeAiChat />
+      <FakeAiChat onSecretCode={handleSecretCode} />
 
       {/* Cookie Consent Dialog */}
       {showCookieDialog && (

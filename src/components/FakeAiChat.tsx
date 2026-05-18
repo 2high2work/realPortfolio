@@ -37,6 +37,10 @@ const applyHighlightColor = (color: string) => {
   document.documentElement.style.setProperty('--theme-highlight-color', color);
 };
 
+interface FakeAiChatProps {
+  onSecretCode?: (secretKey: string) => void;
+}
+
 interface Message {
   id: string;
   sender: 'user' | 'ai';
@@ -44,7 +48,7 @@ interface Message {
   timestamp: string;
 }
 
-export const FakeAiChat: React.FC = () => {
+export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -96,6 +100,7 @@ export const FakeAiChat: React.FC = () => {
     const trimmedInput = inputVal.trim();
     const normalizedInput = trimmedInput.toLowerCase();
     const secretColor = HIGHLIGHT_COLOR_BY_SECRET[normalizedInput];
+    const isGlitchSecret = normalizedInput === 'glitch';
 
     const userMsg: Message = {
       id: `msg-${Date.now()}`,
@@ -104,7 +109,14 @@ export const FakeAiChat: React.FC = () => {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
     };
 
-    const aiSecretResponse = secretColor
+    const aiSecretResponse = isGlitchSecret
+      ? {
+          id: `msg-ai-${Date.now()}`,
+          sender: 'ai' as const,
+          text: `SECRET CODE '${normalizedInput}' APPLIED. SYSTEM DISPLAY GLITCH ENABLED.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        }
+      : secretColor
       ? {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai' as const,
@@ -119,6 +131,11 @@ export const FakeAiChat: React.FC = () => {
     });
 
     setInputVal('');
+
+    if (isGlitchSecret) {
+      onSecretCode?.(normalizedInput);
+      return;
+    }
 
     if (secretColor) {
       applyHighlightColor(secretColor);
