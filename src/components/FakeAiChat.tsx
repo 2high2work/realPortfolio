@@ -101,6 +101,7 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
     const normalizedInput = trimmedInput.toLowerCase();
     const secretColor = HIGHLIGHT_COLOR_BY_SECRET[normalizedInput];
     const isGlitchSecret = normalizedInput === 'glitch';
+    const isKeySecret = normalizedInput === 'key';
 
     const userMsg: Message = {
       id: `msg-${Date.now()}`,
@@ -114,6 +115,13 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai' as const,
           text: `SECRET CODE '${normalizedInput}' APPLIED. SYSTEM DISPLAY GLITCH ENABLED.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        }
+      : isKeySecret
+      ? {
+          id: `msg-ai-${Date.now()}`,
+          sender: 'ai' as const,
+          text: `SECRET CODE '${normalizedInput}' APPLIED. CURSOR SET TO KEY.`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
         }
       : secretColor
@@ -132,7 +140,7 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
 
     setInputVal('');
 
-    if (isGlitchSecret) {
+    if (isGlitchSecret || isKeySecret) {
       onSecretCode?.(normalizedInput);
       return;
     }

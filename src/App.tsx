@@ -39,9 +39,15 @@ export const App: React.FC = () => {
 
   // Glitch mode state
   const [glitchMode, setGlitchMode] = useState(false);
+  const [keyCursor, setKeyCursor] = useState(false);
   const handleSecretCode = (code: string) => {
     if (code === 'glitch') {
       setGlitchMode(true);
+      return;
+    }
+    if (code === 'key') {
+      setKeyCursor(true);
+      return;
     }
   };
 
@@ -149,7 +155,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className={`theme-highlight-root ${glitchMode ? 'glitch-root' : ''} min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black`}>
+    <div className={`theme-highlight-root ${glitchMode ? 'glitch-root' : ''} ${keyCursor ? 'key-cursor-root' : ''} min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black`}>
       <VantaBackground />
       
       {/* Accessibility Skip Link */}

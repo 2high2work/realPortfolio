@@ -22,3 +22,9 @@
     text-shadow: 0 0 0.4rem rgba(0, 255, 255, 1), 0 0 0.7rem rgba(255, 0, 255, 1);
   }
 }
+
+/* Key cursor: uses an inline SVG with a key emoji as cursor */
+.key-cursor-root,
+.key-cursor-root * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>🔑</text></svg>") 16 16, auto;
+}
