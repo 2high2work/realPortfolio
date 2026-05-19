@@ -37,7 +37,7 @@ export const PortraitOutline: React.FC<PortraitOutlineProps> = ({
         <img 
           src={imageUrl || "/images/images/profile1.webp"} 
           alt={label} 
-          className="w-full h-full object-cover" 
+          className="w-full h-full object-cover object-top" 
           loading="lazy"
         />
       </div>

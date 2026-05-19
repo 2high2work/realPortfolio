@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
   {
     id: "proj-1",
     title: "NIGHT_OF_WOLVES",
-    subtitle: "2D Action Game // Gooblin Studio",
+    subtitle: "2D Action Game // Gooblin Studio // WIP",
     externalUrl: "https://store.steampowered.com/app/2393490/Night_of_Wolves/",
     description:
       "Ongoing commercial videogame project developed by Gooblin Studio inside the Ciudad De Las Nubes universe.",
@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
     id: "proj-2",
     title: "GOOBLINSTUDIO.COM",
     subtitle: "Studio Website",
-    externalUrl: "https://gooblinstudio.com",
+    externalUrl: "http://gooblinstudio.com",
     description:
       "Official web hub for Gooblin Studio and its projects.",
     longDescription:
@@ -179,7 +179,7 @@ export const SKILLS: Skill[] = [
     level: "VERY ADVANCED",
     experienceYears: "Several Years",
     description:
-      "Gameplay systems, logic implementation, balancing, and game structure inside Unity projects.",
+      "Extensive experience designing and implementing gameplay systems in Unity using C#. I build modular architectures for character controllers, combat mechanics, state machines and input systems, and create tools and editor workflows to speed iteration. I lead rapid prototyping to validate feel and balance, produce clear technical design documents, integrate animation/physics/audio for responsive feedback, and tune performance for target platforms.",
     details: [
       "Combat timing and gameplay flow",
       "Gameplay logic documentation",
@@ -203,7 +203,7 @@ export const SKILLS: Skill[] = [
     level: "INTERMEDIATE",
     experienceYears: "Several Years",
     description:
-      "Building structured web applications with a strong focus on maintainability and identity.",
+      "Hands-on fullstack development experience building maintainable, production-ready web applications with TypeScript and modern frameworks. I design APIs and data models, implement server- and client-side rendering strategies (Next.js), manage state and component architecture, and ensure accessibility and responsive behavior. I integrate databases (Prisma, MongoDB), authentication, deployment pipelines, and observability to deliver robust, scalable products.",
     details: [
       "Next.js and TypeScript applications",
       "Responsive layouts and UI systems",
@@ -227,7 +227,7 @@ ___________    .__  .__            __                 __
     level: "ADVANCED",
     experienceYears: "Professional Experience",
     description:
-      "Automated and manual testing workflows for professional environments.",
+      "Professional QA and automation expertise spanning test strategy, end-to-end automation, and performance testing. I author reliable Playwright tests and test suites, design deterministic test data and CI integrations, and write manual test plans for edge cases. I use K6 for load testing, triage flaky failures, and work closely with developers to reproduce and fix defects while improving testability across the stack.",
     details: [
       "Playwright end-to-end testing",
       "Manual QA procedures",
@@ -251,7 +251,7 @@ ________      _____       _____          __                         __  .__
     level: "VERY ADVANCED",
     experienceYears: "Several Years",
     description:
-      "Building clean and expressive interfaces without relying on trend-driven design systems.",
+      "Deep frontend implementation skills focused on semantic HTML, accessible markup, and maintainable CSS/utility systems. I craft responsive layouts, keyboard-friendly interactions, and performance-conscious components. I prioritize readable structure, ARIA patterns where needed, and subtle motion/visual polish while keeping implementation lightweight and easy to maintain.",
     details: [
       "Advanced HTML and CSS",
       "Accessibility-conscious structure",
@@ -275,7 +275,7 @@ ___________                     __                     .___
     level: "ADAPTABLE",
     experienceYears: "Ongoing",
     description:
-      "Comfortable working across different technologies depending on project needs.",
+      "Adaptable programmer with broad experience across languages and paradigms. I write concise Python scripts for tooling, apply C++ fundamentals when performance or engine work requires it, and maintain solid Git-based workflows. I emphasize pragmatic problem solving, clear code structure, debugging rigor, and a continuous learning mindset that lets me adopt new tools and patterns quickly.",
     details: [
       "Python scripting",
       "C++ fundamentals",
@@ -296,11 +296,12 @@ export const EXPERIENCE: Experience[] = [
     period: "2025 - PRESENT",
     location: "Barcelona, Spain",
     summary:
-      "Dual vocational training position focused on automated and manual software testing.",
+      "Vocational training role combining automated and manual quality assurance. I design and maintain Playwright end-to-end suites in TypeScript, integrate tests into CI pipelines, author deterministic test data and fixtures, and execute performance/load testing with K6. I investigate flaky tests, produce clear bug reports with reproduction steps, and collaborate with developers to improve observability and testability across the stack.",
     achievements: [
-      "Automating testing workflows using Playwright and TypeScript",
-      "Performing manual QA and validation procedures",
-      "Working with K6 for performance and stress testing"
+      "Built and maintained Playwright E2E suites covering critical user flows",
+      "Integrated automated tests into CI to reduce regression time",
+      "Authored K6 performance tests and analyzed system bottlenecks",
+      "Created manual QA plans and reproducible bug reports for developers"
     ],
     asciiBadge: String.raw`
 .______________    _________  
@@ -319,11 +320,11 @@ export const EXPERIENCE: Experience[] = [
     period: "2019 - PRESENT",
     location: "Independent Studio",
     summary:
-      "Co-founder of Gooblin Studio, an independent game studio focused on lore-heavy 2D experiences connected through the Ciudad De Las Nubes universe.",
+      "Co-founder and developer responsible for technical direction, gameplay systems, and studio tooling. I contribute to system design and technical planning for narrative-driven 2D projects, implement core gameplay mechanics, manage version control and release processes, and build public-facing web infrastructure. I bridge design and engineering, write technical documentation, and support cross-discipline collaboration to keep projects aligned with creative goals.",
     achievements: [
-      "Participated in the development planning of Night Of Wolves",
-      "Built the studio's public website",
-      "Helped shape gameplay systems and technical logic documentation"
+      "Led gameplay system design and technical documentation for Night Of Wolves",
+      "Developed and maintained the studio's public website and internal tooling",
+      "Coordinated releases, merges, and cross-discipline technical communication"
     ],
     asciiBadge: String.raw`
   ________             ___.   .__  .__           _________ __            .___.__        
@@ -342,11 +343,11 @@ export const EXPERIENCE: Experience[] = [
     period: "2022 - PRESENT",
     location: "Freelance / Personal Brand",
     summary:
-      "2High2Work is my personal identity as a programmer, developer, and creator. It acts both as a portfolio and as a space for smaller, more personal projects outside the scope of larger Gooblin Studio productions.",
+      "Personal creator identity where I prototype, develop and publish independent projects end-to-end. I build Unity prototypes, iterate rapidly on mechanics and visual identity, and produce web projects that showcase experiments and technical demos. This work sharpens my design-to-implementation workflow and serves as a playground for exploring new ideas and tools.",
     achievements: [
-      "Developed independent Unity projects",
-      "Built personal and collaborative web projects",
-      "Maintained a consistent technical and artistic identity"
+      "Designed and shipped solo Unity prototypes and small games",
+      "Built personal web projects and portfolio tooling to showcase experiments",
+      "Maintained a consistent technical and artistic identity across releases"
     ],
     asciiBadge: String.raw`
       ,----,           ,----,   
@@ -368,16 +369,15 @@ export const EXPERIENCE: Experience[] = [
 
 export const ABOUT_DATA = {
   header: "ABOUT // 2HIGH2WORK",
-
   tagline:
-    "PROGRAMMER AS A JOB AND AS A HOBBY",
+    "SOFTWARE ENGINEER — GAME DEVELOPMENT, WEB, AND QA AUTOMATION",
 
   bioParagraphs: [
-    "I'm 2.2, the person behind 2High2Work. Programming started as a hobby long before it became work, and even now I still approach it more like an artform than a career ladder. The name itself is intentionally unserious. It is a fast way of separating myself from the polished corporate image most portfolios try to imitate.",
+    "I am 2.2, the creator behind 2High2Work. I treat software development as both a profession and a craft, combining technical rigor with iterative design. My work emphasizes maintainable architecture, clear documentation, and pragmatic solutions that serve gameplay and user needs.",
 
-    "I work across videogames, web development, and QA automation. Professionally, I currently work with automated and manual testing using Playwright, TypeScript, and K6. Outside of work, most of my time goes into Unity projects, gameplay systems, and web experiments. I care a lot about structure and maintainability because messy projects always become bigger problems later.",
+    "My professional practice spans gameplay engineering in Unity (C#), fullstack web development with TypeScript/Next.js, and QA automation using Playwright and K6. I design and implement gameplay systems, architect web applications, and build robust automated test suites integrated into CI pipelines to ensure release quality and system reliability.",
 
-    "I'm also co-founder of Gooblin Studio, where I work on gameplay logic, technical planning, and game development inside the shared universe of Ciudad De Las Nubes. Through 2High2Work, I release smaller and more personal projects that lean more into experimentation, learning, and creative freedom."
+    "As co-founder of Gooblin Studio I contribute to technical direction, system design, and public-facing infrastructure. Through 2High2Work I publish solo prototypes and web experiments."
   ],
 
   stats: [
