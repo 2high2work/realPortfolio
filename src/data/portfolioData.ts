@@ -149,9 +149,9 @@ ____   ____.__               __
     subtitle: "Arcade Game",
     externalUrl: "https://2high2work.itch.io/pong-in-caroteo",
     description:
-      "Small Unity game developed entirely under the 2High2Work identity.",
+      "Collaborative arcade game between Gooblin Studio and 2High2Work.",
     longDescription:
-      "Pong In Caroteo is a simple arcade-style project inspired by classic Pong. I programmed the entire game myself as a smaller-scale but fully personal project. While casual in scope, it represents the side of 2High2Work focused on experimentation, learning, and creating games for the sake of making them.",
+      "Pong In Caroteo is a simple arcade-style project inspired by classic Pong, developed as a collaboration between Gooblin Studio and 2High2Work. Gooblin Studio created the art and lore, while 2High2Work handled all programming. The project represents the experimental side of our collaboration, focused on prototyping, learning, and creating games for the sake of making them.",
     techStack: ["Unity", "C#"],
     metrics: [
       "Solo Developed",

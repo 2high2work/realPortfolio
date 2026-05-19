@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 
-type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT';
+type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT' | 'TOWER';
 type CookieConsent = 'accepted' | 'rejected' | null;
 
 export const App: React.FC = () => {
@@ -47,6 +47,14 @@ export const App: React.FC = () => {
     }
     if (code === 'key') {
       setKeyCursor(true);
+      return;
+    }
+    if (code === 'the tower') {
+      setSelectedProject(null);
+      setSelectedSkill(null);
+      setSelectedExperience(null);
+      setActiveTab('TOWER');
+      window.location.hash = 'tower';
       return;
     }
   };
@@ -75,7 +83,7 @@ export const App: React.FC = () => {
   // Load initial tab from URL hash
   useEffect(() => {
     const hash = window.location.hash.replace('#', '').toUpperCase();
-    if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT'].includes(hash)) {
+    if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
       setActiveTab(hash as Tab);
     }
   }, []);
@@ -84,9 +92,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '').toUpperCase();
-      if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT'].includes(hash)) {
-        setActiveTab(hash as Tab);
-        setSelectedProject(null);
+        if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
         setSelectedSkill(null);
         setSelectedExperience(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -937,6 +943,18 @@ ________  ___ ___ .__       .__     ________  __      __             __
             </div>
           </section>
         )}
+
+        {/* ==================== 7. SECRET TOWER PAGE ==================== */}
+        {activeTab === 'TOWER' && (
+          <section className="animate-fade-in min-h-[60vh] border-2 border-white p-8 bg-black text-white flex items-center justify-center">
+            <div className="text-center space-y-4">
+              <p className="text-xs uppercase text-gray-400 tracking-widest">SECRET ACCESS GRANTED</p>
+              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">THE TOWER</h2>
+              <p className="text-sm text-gray-500">This page is blank for now. Check back when the tower awakens.</p>
+            </div>
+          </section>
+        )}
+
       </main>
 
       {/* Footer Area */}
