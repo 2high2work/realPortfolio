@@ -93,7 +93,7 @@ export const PROJECTS: Project[] = [
     id: "proj-3",
     title: "VANLIFERENTALS",
     subtitle: "Fullstack Rental Platform",
-    externalUrl: "",
+    externalUrl: "https://van-life-rentals.vercel.app/",
     description:
       "Educational fullstack project focused on modern web architecture and database integration.",
     longDescription:
