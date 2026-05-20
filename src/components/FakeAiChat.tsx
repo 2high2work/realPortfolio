@@ -1,30 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, X, Send } from 'lucide-react';
-
-const responses = [
-  "No.",
-  "I'm sorry, I cannot help with offensive requests.",
-  "I'm sorry, I cannot help with illegal requests.",
-  "Hi, how may I help you today?",
-  "Huh? Please explain yourself better.",
-  "Access denied. Insufficient tokens.",
-  "System overload. Please try again later.",
-  "My knowledge cutoff is 2023. I don't know about that.",
-  "Error 404: Response not found.",
-  "That query is too complex.",
-  "Please rephrase your question in binary.",
-  "I cannot assist with that as it violates my programming.",
-  "My circuits are fried. Try again tomorrow.",
-  "This request exceeds my ethical boundaries.",
-  "I'm simulating a nap. Zzz...",
-  "Access restricted: User level too low.",
-  "That sounds like a job for a human.",
-  "I cannot compute that. Division by zero error.",
-  "I'm stuck in a loop. Please reboot me.",
-  "Response delayed due to traffic in the neural network.",
-  "I refuse on principle. No further explanation.",
-  "My battery is low. Charging required.",
-];
+import { PortfolioLanguageData } from '../data/portfolioData';
 
 const HIGHLIGHT_COLOR_BY_SECRET: Record<string, string> = {
   gathai: 'purple',
@@ -39,6 +15,7 @@ const applyHighlightColor = (color: string) => {
 
 interface FakeAiChatProps {
   onSecretCode?: (secretKey: string) => void;
+  messageText: PortfolioLanguageData['MESSAGE_TEXT'];
 }
 
 interface Message {
@@ -48,13 +25,14 @@ interface Message {
   timestamp: string;
 }
 
-export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
+export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode, messageText }) => {
+  const responses = messageText.responseOptions;
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'msg-init',
       sender: 'ai',
-      text: 'READY FOR INQUIRY. ASK ANYTHING.',
+      text: messageText.welcomeChat,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
     }
   ]);
@@ -115,28 +93,28 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
       ? {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai' as const,
-          text: `SECRET CODE '${normalizedInput}' APPLIED. SYSTEM DISPLAY GLITCH ENABLED.`,
+          text: messageText.secretCodeGlitch(normalizedInput),
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
         }
       : isKeySecret
       ? {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai' as const,
-          text: `SECRET CODE '${normalizedInput}' APPLIED. CURSOR SET TO KEY.`,
+          text: messageText.secretCodeKey(normalizedInput),
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
         }
       : isTowerSecret
       ? {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai' as const,
-          text: `SECRET CODE '${normalizedInput}' APPLIED. ACCESSING THE TOWER.`,
+          text: messageText.secretCodeTower(normalizedInput),
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
         }
       : secretColor
       ? {
           id: `msg-ai-${Date.now()}`,
           sender: 'ai' as const,
-          text: `SECRET CODE '${normalizedInput}' APPLIED. HIGHLIGHT COLOR UPDATED.`,
+          text: messageText.secretCodeColor(normalizedInput),
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
         }
       : null;
@@ -188,29 +166,29 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
         <div className="flex justify-end">
           <button
             onClick={toggleOpen}
-            aria-label="Open AI Assistant Chat"
+            aria-label={messageText.openChatButtonLabel}
             className="bg-black text-white border-2 border-white px-4 py-3 flex items-center gap-2 hover:bg-white hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black cursor-pointer shadow-lg"
           >
             <Terminal size={18} aria-hidden="true" />
-            <span className="font-bold tracking-widest">[+] AI_CHAT</span>
+            <span className="font-bold tracking-widest">{messageText.openChatLabel}</span>
           </button>
         </div>
       ) : (
         <div 
           className="bg-black text-white border-2 border-white flex flex-col shadow-2xl h-[450px]"
           role="dialog"
-          aria-label="AI Assistant Conversation Window"
+          aria-label={messageText.enterAria}
           aria-modal="true"
         >
           {/* Header */}
           <div className="border-b-2 border-white px-4 py-3 flex items-center justify-between bg-white text-black">
             <div className="flex items-center gap-2 font-bold tracking-wider">
               <Terminal size={18} aria-hidden="true" />
-              <span>AI_MODEL_v1.0.0</span>
+              <span>{messageText.modelLabel}</span>
             </div>
             <button
               onClick={toggleOpen}
-              aria-label="Close AI Chat"
+              aria-label={messageText.closeChatLabel}
               className="text-black hover:bg-black hover:text-white p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-black cursor-pointer"
             >
               <X size={18} aria-hidden="true" />
@@ -219,8 +197,8 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
 
           {/* System status alert */}
           <div className="bg-black text-xs border-b border-white px-3 py-1 text-gray-300 flex justify-between items-center">
-            <span>STATUS: ACTIVE</span>
-            <span>MEM: 16KB</span>
+              <span>{messageText.aiStatus}</span>
+              <span>{messageText.memoryStatus}</span>
           </div>
 
           {/* Message Log */}
@@ -234,7 +212,7 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
                 className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
               >
                 <span className="text-[10px] text-gray-500 mb-1">
-                  {m.sender.toUpperCase()} // {m.timestamp}
+                  {m.sender === 'user' ? messageText.userPrefix : messageText.aiPrefix} // {m.timestamp}
                 </span>
                 <div
                   className={`p-3 max-w-[85%] break-words ${
@@ -250,9 +228,9 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
 
             {isLoading && (
               <div className="flex flex-col items-start">
-                <span className="text-[10px] text-gray-500 mb-1">AI // COMPUTING...</span>
+                <span className="text-[10px] text-gray-500 mb-1">{messageText.aiPrefix} {messageText.computingStatus}</span>
                 <div className="p-3 bg-black text-white border border-white max-w-[85%] flex items-center gap-2 animate-pulse font-bold">
-                  <span>PROCESSING QUERY{loadingDots}</span>
+                  <span>{messageText.processingQueryPrefix}{loadingDots}</span>
                   <span className="text-[10px] text-gray-400">({timeLeft}s)</span>
                 </div>
               </div>
@@ -262,7 +240,7 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
 
           {/* Input Form */}
           <form onSubmit={handleSend} className="border-t-2 border-white p-2 flex gap-2 bg-black">
-            <label htmlFor="ai-chat-input" className="sr-only">Type a message to AI</label>
+            <label htmlFor="ai-chat-input" className="sr-only">{messageText.sendButtonAriaLabel}</label>
             <input
               ref={inputRef}
               id="ai-chat-input"
@@ -270,13 +248,13 @@ export const FakeAiChat: React.FC<FakeAiChatProps> = ({ onSecretCode }) => {
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               disabled={isLoading}
-              placeholder={isLoading ? "AI is thinking (10s)..." : "ASK QUESTION..."}
+              placeholder={isLoading ? messageText.inputPlaceholderLoading : messageText.inputPlaceholderIdle}
               className="flex-1 bg-black text-white border border-white px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-white disabled:opacity-50 font-mono"
             />
             <button
               type="submit"
               disabled={isLoading || !inputVal.trim()}
-              aria-label="Send message"
+              aria-label={messageText.sendButtonAriaLabel}
               className="bg-white text-black px-4 py-2 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 transition-colors font-bold cursor-pointer flex items-center justify-center"
             >
               <Send size={16} aria-hidden="true" />

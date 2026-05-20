@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  PROJECTS, 
-  SKILLS, 
-  EXPERIENCE, 
-  ABOUT_DATA,
+import {
   Project,
   Skill,
-  Experience 
+  Experience,
+  PORTFOLIO_DATA_BY_LANGUAGE,
+  Language,
+  DEFAULT_LANGUAGE,
+  LANGUAGE_STORAGE_KEY,
 } from './data/portfolioData';
 import { FakeAiChat } from './components/FakeAiChat';
 import { PortraitOutline } from './components/PortraitOutline';
 import { VantaBackground } from './components/VantaBackground';
 import { DynamicStatsGrid } from './components/DynamicStatsGrid';
-import { 
-  ExternalLink, 
-  ArrowLeft, 
-  Terminal, 
-  FileText, 
-  Cpu, 
-  Briefcase, 
-  User as UserIcon, 
-  Mail, 
+import {
+  ExternalLink,
+  ArrowLeft,
+  Terminal,
+  FileText,
+  Cpu,
+  Briefcase,
+  User as UserIcon,
+  Mail,
   ChevronRight,
-  Code2
+  Code2,
 } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -36,6 +36,28 @@ export const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
+
+  const languageData = PORTFOLIO_DATA_BY_LANGUAGE[language];
+  const {
+    ABOUT_DATA,
+    HEADER_TEXT,
+    NAV_ITEMS,
+    LANDING_TEXT,
+    PROJECT_SECTION_TEXT,
+    SKILL_SECTION_TEXT,
+    ARIA_TEXT,
+    CONTACT_SECTION_TEXT,
+    COOKIE_TEXT,
+    EXPERIENCE_SECTION_TEXT,
+    FOOTER_TEXT,
+    MESSAGE_TEXT,
+    STAT_GRID_TEXT,
+    PORTRAIT_TEXT,
+    PROJECTS,
+    SKILLS,
+    EXPERIENCE,
+  } = languageData;
 
   // Glitch mode state
   const [glitchMode, setGlitchMode] = useState(false);
@@ -79,6 +101,19 @@ export const App: React.FC = () => {
       setShowCookieDialog(true);
     }
   }, []);
+
+  // Load saved language from localStorage on mount
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY) as Language | null;
+    if (savedLanguage === 'EN' || savedLanguage === 'ES') {
+      setLanguage(savedLanguage);
+    }
+  }, []);
+
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
+  };
 
   // Load initial tab from URL hash
   useEffect(() => {
@@ -177,24 +212,46 @@ export const App: React.FC = () => {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
           <div>
             <div className="text-xs text-gray-400 mb-1 tracking-widest flex items-center gap-2" aria-hidden="true">
-              <span>SYSTEM: 2H2W_OS // v4.2.0</span>
-              <span className="hidden sm:inline">| SECURE_BOOT: ENABLED</span>
+              <span>{HEADER_TEXT.systemStatus}</span>
+              <span className="hidden sm:inline">{HEADER_TEXT.secureBoot}</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tighter uppercase whitespace-pre-line leading-none">
-              2HIGH2WORK
+              {HEADER_TEXT.siteName}
             </h1>
             <p className="text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
-              PROGRAMMER // GAMEDEV // QA AUTOMATION
+              {HEADER_TEXT.siteSubtitle}
             </p>
           </div>
 
-          <div className="flex items-center gap-3 bg-white text-black px-3 py-1 text-xs font-bold self-start sm:self-auto shadow-md">
-            <span className="inline-block w-2 h-2 bg-black animate-ping" />
-            <span>
-              {cookieConsent === 'rejected' 
-                ? "WE CAN'T STEAL YOUR DATA ANYMORE" 
-                : 'PLEASE STAND BY: STEALING YOUR DATA'}
-            </span>
+          <div className="flex flex-col items-start sm:items-end gap-3">
+            <div className="inline-flex items-center gap-1 rounded border border-white bg-white/10 px-1 py-1 text-xs uppercase text-white font-bold">
+              <button
+                type="button"
+                onClick={() => handleLanguageChange('EN')}
+                aria-pressed={language === 'EN'}
+                className={`px-2 py-1 transition-colors ${language === 'EN' ? 'bg-black text-white' : 'text-white'}`}
+              >
+                EN
+              </button>
+              <span className="text-gray-400">/</span>
+              <button
+                type="button"
+                onClick={() => handleLanguageChange('ES')}
+                aria-pressed={language === 'ES'}
+                className={`px-2 py-1 transition-colors ${language === 'ES' ? 'bg-black text-white' : 'text-white'}`}
+              >
+                ES
+              </button>
+            </div>
+
+            <div className="flex items-center gap-3 bg-white text-black px-3 py-1 text-xs font-bold shadow-md">
+              <span className="inline-block w-2 h-2 bg-black animate-ping" />
+              <span>
+                {cookieConsent === 'rejected'
+                  ? HEADER_TEXT.dataAccepted
+                  : HEADER_TEXT.dataRejected}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -204,25 +261,27 @@ export const App: React.FC = () => {
           aria-label="Main Navigation"
         >
           <div className="flex flex-wrap gap-2 sm:gap-3">
-            {[
-              { id: 'LANDING', label: '01 // LANDING', icon: Terminal },
-              { id: 'PROJECTS', label: '02 // PROJECTS', icon: FileText },
-              { id: 'SKILLS', label: '03 // SKILLS', icon: Cpu },
-              { id: 'EXPERIENCE', label: '04 // EXPERIENCE', icon: Briefcase },
-              { id: 'ABOUT', label: '05 // ABOUT ME', icon: UserIcon },
-              { id: 'CONTACT', label: '06 // CONTACT', icon: Mail },
-            ].map((item) => {
-              const Icon = item.icon;
+            {NAV_ITEMS.map((item) => {
+              const iconMap = {
+                LANDING: Terminal,
+                PROJECTS: FileText,
+                SKILLS: Cpu,
+                EXPERIENCE: Briefcase,
+                ABOUT: UserIcon,
+                CONTACT: Mail,
+                TOWER: Code2,
+              } as const;
+              const Icon = iconMap[item.id];
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
-                  onClick={() => handleTabChange(item.id as Tab)}
-                  aria-label={`Navigate to ${item.label.split(' // ')[1]}`}
+                  onClick={() => handleTabChange(item.id)}
+                  aria-label={ARIA_TEXT.navButton(item.label.split(' // ')[1])}
                   aria-current={isActive ? 'page' : undefined}
                   className={`px-3 sm:px-4 py-2 border border-white text-xs sm:text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
-                    isActive 
-                      ? 'bg-white text-black font-extrabold translate-x-1 sm:translate-x-0 sm:-translate-y-1 shadow-[2px_2px_0px_rgba(255,255,255,0.4)]' 
+                    isActive
+                      ? 'bg-white text-black font-extrabold translate-x-1 sm:translate-x-0 sm:-translate-y-1 shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
                       : 'bg-black text-white hover:bg-gray-900'
                   }`}
                 >
@@ -241,40 +300,32 @@ export const App: React.FC = () => {
         {/* ==================== 1. LANDING PAGE ==================== */}
         {activeTab === 'LANDING' && (
           <section className="space-y-8 animate-fade-in" aria-labelledby="landing-heading">
-            <h2 id="landing-heading" className="sr-only">Landing Page</h2>
+            <h2 id="landing-heading" className="sr-only">{LANDING_TEXT.landingAria}</h2>
             
             {/* Terminal Hero Banner */}
             <div className="border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
               <div className="absolute top-2 right-2 text-xs text-gray-500 font-bold tracking-widest hidden sm:block">
-                [ INIT_MODE: ONLINE ]
+                {LANDING_TEXT.initMode}
               </div>
               
               <div className="text-gray-400 text-xs mb-4 uppercase tracking-widest border-b border-gray-800 pb-2">
-                SYSTEM MESSAGE // BROADCAST
+                {LANDING_TEXT.systemBroadcast}
               </div>
 
               {/* ASCII Header Art */}
               <div className="text-xs sm:text-sm font-mono whitespace-pre text-white overflow-x-auto select-none py-2 leading-none font-bold">
-                {String.raw`
-________  ___ ___ .__       .__     ________  __      __             __    
-\_____  \/   |   \|__| ____ |  |__  \_____  \/  \    /  \___________|  | __
- /  ____/    ~    \  |/ ___\|  |  \  /  ____/\   \/\/   /  _ \_  __ \  |/ /
-/       \    Y    /  / /_/  >   Y  \/       \ \        (  <_> )  | \/    < 
-\_______ \___|_  /|__\___  /|___|  /\_______ \ \__/\  / \____/|__|  |__|_ \
-        \/     \/   /_____/      \/         \/      \/                   \/
-                `}
+                {LANDING_TEXT.heroAscii}
               </div>
 
               <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed max-w-4xl border-t border-white pt-6">
                 <p className="font-bold text-white tracking-wide">
-                  Welcome to <span className="bg-white text-black px-1 py-0.5">2High2Work</span>. 
-                  Personal portfolio, development archive, and public identity of 2.2.
+                  {LANDING_TEXT.welcome}
                 </p>
                 <p className="text-gray-300">
-                  I work across web development, QA automation, and videogame development, mainly through Gooblin Studio and personal 2High2Work projects.
+                  {LANDING_TEXT.overview}
                 </p>
                 <p className="text-sm text-gray-400 font-normal">
-                  Most of my work revolves around clean frontend structure, accessible interfaces, gameplay systems, and organized project architecture.
+                  {LANDING_TEXT.note}
                 </p>
               </div>
 
@@ -287,16 +338,16 @@ ________  ___ ___ .__       .__     ________  __      __             __
               <div className="lg:col-span-2 border border-white p-6 space-y-6 bg-black">
                 <div className="flex items-center gap-2 border-b border-white pb-3">
                   <Code2 size={20} />
-                  <h3 className="font-bold text-lg tracking-widest">// ABOUT THIS SITE</h3>
+                  <h3 className="font-bold text-lg tracking-widest">{LANDING_TEXT.aboutThisSiteTitle}</h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                  A lot of modern web design feels overly safe to me. I prefer simpler interfaces, stronger contrast, clearer structure, and projects that feel like they were made by a real person.
+                  {LANDING_TEXT.aboutThisSiteDescription}
                 </p>
                 
                 <div className="bg-white text-black p-4 space-y-2">
-                  <p className="font-extrabold text-xs uppercase tracking-widest">// NAVIGATION</p>
+                  <p className="font-extrabold text-xs uppercase tracking-widest">{LANDING_TEXT.navigationTitle}</p>
                   <p className="font-bold text-sm">
-                    &quot;Use the navigation above to explore the portfolio.&quot;
+                    {LANDING_TEXT.navigationHint}
                   </p>
                 </div>
 
@@ -305,14 +356,14 @@ ________  ___ ___ .__       .__     ________  __      __             __
                     onClick={() => handleTabChange('PROJECTS')}
                     className="bg-white text-black font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-gray-200 transition-colors flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
-                    <span>EXPLORE PROJECTS</span>
+                    <span>{LANDING_TEXT.exploreProjects}</span>
                     <ChevronRight size={16} />
                   </button>
                   <button
                     onClick={() => handleTabChange('CONTACT')}
                     className="border border-white text-white font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
-                    <span>GET IN TOUCH</span>
+                    <span>{LANDING_TEXT.getInTouch}</span>
                   </button>
                 </div>
               </div>
@@ -320,7 +371,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
               {/* Portrait Placeholder Outline */}
               <div className="space-y-2">
                 <PortraitOutline 
-                  label="FOUNDER // LEAD ARCHITECT" 
+                  label={LANDING_TEXT.founderLabel} 
                   height="min-h-[340px]" 
                   imageUrl={glitchMode ? '/images/founder-glitch.webp' : '/images/founder.webp'}
                 />
@@ -329,7 +380,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
 
             {/* ASCII System Footer Accent */}
             <div className="border border-white p-4 text-center text-xs tracking-widest text-gray-400 bg-black">
-              +---+ [ SECURE TUNNEL ESTABLISHED // RSA-4096 ] +---+
+              {LANDING_TEXT.secureFooter}
             </div>
           </section>
         )}
@@ -337,7 +388,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
         {/* ==================== 2. PROJECT LIST & DESIGNATED PAGE ==================== */}
         {activeTab === 'PROJECTS' && (
           <section className="animate-fade-in" aria-labelledby="projects-heading">
-            <h2 id="projects-heading" className="sr-only">Projects Portfolio</h2>
+            <h2 id="projects-heading" className="sr-only">{PROJECT_SECTION_TEXT.headingAria}</h2>
 
             {/* If a project is selected, show its designated page */}
             {selectedProject ? (
@@ -346,15 +397,15 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
                   <button
                     onClick={() => setSelectedProject(null)}
-                    aria-label="Back to Projects List"
+                    aria-label={ARIA_TEXT.projectListBack}
                     className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
-                    <span>{'[<-- BACK TO PROJECT LIST]'}</span>
+                    <span>{PROJECT_SECTION_TEXT.detailBackButton}</span>
                   </button>
 
                   <div className="text-xs text-gray-400">
-                    PROJECT_ID: {selectedProject.id} // SECURE
+                    {PROJECT_SECTION_TEXT.projectMeta.replace('{id}', selectedProject.id)}
                   </div>
                 </div>
 
@@ -368,10 +419,10 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       href={selectedProject.externalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Open external webpage for ${selectedProject.title} in new tab`}
+                      aria-label={ARIA_TEXT.projectDetailExternalLink(selectedProject.title)}
                       className="bg-white text-black px-3 py-1 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-center border border-white"
                     >
-                      <span>OPEN PROJECT WEBPAGE</span>
+                      <span>{PROJECT_SECTION_TEXT.openProjectWebPage}</span>
                       <ExternalLink size={14} aria-hidden="true" />
                     </a>
                   </div>
@@ -390,7 +441,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
 
                 {/* Description */}
                 <div className="space-y-4 text-sm sm:text-base leading-relaxed border-t border-gray-800 pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// SYSTEM OVERVIEW</h4>
+                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{PROJECT_SECTION_TEXT.systemOverviewHeading}</h4>
                   <p className="text-gray-200">{selectedProject.longDescription}</p>
                 </div>
 
@@ -436,10 +487,10 @@ ________  ___ ___ .__       .__     ________  __      __             __
               <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
                 <div className="border-b border-white pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
-                    // DEPLOYED PROJECTS
+                    {PROJECT_SECTION_TEXT.projectListTitle}
                   </h3>
                   <p className="text-xs text-gray-400 mt-1">
-                    Click a project card to view designated system details. Click the Title to navigate directly to the external live webpage.
+                    {PROJECT_SECTION_TEXT.projectListDescription}
                   </p>
                 </div>
 
@@ -462,7 +513,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              aria-label={`Open external webpage for ${proj.title} in new window`}
+                              aria-label={ARIA_TEXT.projectExternalLink(proj.title)}
                               className="inline-flex items-center gap-2 text-lg sm:text-xl font-extrabold tracking-tight underline hover:bg-white hover:text-black p-0.5 transition-colors"
                             >
                               <span>{proj.title}</span>
@@ -472,7 +523,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                           </div>
 
                           <span className="text-[10px] bg-white text-black px-2 py-0.5 font-bold uppercase tracking-widest shrink-0">
-                            VIEW_DTL
+                            {PROJECT_SECTION_TEXT.viewDetailBadge}
                           </span>
                         </div>
 
@@ -502,7 +553,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                           {proj.techStack.length > 3 && <span className="text-[10px] text-gray-500">+{proj.techStack.length - 3}</span>}
                         </div>
                         <span className="text-white group-hover:translate-x-1 transition-transform font-bold inline-flex items-center gap-1">
-                          <span>OPEN PAGE</span>
+                          <span>{PROJECT_SECTION_TEXT.openPage}</span>
                           <ChevronRight size={14} />
                         </span>
                       </div>
@@ -517,20 +568,20 @@ ________  ___ ___ .__       .__     ________  __      __             __
         {/* ==================== 3. SKILLS LIST & DESIGNATED PAGE ==================== */}
         {activeTab === 'SKILLS' && (
           <section className="animate-fade-in" aria-labelledby="skills-heading">
-            <h2 id="skills-heading" className="sr-only">Technical Skills Matrix</h2>
+            <h2 id="skills-heading" className="sr-only">{SKILL_SECTION_TEXT.headingAria}</h2>
 
             {selectedSkill ? (
               <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
                 <div className="flex items-center justify-between border-b border-white pb-6">
                   <button
                     onClick={() => setSelectedSkill(null)}
-                    aria-label="Back to Skills List"
+                    aria-label={ARIA_TEXT.navButton(SKILL_SECTION_TEXT.backToSkills)}
                     className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
-                    <span>{'[<-- BACK TO SKILLS LIST]'}</span>
+                    <span>{SKILL_SECTION_TEXT.backToSkills}</span>
                   </button>
-                  <span className="text-xs text-gray-400">CATEGORY: {selectedSkill.category.toUpperCase()}</span>
+                  <span className="text-xs text-gray-400">{SKILL_SECTION_TEXT.categoryLabel} {selectedSkill.category.toUpperCase()}</span>
                 </div>
 
                 <div className="space-y-2">
@@ -549,14 +600,14 @@ ________  ___ ___ .__       .__     ________  __      __             __
                 </div>
 
                 <div className="space-y-4 border-t border-gray-800 pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// CAPABILITY DESCRIPTION</h4>
+                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{SKILL_SECTION_TEXT.capabilityHeading}</h4>
                   <p className="text-sm sm:text-base text-gray-200 leading-relaxed">
                     {selectedSkill.description}
                   </p>
                 </div>
 
                 <div className="space-y-3 border-t border-white pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// TECHNICAL DRILLDOWN</h4>
+                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{SKILL_SECTION_TEXT.drilldownHeading}</h4>
                   <ul className="space-y-2" aria-label="Skill drilldown points">
                     {selectedSkill.details.map((detail, idx) => (
                       <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
@@ -571,10 +622,10 @@ ________  ___ ___ .__       .__     ________  __      __             __
               <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
                 <div className="border-b border-white pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
-                    // TECHNICAL COMPETENCY MATRIX
+                    {SKILL_SECTION_TEXT.matrixHeading}
                   </h3>
                   <p className="text-xs text-gray-400 mt-1">
-                    Click any skill card to open its designated breakdown page.
+                    {SKILL_SECTION_TEXT.matrixDescription}
                   </p>
                 </div>
 
@@ -586,14 +637,14 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       role="button"
                       tabIndex={0}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedSkill(skill); }}
-                      aria-label={`View details for skill ${skill.name}`}
+                      aria-label={ARIA_TEXT.skillCard(skill.name)}
                       className="border-2 border-white p-6 bg-black hover:border-gray-300 transition-all group cursor-pointer flex flex-col justify-between shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between border-b border-gray-800 pb-3">
                           <span className="text-xs text-gray-400 font-bold uppercase">{skill.category}</span>
                           <span className="text-[10px] bg-white text-black px-2 py-0.5 font-bold uppercase tracking-widest">
-                            VIEW_PAGE
+                            {SKILL_SECTION_TEXT.viewPageBadge}
                           </span>
                         </div>
 
@@ -612,7 +663,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
                       </div>
 
                       <div className="mt-6 pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-400 group-hover:text-white transition-colors">
-                        <span>[ DETAILS AVAILABLE ]</span>
+                        <span>{SKILL_SECTION_TEXT.detailsAvailable}</span>
                         <ChevronRight size={16} />
                       </div>
                     </div>
@@ -968,7 +1019,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
       </footer>
 
       {/* Fake AI Chat Widget (Bottom Right Box) */}
-      <FakeAiChat onSecretCode={handleSecretCode} />
+      <FakeAiChat onSecretCode={handleSecretCode} messageText={MESSAGE_TEXT} />
 
       {/* Cookie Consent Dialog */}
       {showCookieDialog && (
