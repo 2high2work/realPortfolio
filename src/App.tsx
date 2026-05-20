@@ -38,6 +38,12 @@ export const App: React.FC = () => {
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
 
+  useEffect(() => {
+    if (selectedProject) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [selectedProject]);
+
   const languageData = PORTFOLIO_DATA_BY_LANGUAGE[language];
   const {
     ABOUT_DATA,
