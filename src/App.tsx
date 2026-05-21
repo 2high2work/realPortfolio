@@ -551,7 +551,7 @@ export const App: React.FC = () => {
                             <img
                               src={proj.imageUrl}
                               alt={proj.placeholderText}
-                              className="absolute inset-0 h-full w-full object-cover"
+                              className="absolute inset-0 h-full w-full object-cover object-top"
                             />
                           </div>
                         </div>
@@ -844,14 +844,12 @@ export const App: React.FC = () => {
 
               {/* Portrait Stack - RIGHT SIDE */}
               <div className="space-y-6">
-                <div className="border-2 border-white overflow-hidden bg-black aspect-[3/4] group">
-                  <img 
-                    src="/images/portrait1.webp" 
-                    alt="Portrait 1 - Terminal View" 
-                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
-                    loading="lazy"
-                  />
-                </div>
+                <PortraitOutline
+                  label="ABOUT // VECTOR PORTRAIT"
+                  height="min-h-[340px]"
+                  aspectRatio="aspect-[3/4]"
+                  imageUrl="/images/portrait1.webp"
+                />
               </div>
             </div>
 
