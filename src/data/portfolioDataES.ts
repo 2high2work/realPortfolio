@@ -73,7 +73,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
  /  ____/    ~    \  |/ ___\|  |  \  /  ____/\   \/\/   /  _ \_  __ \  |/ /
 /       \    Y    /  / /_/  >   Y  \/       \ \        (  <_> )  | \/    < 
 \_______ \___|_  /|__\___  /|___|  /\_______ \ \__/\  / \____/|__|  |__|_ \
-        \/     \/   /_____/      \/         \/     \/               \/              
+        \/     \/   /_____/      \/         \/     \/                    \/              
                 `,
   welcome: 'Bienvenido a 2High2Work. Portafolio personal, archivo de desarrollo e identidad pública de 2.2.',
   overview: 'Trabajo en desarrollo web, automatización de QA y desarrollo de videojuegos, principalmente a través de Gooblin Studio y proyectos personales de 2High2Work.',
