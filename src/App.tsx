@@ -44,6 +44,18 @@ export const App: React.FC = () => {
     }
   }, [selectedProject]);
 
+  useEffect(() => {
+    if (selectedSkill) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [selectedSkill]);
+
+  useEffect(() => {
+    if (selectedExperience) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [selectedExperience]);
+
   const languageData = PORTFOLIO_DATA_BY_LANGUAGE[language];
   const {
     ABOUT_DATA,
