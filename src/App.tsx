@@ -29,8 +29,18 @@ import { Analytics } from '@vercel/analytics/react';
 type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT' | 'TOWER';
 type CookieConsent = 'accepted' | 'rejected' | null;
 
+const getInitialTab = (): Tab => {
+  if (typeof window !== 'undefined') {
+    const hash = window.location.hash.replace('#', '').toUpperCase();
+    if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
+      return hash as Tab;
+    }
+  }
+  return 'LANDING';
+};
+
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('LANDING');
+  const [activeTab, setActiveTab] = useState<Tab>(getInitialTab);
 
   // State for designated detail pages
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -133,19 +143,14 @@ export const App: React.FC = () => {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
   };
 
-  // Load initial tab from URL hash
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '').toUpperCase();
-    if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
-      setActiveTab(hash as Tab);
-    }
-  }, []);
 
   // Listen for hash changes
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '').toUpperCase();
-        if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
+      if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
+        setActiveTab(hash as Tab);
+        setSelectedProject(null);
         setSelectedSkill(null);
         setSelectedExperience(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
