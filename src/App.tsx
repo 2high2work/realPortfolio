@@ -71,6 +71,7 @@ export const App: React.FC = () => {
   const languageData = PORTFOLIO_DATA_BY_LANGUAGE[language];
   const {
     ABOUT_DATA,
+    ABOUT_SECTION_TEXT,
     HEADER_TEXT,
     NAV_ITEMS,
     LANDING_TEXT,
@@ -84,6 +85,7 @@ export const App: React.FC = () => {
     MESSAGE_TEXT,
     STAT_GRID_TEXT,
     PORTRAIT_TEXT,
+    TOWER_TEXT,
     PROJECTS,
     SKILLS,
     EXPERIENCE,
@@ -192,12 +194,13 @@ export const App: React.FC = () => {
           name: contactName,
           email: contactEmail,
           message: contactMessage,
+          language,
         }),
       });
 
       if (!response.ok) {
         const errorBody = await response.json().catch(() => ({}));
-        throw new Error(errorBody?.message || 'Failed to send message');
+        throw new Error(errorBody?.message || CONTACT_SECTION_TEXT.submitFailed);
       }
 
       setContactStatus('success');
@@ -206,7 +209,7 @@ export const App: React.FC = () => {
       setContactMessage('');
     } catch (error) {
       console.error('Contact submit failed', error);
-      setContactError(error instanceof Error ? error.message : 'Unknown error');
+      setContactError(error instanceof Error ? error.message : CONTACT_SECTION_TEXT.unknownError);
       setContactStatus('error');
     }
   };
@@ -230,7 +233,7 @@ export const App: React.FC = () => {
         href="#main-content" 
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-white focus:text-black focus:p-2 focus:z-50 font-bold"
       >
-        Skip to main content
+        {HEADER_TEXT.skipToMain}
       </a>
 
       {/* ASCII Top Header Banner */}
@@ -298,7 +301,7 @@ export const App: React.FC = () => {
                 className="sm:hidden inline-flex items-center justify-center border border-white bg-black px-3 py-2 text-sm font-bold text-white transition hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
               >
                 {mobileMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-                <span className="sr-only">{mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}</span>
+                <span className="sr-only">{mobileMenuOpen ? HEADER_TEXT.closeNavigationMenu : HEADER_TEXT.openNavigationMenu}</span>
               </button>
             </div>
           </div>
@@ -307,7 +310,7 @@ export const App: React.FC = () => {
           {/* Top Navigation Menu */}
         <nav 
           className="max-w-6xl mx-auto mt-6 pt-4 border-t border-gray-800"
-          aria-label="Main Navigation"
+          aria-label={HEADER_TEXT.mainNavigationLabel}
         >
           <div className="hidden sm:flex flex-wrap gap-2 sm:gap-3">
               {NAV_ITEMS.map((item) => {
@@ -416,7 +419,7 @@ export const App: React.FC = () => {
               </div>
 
               {/* Quick stats grid - Dynamic User System Information */}
-              <DynamicStatsGrid />
+              <DynamicStatsGrid text={STAT_GRID_TEXT} />
             </div>
 
             {/* Featured Portrait & Intro Split */}
@@ -460,6 +463,7 @@ export const App: React.FC = () => {
                   label={LANDING_TEXT.founderLabel} 
                   height="min-h-[340px]" 
                   imageUrl={glitchMode ? '/images/founder-glitch.webp' : '/images/founder.webp'}
+                  text={PORTRAIT_TEXT}
                 />
               </div>
             </div>
@@ -519,7 +523,7 @@ export const App: React.FC = () => {
 
                 {/* ASCII Art Representation (lets center the ASCII) */}
                 <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">ASCII diagram representation of {selectedProject.title}</span>
+                  <span className="sr-only">{PROJECT_SECTION_TEXT.asciiDiagramLabel(selectedProject.title)}</span>
                   <div className="flex justify-center">
                     {selectedProject.asciiArt}
                   </div>
@@ -545,8 +549,8 @@ export const App: React.FC = () => {
                 {/* Metrics & Stack */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-white pt-6">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// SKILLS</h4>
-                    <ul className="space-y-2" aria-label="Performance Metrics">
+                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{PROJECT_SECTION_TEXT.skillsHeading}</h4>
+                    <ul className="space-y-2" aria-label={PROJECT_SECTION_TEXT.performanceMetricsAriaLabel}>
                       {selectedProject.metrics.map((m, index) => (
                         <li key={index} className="flex items-center gap-2 text-xs font-bold">
                           <span className="text-white font-extrabold">[+]</span>
@@ -557,8 +561,8 @@ export const App: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// TECHNICAL STACK</h4>
-                    <div className="flex flex-wrap gap-2" aria-label="Technologies used">
+                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{PROJECT_SECTION_TEXT.techStackHeading}</h4>
+                    <div className="flex flex-wrap gap-2" aria-label={PROJECT_SECTION_TEXT.technologiesUsedAriaLabel}>
                       {selectedProject.techStack.map((tech, index) => (
                         <span key={index} className="border border-white px-3 py-1 text-xs font-bold bg-black text-white">
                           {tech}
@@ -681,7 +685,7 @@ export const App: React.FC = () => {
                 </div>
 
                 <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">ASCII Icon for {selectedSkill.name}</span>
+                  <span className="sr-only">{SKILL_SECTION_TEXT.asciiIconLabel(selectedSkill.name)}</span>
                   {selectedSkill.asciiIcon}
                 </div>
 
@@ -694,7 +698,7 @@ export const App: React.FC = () => {
 
                 <div className="space-y-3 border-t border-white pt-6">
                   <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{SKILL_SECTION_TEXT.drilldownHeading}</h4>
-                  <ul className="space-y-2" aria-label="Skill drilldown points">
+                  <ul className="space-y-2" aria-label={SKILL_SECTION_TEXT.drilldownAriaLabel}>
                     {selectedSkill.details.map((detail, idx) => (
                       <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
                         <span className="text-white font-extrabold mt-0.5">[&gt;]</span>
@@ -763,18 +767,18 @@ export const App: React.FC = () => {
         {/* ==================== 4. EXPERIENCE LIST & DESIGNATED PAGE ==================== */}
         {activeTab === 'EXPERIENCE' && (
           <section className="animate-fade-in" aria-labelledby="experience-heading">
-            <h2 id="experience-heading" className="sr-only">Professional Experience</h2>
+            <h2 id="experience-heading" className="sr-only">{EXPERIENCE_SECTION_TEXT.headingAria}</h2>
 
             {selectedExperience ? (
               <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
                 <div className="flex items-center justify-between border-b border-white pb-6">
                   <button
                     onClick={() => setSelectedExperience(null)}
-                    aria-label="Back to Experience List"
+                    aria-label={EXPERIENCE_SECTION_TEXT.backToExperience}
                     className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
-                    <span>{'[<-- BACK TO EXPERIENCE LIST]'}</span>
+                    <span>{EXPERIENCE_SECTION_TEXT.backToExperience}</span>
                   </button>
                   <span className="text-xs text-gray-400">{selectedExperience.period}</span>
                 </div>
@@ -790,20 +794,20 @@ export const App: React.FC = () => {
                 </div>
 
                 <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">ASCII badge for {selectedExperience.company}</span>
+                  <span className="sr-only">{EXPERIENCE_SECTION_TEXT.asciiBadgeLabel(selectedExperience.company)}</span>
                   {selectedExperience.asciiBadge}
                 </div>
 
                 <div className="space-y-4 border-t border-gray-800 pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// ROLE SUMMARY</h4>
+                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{EXPERIENCE_SECTION_TEXT.roleSummaryHeading}</h4>
                   <p className="text-sm sm:text-base text-gray-200 leading-relaxed">
                     {selectedExperience.summary}
                   </p>
                 </div>
 
                 <div className="space-y-3 border-t border-white pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">// KEY ACHIEVEMENTS</h4>
-                  <ul className="space-y-3" aria-label="Professional achievements">
+                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{EXPERIENCE_SECTION_TEXT.achievementsHeading}</h4>
+                  <ul className="space-y-3" aria-label={EXPERIENCE_SECTION_TEXT.achievementsAriaLabel}>
                     {selectedExperience.achievements.map((ach, idx) => (
                       <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
                         <span className="text-white font-extrabold mt-0.5">[+]</span>
@@ -817,10 +821,10 @@ export const App: React.FC = () => {
               <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
                 <div className="border-b border-white pb-4">
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
-                    // ENGINEERING CHRONOLOGY
+                    {EXPERIENCE_SECTION_TEXT.engineeringChronology}
                   </h3>
                   <p className="text-xs text-gray-400 mt-1">
-                    Click any experience role to view full operational details and authenticated achievements.
+                    {EXPERIENCE_SECTION_TEXT.clickExperienceCard}
                   </p>
                 </div>
 
@@ -832,7 +836,7 @@ export const App: React.FC = () => {
                       role="button"
                       tabIndex={0}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedExperience(exp); }}
-                      aria-label={`View details for role ${exp.role} at ${exp.company}`}
+                      aria-label={ARIA_TEXT.experienceCard(exp.role, exp.company)}
                       className="border-2 border-white p-6 bg-black hover:border-gray-300 transition-all group cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
                     >
                       <div className="space-y-2 flex-1">
@@ -857,7 +861,7 @@ export const App: React.FC = () => {
                       </div>
 
                       <div className="flex items-center gap-2 self-end sm:self-center shrink-0 bg-white text-black px-3 py-2 text-xs font-bold">
-                        <span>VIEW_PAGE</span>
+                        <span>{EXPERIENCE_SECTION_TEXT.viewPageBadge}</span>
                         <ChevronRight size={14} />
                       </div>
                     </div>
@@ -871,7 +875,7 @@ export const App: React.FC = () => {
         {/* ==================== 5. ABOUT ME ==================== */}
         {activeTab === 'ABOUT' && (
           <section className="animate-fade-in space-y-12" aria-labelledby="about-heading">
-            <h2 id="about-heading" className="sr-only">About 2High2Work</h2>
+            <h2 id="about-heading" className="sr-only">{ABOUT_SECTION_TEXT.headingAria}</h2>
 
             {/* Header section */}
             <div className="border-b-2 border-white pb-6 space-y-2 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
@@ -897,9 +901,9 @@ export const App: React.FC = () => {
                 {/* Core Philosophy */}
                 <div className="border-2 border-white p-6 bg-black space-y-4 mt-8">
                   <h4 className="font-extrabold text-xs tracking-widest text-white uppercase border-b border-gray-800 pb-2">
-                    // ENGINEERING TENETS
+                    {ABOUT_SECTION_TEXT.philosophyHeading}
                   </h4>
-                  <ul className="space-y-3" aria-label="Core philosophy tenets">
+                  <ul className="space-y-3" aria-label={ABOUT_SECTION_TEXT.philosophyAriaLabel}>
                     {ABOUT_DATA.philosophy.map((tenet, idx) => (
                       <li key={idx} className="text-xs sm:text-sm font-bold text-gray-200 flex items-start gap-2">
                         <span className="text-white">&gt;</span>
@@ -913,10 +917,11 @@ export const App: React.FC = () => {
               {/* Portrait Stack - RIGHT SIDE */}
               <div className="space-y-6">
                 <PortraitOutline
-                  label="ABOUT // VECTOR PORTRAIT"
+                  label={ABOUT_SECTION_TEXT.vectorPortraitLabel}
                   height="min-h-[340px]"
                   aspectRatio="aspect-[3/4]"
                   imageUrl="/images/portrait1.webp"
+                  text={PORTRAIT_TEXT}
                 />
               </div>
             </div>
@@ -945,14 +950,14 @@ export const App: React.FC = () => {
         {/* ==================== 6. CONTACT PAGE ==================== */}
         {activeTab === 'CONTACT' && (
           <section className="animate-fade-in space-y-10" aria-labelledby="contact-heading">
-            <h2 id="contact-heading" className="sr-only">Contact Details</h2>
+            <h2 id="contact-heading" className="sr-only">{CONTACT_SECTION_TEXT.headingAria}</h2>
 
             <div className="border-b-2 border-white pb-6 space-y-2 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
               <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-                CONTACT // TRANSMISSION
+                {CONTACT_SECTION_TEXT.contactTitle}
               </h3>
               <p className="text-sm sm:text-base text-gray-300 font-bold">
-                SECURE ENDPOINT FOR PROFESSIONAL INQUIRIES AND CONTRACT DEPLOYMENTS.
+                {CONTACT_SECTION_TEXT.contactSubtitle}
               </p>
             </div>
 
@@ -960,14 +965,14 @@ export const App: React.FC = () => {
               {/* Contact Form */}
               <div className="border-2 border-white p-6 sm:p-8 bg-black space-y-6 shadow-xl">
                 <div className="border-b border-gray-800 pb-3 flex items-center justify-between text-xs">
-                  <span className="font-bold text-white">// DISPATCH FORM</span>
-                  <span className="text-gray-400">ENCRYPTION: REQUIRED</span>
+                  <span className="font-bold text-white">{CONTACT_SECTION_TEXT.formSectionTitle}</span>
+                  <span className="text-gray-400">{CONTACT_SECTION_TEXT.encryptionNotice}</span>
                 </div>
 
                 <form onSubmit={handleContactSubmit} className="space-y-4">
                   <div className="space-y-1">
                     <label htmlFor="contact-name" className="block text-xs font-bold text-gray-300">
-                      IDENTIFIER [NAME]
+                      {CONTACT_SECTION_TEXT.nameLabel}
                     </label>
                     <input
                       id="contact-name"
@@ -976,14 +981,14 @@ export const App: React.FC = () => {
                       value={contactName}
                       onChange={(event) => setContactName(event.target.value)}
                       disabled={contactStatus === 'sending'}
-                      placeholder="e.g. ARCHITECT_01"
+                      placeholder={CONTACT_SECTION_TEXT.namePlaceholder}
                       className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
                     />
                   </div>
 
                   <div className="space-y-1">
                     <label htmlFor="contact-email" className="block text-xs font-bold text-gray-300">
-                      RETURN VECTOR [EMAIL]
+                      {CONTACT_SECTION_TEXT.emailLabel}
                     </label>
                     <input
                       id="contact-email"
@@ -992,14 +997,14 @@ export const App: React.FC = () => {
                       value={contactEmail}
                       onChange={(event) => setContactEmail(event.target.value)}
                       disabled={contactStatus === 'sending'}
-                      placeholder="e.g. secure@domain.com"
+                      placeholder={CONTACT_SECTION_TEXT.emailPlaceholder}
                       className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
                     />
                   </div>
 
                   <div className="space-y-1">
                     <label htmlFor="contact-message" className="block text-xs font-bold text-gray-300">
-                      PAYLOAD [MESSAGE]
+                      {CONTACT_SECTION_TEXT.messageLabel}
                     </label>
                     <textarea
                       id="contact-message"
@@ -1008,20 +1013,20 @@ export const App: React.FC = () => {
                       value={contactMessage}
                       onChange={(event) => setContactMessage(event.target.value)}
                       disabled={contactStatus === 'sending'}
-                      placeholder="ENTER TRANSMISSION DATA HERE..."
+                      placeholder={CONTACT_SECTION_TEXT.messagePlaceholder}
                       className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono resize-none disabled:opacity-50"
                     />
                   </div>
 
                   {contactStatus === 'success' && (
                     <div className="rounded border border-emerald-500 bg-emerald-950/30 p-3 text-emerald-200 text-xs font-bold">
-                      TRANSMISSION SUCCESSFUL. 2High2Work has received your message.
+                      {CONTACT_SECTION_TEXT.successMessage}
                     </div>
                   )}
 
                   {contactStatus === 'error' && contactError && (
                     <div className="rounded border border-amber-500 bg-amber-950/30 p-3 text-amber-200 text-xs font-bold">
-                      FAILED TO SEND: {contactError}
+                      {CONTACT_SECTION_TEXT.errorPrefix} {contactError}
                     </div>
                   )}
 
@@ -1030,7 +1035,7 @@ export const App: React.FC = () => {
                     disabled={contactStatus === 'sending'}
                     className="w-full bg-white text-black font-extrabold py-3 text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-white cursor-pointer shadow-md disabled:opacity-50"
                   >
-                    {contactStatus === 'sending' ? '[ TRANSMITTING ... ]' : '[ TRANSMIT PAYLOAD ]'}
+                    {contactStatus === 'sending' ? CONTACT_SECTION_TEXT.transmittingMessage : CONTACT_SECTION_TEXT.transmitPayload}
                   </button>
                 </form>
               </div>
@@ -1039,39 +1044,40 @@ export const App: React.FC = () => {
               <div className="space-y-8">
                 <div className="border border-white p-6 bg-black space-y-6">
                   <h4 className="font-extrabold text-xs tracking-widest text-white uppercase border-b border-gray-800 pb-2">
-                    // DIRECT CHANNELS
+                    {CONTACT_SECTION_TEXT.directChannelsTitle}
                   </h4>
 
                   <div className="space-y-4 text-xs sm:text-sm">
                     <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                      <span className="text-gray-400">EMAIL:</span>
+                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.directEmailLabel}</span>
                       <a href="mailto:info.2high2work@gmail.com" className="font-extrabold text-white underline hover:text-gray-300">
                         info.2high2work@gmail.com
                       </a>
                     </div>
                     <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                      <span className="text-gray-400">GITHUB:</span>
+                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.githubLabel}</span>
                       <a href="https://github.com/2high2work" target="_blank" rel="noopener noreferrer" className="font-extrabold text-white underline hover:text-gray-300 flex items-center gap-1">
                         <span>github.com/2high2work</span>
                         <ExternalLink size={12} />
                       </a>
                     </div>
                     <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                      <span className="text-gray-400">PGP FINGERPRINT:</span>
+                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.pgpLabel}</span>
                       <span className="font-mono text-[11px] text-gray-300">4F9A 82E1 C30B 77D2</span>
                     </div>
                     <div className="flex items-center justify-between pb-1">
-                      <span className="text-gray-400">LOCATION:</span>
-                      <span className="font-extrabold text-white">DECENTRALIZED // EARTH</span>
+                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.locationLabel}</span>
+                      <span className="font-extrabold text-white">{CONTACT_SECTION_TEXT.locationValue}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <PortraitOutline 
-                    label="CONTACT // VECTOR PORTRAIT" 
+                    label={CONTACT_SECTION_TEXT.contactPortraitLabel} 
                     height="min-h-[220px]" 
                     imageUrl='/images/portrait2.webp'
+                    text={PORTRAIT_TEXT}
                   />
                 </div>
               </div>
@@ -1083,9 +1089,9 @@ export const App: React.FC = () => {
         {activeTab === 'TOWER' && (
           <section className="animate-fade-in min-h-[60vh] border-2 border-white p-8 bg-black text-white flex items-center justify-center">
             <div className="text-center space-y-4">
-              <p className="text-xs uppercase text-gray-400 tracking-widest">SECRET ACCESS GRANTED</p>
-              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">THE TOWER</h2>
-              <p className="text-sm text-gray-500">This page is blank for now. Check back when the tower awakens.</p>
+              <p className="text-xs uppercase text-gray-400 tracking-widest">{TOWER_TEXT.accessGranted}</p>
+              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">{TOWER_TEXT.title}</h2>
+              <p className="text-sm text-gray-500">{TOWER_TEXT.description}</p>
             </div>
           </section>
         )}
@@ -1093,11 +1099,11 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer Area */}
-      <footer className="border-t-2 border-white mt-16 p-6 bg-black text-xs text-gray-400" aria-label="Site Footer">
+      <footer className="border-t-2 border-white mt-16 p-6 bg-black text-xs text-gray-400" aria-label={FOOTER_TEXT.ariaLabel}>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
-            <p className="font-extrabold text-white tracking-widest">// 2HIGH2WORK PORTFOLIO</p>
-            <p className="mt-1">Designed and developed by 2.2</p>
+            <p className="font-extrabold text-white tracking-widest">{FOOTER_TEXT.title}</p>
+            <p className="mt-1">{FOOTER_TEXT.credit}</p>
           </div>
         </div>
       </footer>
@@ -1111,19 +1117,19 @@ export const App: React.FC = () => {
           <div className="border-2 border-white bg-black p-6 sm:p-8 max-w-md w-full space-y-6">
             <div className="space-y-2">
               <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-                COOKIE POLICY
+                {COOKIE_TEXT.title}
               </h2>
               <p className="text-xs text-gray-400 tracking-widest">
-                [ SYSTEM NOTIFICATION ]
+                {COOKIE_TEXT.notificationLabel}
               </p>
             </div>
 
             <div className="space-y-4 text-sm leading-relaxed">
               <p className="text-gray-300">
-                This site does not actually collect cookies.
+                {COOKIE_TEXT.body}
               </p>
               <p className="text-gray-400 text-xs font-mono">
-                // Your choice will be remembered and promptly ignored until you clear your browser cache.
+                {COOKIE_TEXT.note}
               </p>
             </div>
 
@@ -1132,13 +1138,13 @@ export const App: React.FC = () => {
                 onClick={handleCookieAccept}
                 className="flex-1 bg-white text-black px-4 py-3 font-bold text-xs tracking-widest hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
               >
-                ACCEPT
+                {COOKIE_TEXT.accept}
               </button>
               <button
                 onClick={handleCookieReject}
                 className="flex-1 border border-white text-white px-4 py-3 font-bold text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
               >
-                REJECT
+                {COOKIE_TEXT.reject}
               </button>
             </div>
           </div>

@@ -61,6 +61,9 @@ export const HEADER_TEXT = {
   footerTitle: '// 2HIGH2WORK PORTFOLIO',
   footerCredit: 'Designed and developed by 2.2',
   skipToMain: 'Skip to main content',
+  mainNavigationLabel: 'Main Navigation',
+  openNavigationMenu: 'Open navigation menu',
+  closeNavigationMenu: 'Close navigation menu',
 };
 
 export const LANDING_TEXT = {
@@ -93,6 +96,7 @@ export const PROJECT_SECTION_TEXT = {
   detailBackButton: '[<-- BACK TO PROJECT LIST]',
   projectMeta: 'PROJECT_ID: {id} // SECURE',
   openProjectWebPage: 'OPEN PROJECT WEBPAGE',
+  asciiDiagramLabel: (title: string) => `ASCII diagram representation of ${title}`,
   systemOverviewHeading: '// SYSTEM OVERVIEW',
   projectListTitle: '// DEPLOYED PROJECTS',
   projectListDescription: 'Click a project card to view designated system details. Click the Title to navigate directly to the external live webpage.',
@@ -100,6 +104,10 @@ export const PROJECT_SECTION_TEXT = {
   openPage: 'OPEN PAGE',
   openPageAria: 'Open external webpage for {title} in new window',
   backToProjects: 'Back to Projects List',
+  performanceMetricsAriaLabel: 'Performance Metrics',
+  technologiesUsedAriaLabel: 'Technologies used',
+  skillsHeading: '// SKILLS',
+  techStackHeading: '// TECHNICAL STACK',
 };
 
 export const SKILL_SECTION_TEXT = {
@@ -108,6 +116,8 @@ export const SKILL_SECTION_TEXT = {
   categoryLabel: 'CATEGORY:',
   capabilityHeading: '// CAPABILITY DESCRIPTION',
   drilldownHeading: '// TECHNICAL DRILLDOWN',
+  asciiIconLabel: (name: string) => `ASCII Icon for ${name}`,
+  drilldownAriaLabel: 'Skill drilldown points',
   cardViewPage: 'VIEW_PAGE',
   matrixHeading: '// TECHNICAL COMPETENCY MATRIX',
   matrixDescription: 'Click any skill card to open its designated breakdown page.',
@@ -126,11 +136,16 @@ export const EXPERIENCE_SECTION_TEXT = {
   clickExperienceCard: 'Click any experience role to view full operational details and authenticated achievements.',
   viewExperienceAria: 'View details for role {role} at {company}',
   viewPageBadge: 'VIEW_PAGE',
+  asciiBadgeLabel: (company: string) => `ASCII badge for ${company}`,
+  achievementsAriaLabel: 'Professional achievements',
 };
 
 export const ABOUT_SECTION_TEXT = {
   headingAria: 'About 2High2Work',
   telemetryHeading: '// TELEMETRY SUMMARY',
+  philosophyHeading: '// ENGINEERING TENETS',
+  philosophyAriaLabel: 'Core philosophy tenets',
+  vectorPortraitLabel: 'ABOUT // VECTOR PORTRAIT',
 };
 
 export const CONTACT_SECTION_TEXT = {
@@ -148,6 +163,9 @@ export const CONTACT_SECTION_TEXT = {
   successMessage: 'TRANSMISSION SUCCESSFUL. 2High2Work has received your message.',
   transmittingMessage: '[ TRANSMITTING ... ]',
   transmitPayload: '[ TRANSMIT PAYLOAD ]',
+  errorPrefix: 'FAILED TO SEND:',
+  submitFailed: 'Failed to send message',
+  unknownError: 'Unknown error',
   directChannelsTitle: '// DIRECT CHANNELS',
   directEmailLabel: 'EMAIL:',
   githubLabel: 'GITHUB:',
@@ -175,6 +193,7 @@ export const TOWER_TEXT = {
 export const FOOTER_TEXT = {
   title: HEADER_TEXT.footerTitle,
   credit: HEADER_TEXT.footerCredit,
+  ariaLabel: 'Site Footer',
 };
 
 export const MESSAGE_TEXT = {
@@ -239,6 +258,7 @@ export const PORTRAIT_TEXT = {
   defaultLabel: 'PORTRAIT PLACEHOLDER',
   dimLabel: 'DIM: 600x800',
   modeLabel: 'MODE: B&W',
+  imagePlaceholderAria: 'Image placeholder',
 };
 
 export const ABOUT_DATA: AboutText = {

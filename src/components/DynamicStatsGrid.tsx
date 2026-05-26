@@ -5,6 +5,7 @@ import {
   generateFingerprint,
   fetchPublicIPAndVPN,
 } from '../utils/getUserSystemInfo';
+import { PortfolioLanguageData } from '../data/portfolioData';
 
 interface SystemStats {
   ip: string;
@@ -17,9 +18,13 @@ interface SystemStats {
   loading: boolean;
 }
 
-export const DynamicStatsGrid: React.FC = () => {
+interface DynamicStatsGridProps {
+  text: PortfolioLanguageData['STAT_GRID_TEXT'];
+}
+
+export const DynamicStatsGrid: React.FC<DynamicStatsGridProps> = ({ text }) => {
   const [stats, setStats] = useState<SystemStats>({
-    ip: 'LOADING...',
+    ip: text.loading,
     isVPN: false,
     browser: detectBrowser(),
     resolution: getResolution().resolution,
@@ -44,7 +49,7 @@ export const DynamicStatsGrid: React.FC = () => {
         console.error('Error loading system stats:', error);
         setStats(prev => ({
           ...prev,
-          ip: 'UNAVAILABLE',
+          ip: text.unavailable,
           loading: false,
         }));
       }
@@ -68,12 +73,12 @@ export const DynamicStatsGrid: React.FC = () => {
 
   // Format IP status message
   const getIPStatus = () => {
-    if (stats.ip === 'LOADING...' || stats.ip === 'UNAVAILABLE' || stats.ip === 'PRIVATE') {
+    if (stats.ip === text.loading || stats.ip === text.unavailable || stats.ip === text.private) {
       return stats.ip;
     }
     
     if (stats.isVPN) {
-      return stats.vpnProvider ? `${stats.ip} [${stats.vpnProvider}]` : `${stats.ip} [VPN]`;
+      return stats.vpnProvider ? `${stats.ip} [${stats.vpnProvider}]` : `${stats.ip} ${text.vpnLabel}`;
     }
     
     return stats.ip;
@@ -83,19 +88,19 @@ export const DynamicStatsGrid: React.FC = () => {
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-gray-800 text-xs">
       {/* IP / VPN Status */}
       <div className="border border-white p-3">
-        <span className="text-gray-400 block mb-1">// IP</span>
+        <span className="text-gray-400 block mb-1">{text.ip}</span>
         <span className="font-extrabold text-white text-sm break-words">{getIPStatus()}</span>
       </div>
 
       {/* Browser */}
       <div className="border border-white p-3">
-        <span className="text-gray-400 block mb-1">// BROWSER</span>
+        <span className="text-gray-400 block mb-1">{text.browser}</span>
         <span className="font-extrabold text-white text-sm">{stats.browser}</span>
       </div>
 
       {/* Resolution */}
       <div className="border border-white p-3">
-        <span className="text-gray-400 block mb-1">// RESOLUTION</span>
+        <span className="text-gray-400 block mb-1">{text.resolution}</span>
         <span className="font-extrabold text-white text-sm">
           {stats.resolution} <span className="text-gray-400">({stats.deviceType})</span>
         </span>
@@ -103,7 +108,7 @@ export const DynamicStatsGrid: React.FC = () => {
 
       {/* Fingerprint */}
       <div className="border border-white p-3">
-        <span className="text-gray-400 block mb-1">// FINGERPRINT</span>
+        <span className="text-gray-400 block mb-1">{text.fingerprint}</span>
         <span className="font-extrabold text-white text-sm font-mono">{stats.fingerprint}</span>
       </div>
     </div>

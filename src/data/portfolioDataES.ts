@@ -61,6 +61,9 @@ export const HEADER_TEXT = {
   footerTitle: '// PORTAFOLIO 2HIGH2WORK',
   footerCredit: 'Diseñado y desarrollado por 2.2',
   skipToMain: 'Ir al contenido principal',
+  mainNavigationLabel: 'Navegación principal',
+  openNavigationMenu: 'Abrir menú de navegación',
+  closeNavigationMenu: 'Cerrar menú de navegación',
 };
 
 export const LANDING_TEXT = {
@@ -93,6 +96,7 @@ export const PROJECT_SECTION_TEXT = {
   detailBackButton: '[<-- VOLVER A LA LISTA DE PROYECTOS]',
   projectMeta: 'PROYECTO_ID: {id} // SEGURO',
   openProjectWebPage: 'ABRIR PÁGINA DEL PROYECTO',
+  asciiDiagramLabel: (title: string) => `Representación ASCII del diagrama de ${title}`,
   systemOverviewHeading: '// VISIÓN DEL SISTEMA',
   projectListTitle: '// PROYECTOS DISPONIBLES',
   projectListDescription: 'Haz clic en una tarjeta de proyecto para ver los detalles del sistema designado. Haz clic en el título para navegar directamente a la página externa en vivo.',
@@ -100,6 +104,10 @@ export const PROJECT_SECTION_TEXT = {
   openPage: 'ABRIR PÁGINA',
   openPageAria: 'Abrir página externa para {title} en nueva ventana',
   backToProjects: 'Volver a la lista de proyectos',
+  performanceMetricsAriaLabel: 'Métricas de rendimiento',
+  technologiesUsedAriaLabel: 'Tecnologías usadas',
+  skillsHeading: '// HABILIDADES',
+  techStackHeading: '// STACK TÉCNICO',
 };
 
 export const SKILL_SECTION_TEXT = {
@@ -108,6 +116,8 @@ export const SKILL_SECTION_TEXT = {
   categoryLabel: 'CATEGORÍA:',
   capabilityHeading: '// DESCRIPCIÓN DE CAPACIDAD',
   drilldownHeading: '// DETALLE TÉCNICO',
+  asciiIconLabel: (name: string) => `Icono ASCII de ${name}`,
+  drilldownAriaLabel: 'Puntos de desglose de la habilidad',
   cardViewPage: 'VER_PAG',
   matrixHeading: '// MATRIZ DE COMPETENCIA TÉCNICA',
   matrixDescription: 'Haz clic en cualquier tarjeta de habilidad para abrir su página de desglose designada.',
@@ -126,11 +136,16 @@ export const EXPERIENCE_SECTION_TEXT = {
   clickExperienceCard: 'Haz clic en cualquier rol de experiencia para ver detalles operativos completos y logros autenticados.',
   viewExperienceAria: 'Ver detalles para el rol {role} en {company}',
   viewPageBadge: 'VER_PAG',
+  asciiBadgeLabel: (company: string) => `Insignia ASCII de ${company}`,
+  achievementsAriaLabel: 'Logros profesionales',
 };
 
 export const ABOUT_SECTION_TEXT = {
   headingAria: 'Acerca de 2High2Work',
   telemetryHeading: '// RESUMEN DE TELEMETRÍA',
+  philosophyHeading: '// PRINCIPIOS DE INGENIERÍA',
+  philosophyAriaLabel: 'Principios filosóficos principales',
+  vectorPortraitLabel: 'ACERCA DE // RETRATO VECTORIAL',
 };
 
 export const CONTACT_SECTION_TEXT = {
@@ -148,6 +163,9 @@ export const CONTACT_SECTION_TEXT = {
   successMessage: 'TRANSMISIÓN EXITOSA. 2High2Work ha recibido tu mensaje.',
   transmittingMessage: '[ TRANSMITIENDO ... ]',
   transmitPayload: '[ TRANSMITIR CARGA ÚTIL ]',
+  errorPrefix: 'ERROR AL ENVIAR:',
+  submitFailed: 'No se pudo enviar el mensaje',
+  unknownError: 'Error desconocido',
   directChannelsTitle: '// CANALES DIRECTOS',
   directEmailLabel: 'EMAIL:',
   githubLabel: 'GITHUB:',
@@ -175,6 +193,7 @@ export const TOWER_TEXT = {
 export const FOOTER_TEXT = {
   title: HEADER_TEXT.footerTitle,
   credit: HEADER_TEXT.footerCredit,
+  ariaLabel: 'Pie de página del sitio',
 };
 
 export const MESSAGE_TEXT = {
@@ -238,6 +257,7 @@ export const PORTRAIT_TEXT = {
   defaultLabel: 'RETRATO DE REPUESTO',
   dimLabel: 'DIM: 600x800',
   modeLabel: 'MODO: B/N',
+  imagePlaceholderAria: 'Marcador de posición de imagen',
 };
 
 export const ABOUT_DATA: AboutText = {
