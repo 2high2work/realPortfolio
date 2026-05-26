@@ -28,6 +28,7 @@ export const getResolution = (): { resolution: string; deviceType: string } => {
 export const generateFingerprint = (): string => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
+  const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
   
   if (ctx) {
     ctx.textBaseline = 'top';
@@ -48,7 +49,7 @@ export const generateFingerprint = (): string => {
     navigator.userAgent,
     navigator.language,
     navigator.hardwareConcurrency,
-    navigator.deviceMemory,
+    deviceMemory ?? 'UNKNOWN',
     screen.colorDepth,
     screen.width + 'x' + screen.height,
     new Date().getTimezoneOffset(),

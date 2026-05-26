@@ -306,4 +306,3 @@ export const PORTFOLIO_DATA_BY_LANGUAGE = {
 } as const;
 
 export type PortfolioLanguageData = typeof PORTFOLIO_DATA_BY_LANGUAGE[Language];
-export { Project, Skill, Experience };

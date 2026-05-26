@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from 'lucide-react';
+//import { User } from 'lucide-react';
 import { PortfolioLanguageData } from '../data/portfolioData';
 
 interface PortraitOutlineProps {
