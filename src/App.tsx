@@ -23,6 +23,8 @@ import {
   Mail,
   ChevronRight,
   Code2,
+  Menu,
+  X,
 } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -90,6 +92,7 @@ export const App: React.FC = () => {
   // Glitch mode state
   const [glitchMode, setGlitchMode] = useState(false);
   const [keyCursor, setKeyCursor] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const handleSecretCode = (code: string) => {
     if (code === 'glitch') {
       setGlitchMode(true);
@@ -232,88 +235,148 @@ export const App: React.FC = () => {
 
       {/* ASCII Top Header Banner */}
       <header className="border-b-2 border-white px-4 py-6 sm:py-8 bg-black">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
-          <div>
-            <div className="text-xs text-gray-400 mb-1 tracking-widest flex items-center gap-2" aria-hidden="true">
-              <span>{HEADER_TEXT.systemStatus}</span>
-              <span className="hidden sm:inline">{HEADER_TEXT.secureBoot}</span>
-            </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tighter uppercase whitespace-pre-line leading-none">
-              {HEADER_TEXT.siteName}
-            </h1>
-            <p className="text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
-              {HEADER_TEXT.siteSubtitle}
-            </p>
-          </div>
+        <div className="max-w-6xl mx-auto flex flex-col gap-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div>
+                <div className="hidden sm:flex text-xs text-gray-400 mb-1 tracking-widest flex items-center gap-2" aria-hidden="true">
+                  <span>{HEADER_TEXT.systemStatus}</span>
+                  <span className="hidden sm:inline">{HEADER_TEXT.secureBoot}</span>
+                </div>
+                <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tighter uppercase whitespace-pre-line leading-none">
+                  {HEADER_TEXT.siteName}
+                </h1>
+                <p className="hidden sm:block text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
+                  {HEADER_TEXT.siteSubtitle}
+                </p>
+              </div>
 
-          <div className="flex flex-col items-start sm:items-end gap-3">
-            <div className="inline-flex items-center gap-1 rounded border border-white bg-white/10 px-1 py-1 text-xs uppercase text-white font-bold">
               <button
                 type="button"
-                onClick={() => handleLanguageChange('EN')}
-                aria-pressed={language === 'EN'}
-                className={`px-2 py-1 transition-colors ${language === 'EN' ? 'bg-black text-white' : 'text-white'}`}
+                onClick={() => handleLanguageChange(language === 'EN' ? 'ES' : 'EN')}
+                className="sm:hidden inline-flex items-center justify-center rounded border border-white bg-white/10 px-3 py-2 text-xs uppercase text-white font-bold transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
               >
-                EN
-              </button>
-              <span className="text-gray-400">/</span>
-              <button
-                type="button"
-                onClick={() => handleLanguageChange('ES')}
-                aria-pressed={language === 'ES'}
-                className={`px-2 py-1 transition-colors ${language === 'ES' ? 'bg-black text-white' : 'text-white'}`}
-              >
-                ES
+                {language === 'EN' ? 'ES' : 'EN'}
               </button>
             </div>
 
-            <div className="flex items-center gap-3 bg-white text-black px-3 py-1 text-xs font-bold shadow-md">
-              <span className="inline-block w-2 h-2 bg-black animate-ping" />
-              <span>
-                {cookieConsent === 'rejected'
-                  ? HEADER_TEXT.dataAccepted
-                  : HEADER_TEXT.dataRejected}
-              </span>
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:inline-flex items-center gap-1 rounded border border-white bg-white/10 px-1 py-1 text-xs uppercase text-white font-bold">
+                <button
+                  type="button"
+                  onClick={() => handleLanguageChange('EN')}
+                  aria-pressed={language === 'EN'}
+                  className={`px-2 py-1 transition-colors ${language === 'EN' ? 'bg-black text-white' : 'text-white'}`}
+                >
+                  EN
+                </button>
+                <span className="text-gray-400">/</span>
+                <button
+                  type="button"
+                  onClick={() => handleLanguageChange('ES')}
+                  aria-pressed={language === 'ES'}
+                  className={`px-2 py-1 transition-colors ${language === 'ES' ? 'bg-black text-white' : 'text-white'}`}
+                >
+                  ES
+                </button>
+              </div>
+
+              <div className="hidden sm:flex items-center gap-3 bg-white text-black px-3 py-1 text-xs font-bold shadow-md">
+                <span className="inline-block w-2 h-2 bg-black animate-ping" />
+                <span>
+                  {cookieConsent === 'rejected'
+                    ? HEADER_TEXT.dataAccepted
+                    : HEADER_TEXT.dataRejected}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((value) => !value)}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation"
+                className="sm:hidden inline-flex items-center justify-center border border-white bg-black px-3 py-2 text-sm font-bold text-white transition hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                {mobileMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+                <span className="sr-only">{mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}</span>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Top Navigation Menu */}
+          {/* Top Navigation Menu */}
         <nav 
           className="max-w-6xl mx-auto mt-6 pt-4 border-t border-gray-800"
           aria-label="Main Navigation"
         >
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            {NAV_ITEMS.map((item) => {
-              const iconMap = {
-                LANDING: Terminal,
-                PROJECTS: FileText,
-                SKILLS: Cpu,
-                EXPERIENCE: Briefcase,
-                ABOUT: UserIcon,
-                CONTACT: Mail,
-                TOWER: Code2,
-              } as const;
-              const Icon = iconMap[item.id];
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleTabChange(item.id)}
-                  aria-label={ARIA_TEXT.navButton(item.label.split(' // ')[1])}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`px-3 sm:px-4 py-2 border border-white text-xs sm:text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
-                    isActive
-                      ? 'bg-white text-black font-extrabold translate-x-1 sm:translate-x-0 sm:-translate-y-1 shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
-                      : 'bg-black text-white hover:bg-gray-900'
-                  }`}
-                >
-                  <Icon size={16} aria-hidden="true" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
+          <div className="hidden sm:flex flex-wrap gap-2 sm:gap-3">
+              {NAV_ITEMS.map((item) => {
+                const iconMap = {
+                  LANDING: Terminal,
+                  PROJECTS: FileText,
+                  SKILLS: Cpu,
+                  EXPERIENCE: Briefcase,
+                  ABOUT: UserIcon,
+                  CONTACT: Mail,
+                  TOWER: Code2,
+                } as const;
+                const Icon = iconMap[item.id];
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleTabChange(item.id)}
+                    aria-label={ARIA_TEXT.navButton(item.label.split(' // ')[1])}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`px-3 sm:px-4 py-2 border border-white text-xs sm:text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
+                      isActive
+                        ? 'bg-white text-black font-extrabold translate-x-1 sm:translate-x-0 sm:-translate-y-1 shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
+                        : 'bg-black text-white hover:bg-gray-900'
+                    }`}
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+          {mobileMenuOpen && (
+            <div id="mobile-navigation" className="mt-4 flex flex-col gap-2 sm:hidden">
+              {NAV_ITEMS.map((item) => {
+                const iconMap = {
+                  LANDING: Terminal,
+                  PROJECTS: FileText,
+                  SKILLS: Cpu,
+                  EXPERIENCE: Briefcase,
+                  ABOUT: UserIcon,
+                  CONTACT: Mail,
+                  TOWER: Code2,
+                } as const;
+                const Icon = iconMap[item.id];
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      handleTabChange(item.id);
+                      setMobileMenuOpen(false);
+                    }}
+                    aria-label={ARIA_TEXT.navButton(item.label.split(' // ')[1])}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`w-full text-left px-4 py-3 border border-white text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
+                      isActive
+                        ? 'bg-white text-black font-extrabold shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
+                        : 'bg-black text-white hover:bg-gray-900'
+                    }`}
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </nav>
       </header>
 
@@ -331,12 +394,12 @@ export const App: React.FC = () => {
                 {LANDING_TEXT.initMode}
               </div>
               
-              <div className="text-gray-400 text-xs mb-4 uppercase tracking-widest border-b border-gray-800 pb-2">
+              <div className="hidden sm:block text-gray-400 text-xs mb-4 uppercase tracking-widest border-b border-gray-800 pb-2">
                 {LANDING_TEXT.systemBroadcast}
               </div>
 
               {/* ASCII Header Art */}
-              <div className="text-xs sm:text-sm font-mono whitespace-pre text-white overflow-x-auto select-none py-2 leading-none font-bold">
+              <div className="hidden sm:block text-xs sm:text-sm font-mono whitespace-pre text-white overflow-x-auto select-none py-2 leading-none font-bold">
                 {LANDING_TEXT.heroAscii}
               </div>
 
@@ -455,7 +518,7 @@ export const App: React.FC = () => {
                 </div>
 
                 {/* ASCII Art Representation (lets center the ASCII) */}
-                <div className="bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
+                <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
                   <span className="sr-only">ASCII diagram representation of {selectedProject.title}</span>
                   <div className="flex justify-center">
                     {selectedProject.asciiArt}
@@ -617,7 +680,7 @@ export const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
+                <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
                   <span className="sr-only">ASCII Icon for {selectedSkill.name}</span>
                   {selectedSkill.asciiIcon}
                 </div>
@@ -726,7 +789,7 @@ export const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
+                <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
                   <span className="sr-only">ASCII badge for {selectedExperience.company}</span>
                   {selectedExperience.asciiBadge}
                 </div>
