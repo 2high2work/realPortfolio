@@ -31,14 +31,33 @@ import { Analytics } from '@vercel/analytics/react';
 type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT' | 'TOWER';
 type CookieConsent = 'accepted' | 'rejected' | null;
 
-const getInitialTab = (): Tab => {
-  if (typeof window !== 'undefined') {
-    const hash = window.location.hash.replace('#', '').toUpperCase();
-    if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
-      return hash as Tab;
-    }
+const VALID_TABS: Tab[] = ['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'];
+
+const parseRouteHash = (): { tab: Tab; detailId: string | null } => {
+  if (typeof window === 'undefined') {
+    return { tab: 'LANDING', detailId: null };
   }
-  return 'LANDING';
+
+  const rawHash = window.location.hash.replace('#', '').trim();
+  if (!rawHash) {
+    return { tab: 'LANDING', detailId: null };
+  }
+
+  const [tabPart, detailPart] = rawHash.split('/');
+  const tab = tabPart?.toUpperCase() as Tab | undefined;
+
+  if (!tab || !VALID_TABS.includes(tab)) {
+    return { tab: 'LANDING', detailId: null };
+  }
+
+  return {
+    tab,
+    detailId: detailPart?.trim() || null,
+  };
+};
+
+const getInitialTab = (): Tab => {
+  return parseRouteHash().tab;
 };
 
 export const App: React.FC = () => {
@@ -90,6 +109,30 @@ export const App: React.FC = () => {
     SKILLS,
     EXPERIENCE,
   } = languageData;
+
+  const findProjectById = (id: string | null) => {
+    if (!id) {
+      return null;
+    }
+
+    return PROJECTS.find((project) => project.id === id) ?? null;
+  };
+
+  const findSkillById = (id: string | null) => {
+    if (!id) {
+      return null;
+    }
+
+    return SKILLS.find((skill) => skill.id === id) ?? null;
+  };
+
+  const findExperienceById = (id: string | null) => {
+    if (!id) {
+      return null;
+    }
+
+    return EXPERIENCE.find((experience) => experience.id === id) ?? null;
+  };
 
   // Glitch mode state
   const [glitchMode, setGlitchMode] = useState(false);
@@ -151,20 +194,36 @@ export const App: React.FC = () => {
 
   // Listen for hash changes
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').toUpperCase();
-      if (['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'].includes(hash)) {
-        setActiveTab(hash as Tab);
+    const syncRouteState = () => {
+      const { tab, detailId } = parseRouteHash();
+
+      setActiveTab(tab);
+
+      if (tab === 'PROJECTS') {
+        setSelectedProject(findProjectById(detailId));
+        setSelectedSkill(null);
+        setSelectedExperience(null);
+      } else if (tab === 'SKILLS') {
+        setSelectedProject(null);
+        setSelectedSkill(findSkillById(detailId));
+        setSelectedExperience(null);
+      } else if (tab === 'EXPERIENCE') {
+        setSelectedProject(null);
+        setSelectedSkill(null);
+        setSelectedExperience(findExperienceById(detailId));
+      } else {
         setSelectedProject(null);
         setSelectedSkill(null);
         setSelectedExperience(null);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+    syncRouteState();
+    window.addEventListener('hashchange', syncRouteState);
+    return () => window.removeEventListener('hashchange', syncRouteState);
+  }, [PROJECTS, SKILLS, EXPERIENCE]);
 
   // Handle cookie consent
   const handleCookieAccept = () => {
@@ -221,6 +280,51 @@ export const App: React.FC = () => {
     setSelectedSkill(null);
     setSelectedExperience(null);
     window.location.hash = tab.toLowerCase();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleProjectSelect = (project: Project) => {
+    setActiveTab('PROJECTS');
+    setSelectedProject(project);
+    setSelectedSkill(null);
+    setSelectedExperience(null);
+    window.location.hash = `projects/${project.id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleProjectBack = () => {
+    setSelectedProject(null);
+    window.location.hash = 'projects';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSkillSelect = (skill: Skill) => {
+    setActiveTab('SKILLS');
+    setSelectedProject(null);
+    setSelectedSkill(skill);
+    setSelectedExperience(null);
+    window.location.hash = `skills/${skill.id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSkillBack = () => {
+    setSelectedSkill(null);
+    window.location.hash = 'skills';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleExperienceSelect = (experience: Experience) => {
+    setActiveTab('EXPERIENCE');
+    setSelectedProject(null);
+    setSelectedSkill(null);
+    setSelectedExperience(experience);
+    window.location.hash = `experience/${experience.id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleExperienceBack = () => {
+    setSelectedExperience(null);
+    window.location.hash = 'experience';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -491,7 +595,7 @@ export const App: React.FC = () => {
                 {/* Back button */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
                   <button
-                    onClick={() => setSelectedProject(null)}
+                    onClick={handleProjectBack}
                     aria-label={ARIA_TEXT.projectListBack}
                     className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
@@ -594,7 +698,7 @@ export const App: React.FC = () => {
                     <div
                       key={proj.id}
                       className="border-2 border-white p-6 bg-black flex flex-col justify-between hover:border-gray-300 transition-colors group cursor-pointer relative shadow-lg"
-                      onClick={() => setSelectedProject(proj)}
+                      onClick={() => handleProjectSelect(proj)}
                       role="article"
                       aria-labelledby={`proj-title-${proj.id}`}
                     >
@@ -669,7 +773,7 @@ export const App: React.FC = () => {
               <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
                   <button
-                    onClick={() => setSelectedSkill(null)}
+                    onClick={handleSkillBack}
                     aria-label={ARIA_TEXT.navButton(SKILL_SECTION_TEXT.backToSkills)}
                     className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
@@ -728,10 +832,10 @@ export const App: React.FC = () => {
                   {SKILLS.map((skill) => (
                     <div
                       key={skill.id}
-                      onClick={() => setSelectedSkill(skill)}
+                      onClick={() => handleSkillSelect(skill)}
                       role="button"
                       tabIndex={0}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedSkill(skill); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSkillSelect(skill); }}
                       aria-label={ARIA_TEXT.skillCard(skill.name)}
                       className="border-2 border-white p-6 bg-black hover:border-gray-300 transition-all group cursor-pointer flex flex-col justify-between shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
                     >
@@ -778,7 +882,7 @@ export const App: React.FC = () => {
               <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
                   <button
-                    onClick={() => setSelectedExperience(null)}
+                    onClick={handleExperienceBack}
                     aria-label={EXPERIENCE_SECTION_TEXT.backToExperience}
                     className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
@@ -837,10 +941,10 @@ export const App: React.FC = () => {
                   {EXPERIENCE.map((exp) => (
                     <div
                       key={exp.id}
-                      onClick={() => setSelectedExperience(exp)}
+                      onClick={() => handleExperienceSelect(exp)}
                       role="button"
                       tabIndex={0}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedExperience(exp); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExperienceSelect(exp); }}
                       aria-label={ARIA_TEXT.experienceCard(exp.role, exp.company)}
                       className="border-2 border-white p-6 bg-black hover:border-gray-300 transition-all group cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
                     >
