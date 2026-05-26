@@ -246,9 +246,14 @@ export const App: React.FC = () => {
                   <span>{HEADER_TEXT.systemStatus}</span>
                   <span className="hidden sm:inline">{HEADER_TEXT.secureBoot}</span>
                 </div>
-                <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tighter uppercase whitespace-pre-line leading-none">
+                <button
+                  type="button"
+                  onClick={() => handleTabChange('LANDING')}
+                  aria-label={HEADER_TEXT.skipToMain}
+                  className="text-left text-3xl sm:text-5xl font-extrabold tracking-tighter uppercase whitespace-pre-line leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                >
                   {HEADER_TEXT.siteName}
-                </h1>
+                </button>
                 <p className="hidden sm:block text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
                   {HEADER_TEXT.siteSubtitle}
                 </p>
@@ -488,7 +493,7 @@ export const App: React.FC = () => {
                   <button
                     onClick={() => setSelectedProject(null)}
                     aria-label={ARIA_TEXT.projectListBack}
-                    className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                    className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
                     <span>{PROJECT_SECTION_TEXT.detailBackButton}</span>
@@ -662,11 +667,11 @@ export const App: React.FC = () => {
 
             {selectedSkill ? (
               <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
-                <div className="flex items-center justify-between border-b border-white pb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
                   <button
                     onClick={() => setSelectedSkill(null)}
                     aria-label={ARIA_TEXT.navButton(SKILL_SECTION_TEXT.backToSkills)}
-                    className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                    className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
                     <span>{SKILL_SECTION_TEXT.backToSkills}</span>
@@ -771,11 +776,11 @@ export const App: React.FC = () => {
 
             {selectedExperience ? (
               <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
-                <div className="flex items-center justify-between border-b border-white pb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
                   <button
                     onClick={() => setSelectedExperience(null)}
                     aria-label={EXPERIENCE_SECTION_TEXT.backToExperience}
-                    className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                    className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
                     <span>{EXPERIENCE_SECTION_TEXT.backToExperience}</span>

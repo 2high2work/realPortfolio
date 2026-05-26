@@ -94,7 +94,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
 export const PROJECT_SECTION_TEXT = {
   headingAria: 'Portafolio de Proyectos',
   detailBackButton: '[<-- VOLVER A LA LISTA DE PROYECTOS]',
-  projectMeta: 'PROYECTO_ID: {id} // SEGURO',
+  projectMeta: 'PROYECTO_ID: {id}',
   openProjectWebPage: 'ABRIR PÁGINA DEL PROYECTO',
   asciiDiagramLabel: (title: string) => `Representación ASCII del diagrama de ${title}`,
   systemOverviewHeading: '// VISIÓN DEL SISTEMA',

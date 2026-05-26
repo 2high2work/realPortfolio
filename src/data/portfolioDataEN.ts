@@ -94,7 +94,7 @@ ________  ___ ___ .__       .__     ________  __      __             __
 export const PROJECT_SECTION_TEXT = {
   headingAria: 'Projects Portfolio',
   detailBackButton: '[<-- BACK TO PROJECT LIST]',
-  projectMeta: 'PROJECT_ID: {id} // SECURE',
+  projectMeta: 'PROJECT_ID: {id}',
   openProjectWebPage: 'OPEN PROJECT WEBPAGE',
   asciiDiagramLabel: (title: string) => `ASCII diagram representation of ${title}`,
   systemOverviewHeading: '// SYSTEM OVERVIEW',
