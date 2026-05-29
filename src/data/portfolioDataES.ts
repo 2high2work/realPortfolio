@@ -262,11 +262,11 @@ export const PORTRAIT_TEXT = {
 
 export const ABOUT_DATA: AboutText = {
   header: 'ACERCA DE // 2HIGH2WORK',
-  tagline: 'INGENIERA DE SOFTWARE — DESARROLLO DE JUEGOS, WEB Y QA AUTOMATIZADO',
+  tagline: 'INGENIERO DE SOFTWARE — DESARROLLO DE JUEGOS, WEB Y QA AUTOMATIZADO',
   bioParagraphs: [
-    'Soy 2.2, la creadora detrás de 2High2Work. Trato el desarrollo de software como profesión y oficio, combinando rigor técnico con diseño iterativo. Mi trabajo enfatiza arquitectura mantenible, documentación clara y soluciones pragmáticas que sirven tanto al juego como a las necesidades del usuario.',
+    'Soy 2.2, el creador detrás de 2High2Work. Trato el desarrollo de software como profesión y oficio, combinando rigor técnico con diseño iterativo. Mi trabajo enfatiza arquitectura mantenible, documentación clara y soluciones pragmáticas que sirven tanto al juego como a las necesidades del usuario.',
     'Mi práctica profesional abarca ingeniería de gameplay en Unity (C#), desarrollo web fullstack con TypeScript/Next.js y automatización de QA con Playwright y K6. Diseño e implemento sistemas de juego, arquitecto aplicaciones web y construyo suites de prueba automatizadas robustas integradas en pipelines de CI para asegurar la calidad de lanzamiento y la fiabilidad del sistema.',
-    'Como cofundadora de Gooblin Studio contribuyo a la dirección técnica, diseño de sistemas e infraestructura pública. A través de 2High2Work publico prototipos en solitario y experimentos web.',
+    'Como cofundador de Gooblin Studio contribuyo a la dirección técnica, diseño de sistemas e infraestructura pública. A través de 2High2Work publico prototipos en solitario y experimentos web.',
   ],
   stats: [
     { label: 'STACK PRINCIPAL', value: 'UNITY // TS // PLAYWRIGHT' },
