@@ -19,7 +19,7 @@ import {
   STAT_GRID_TEXT as STAT_GRID_TEXT_EN,
   TOWER_TEXT as TOWER_TEXT_EN,
   MESSAGE_TEXT as MESSAGE_TEXT_EN,
-} from './portfolioDataEN';
+} from './portfolioDataEN.js';
 import {
   ABOUT_DATA as ABOUT_DATA_ES,
   ABOUT_SECTION_TEXT as ABOUT_SECTION_TEXT_ES,
@@ -41,7 +41,7 @@ import {
   STAT_GRID_TEXT as STAT_GRID_TEXT_ES,
   TOWER_TEXT as TOWER_TEXT_ES,
   MESSAGE_TEXT as MESSAGE_TEXT_ES,
-} from './portfolioDataES';
+} from './portfolioDataES.js';
 
 export interface Project {
   id: string;
