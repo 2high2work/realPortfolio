@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { DEFAULT_LANGUAGE, PORTFOLIO_DATA_BY_LANGUAGE, Language } from '../src/data/portfolioData';
+import { DEFAULT_LANGUAGE, PORTFOLIO_DATA_BY_LANGUAGE, Language } from '../src/data/portfolioData.js';
 
 const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined;
