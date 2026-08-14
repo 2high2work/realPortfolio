@@ -1,37 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import {
   Project,
-  Skill,
-  Experience,
   PORTFOLIO_DATA_BY_LANGUAGE,
   Language,
   DEFAULT_LANGUAGE,
   LANGUAGE_STORAGE_KEY,
 } from './data/portfolioData';
-import { FakeAiChat } from './components/FakeAiChat';
 import { PortraitOutline } from './components/PortraitOutline';
 import { VantaBackground } from './components/VantaBackground';
-import { DynamicStatsGrid } from './components/DynamicStatsGrid';
 import {
   ExternalLink,
   ArrowLeft,
-  Terminal,
+  Home,
   FileText,
-  Cpu,
-  Briefcase,
   User as UserIcon,
   Mail,
   ChevronRight,
-  Code2,
   Menu,
   X,
+  Code2,
 } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 
-type Tab = 'LANDING' | 'PROJECTS' | 'SKILLS' | 'EXPERIENCE' | 'ABOUT' | 'CONTACT' | 'TOWER';
-type CookieConsent = 'accepted' | 'rejected' | null;
+type Tab = 'LANDING' | 'PROJECTS' | 'ABOUT' | 'CONTACT' | 'TOWER';
 
-const VALID_TABS: Tab[] = ['LANDING', 'PROJECTS', 'SKILLS', 'EXPERIENCE', 'ABOUT', 'CONTACT', 'TOWER'];
+const VALID_TABS: Tab[] = ['LANDING', 'PROJECTS', 'ABOUT', 'CONTACT', 'TOWER'];
 
 const parseRouteHash = (): { tab: Tab; detailId: string | null } => {
   if (typeof window === 'undefined') {
@@ -62,100 +55,9 @@ const getInitialTab = (): Tab => {
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(getInitialTab);
-
-  // State for designated detail pages
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
-  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
-
-  useEffect(() => {
-    if (selectedProject) {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    }
-  }, [selectedProject]);
-
-  useEffect(() => {
-    if (selectedSkill) {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    }
-  }, [selectedSkill]);
-
-  useEffect(() => {
-    if (selectedExperience) {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    }
-  }, [selectedExperience]);
-
-  const languageData = PORTFOLIO_DATA_BY_LANGUAGE[language];
-  const {
-    ABOUT_DATA,
-    ABOUT_SECTION_TEXT,
-    HEADER_TEXT,
-    NAV_ITEMS,
-    LANDING_TEXT,
-    PROJECT_SECTION_TEXT,
-    SKILL_SECTION_TEXT,
-    ARIA_TEXT,
-    CONTACT_SECTION_TEXT,
-    COOKIE_TEXT,
-    EXPERIENCE_SECTION_TEXT,
-    FOOTER_TEXT,
-    MESSAGE_TEXT,
-    STAT_GRID_TEXT,
-    PORTRAIT_TEXT,
-    TOWER_TEXT,
-    PROJECTS,
-    SKILLS,
-    EXPERIENCE,
-  } = languageData;
-
-  const findProjectById = (id: string | null) => {
-    if (!id) {
-      return null;
-    }
-
-    return PROJECTS.find((project) => project.id === id) ?? null;
-  };
-
-  const findSkillById = (id: string | null) => {
-    if (!id) {
-      return null;
-    }
-
-    return SKILLS.find((skill) => skill.id === id) ?? null;
-  };
-
-  const findExperienceById = (id: string | null) => {
-    if (!id) {
-      return null;
-    }
-
-    return EXPERIENCE.find((experience) => experience.id === id) ?? null;
-  };
-
-  // Glitch mode state
-  const [glitchMode, setGlitchMode] = useState(false);
-  const [keyCursor, setKeyCursor] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const handleSecretCode = (code: string) => {
-    if (code === 'glitch') {
-      setGlitchMode(true);
-      return;
-    }
-    if (code === 'key') {
-      setKeyCursor(true);
-      return;
-    }
-    if (code === 'the tower') {
-      setSelectedProject(null);
-      setSelectedSkill(null);
-      setSelectedExperience(null);
-      setActiveTab('TOWER');
-      window.location.hash = 'tower';
-      return;
-    }
-  };
 
   // Contact form state
   const [contactName, setContactName] = useState('');
@@ -163,20 +65,6 @@ export const App: React.FC = () => {
   const [contactMessage, setContactMessage] = useState('');
   const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [contactError, setContactError] = useState<string | null>(null);
-
-  // Cookie consent state
-  const [cookieConsent, setCookieConsent] = useState<CookieConsent>(null);
-  const [showCookieDialog, setShowCookieDialog] = useState(false);
-
-  // Load cookie consent from localStorage on mount
-  useEffect(() => {
-    const savedConsent = localStorage.getItem('cookieConsent') as CookieConsent;
-    if (savedConsent) {
-      setCookieConsent(savedConsent);
-    } else {
-      setShowCookieDialog(true);
-    }
-  }, []);
 
   // Load saved language from localStorage on mount
   useEffect(() => {
@@ -191,30 +79,43 @@ export const App: React.FC = () => {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
   };
 
+  const languageData = PORTFOLIO_DATA_BY_LANGUAGE[language];
+  const {
+    ABOUT_DATA,
+    ABOUT_SECTION_TEXT,
+    HEADER_TEXT,
+    NAV_ITEMS,
+    LANDING_TEXT,
+    PROJECT_SECTION_TEXT,
+    ARIA_TEXT,
+    CONTACT_SECTION_TEXT,
+    FOOTER_TEXT,
+    PORTRAIT_TEXT,
+    TOWER_TEXT,
+    PROJECTS,
+  } = languageData;
+
+  const findProjectById = (id: string | null) => {
+    if (!id) return null;
+    return PROJECTS.find((project) => project.id === id) ?? null;
+  };
+
+  useEffect(() => {
+    if (selectedProject) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [selectedProject]);
 
   // Listen for hash changes
   useEffect(() => {
     const syncRouteState = () => {
       const { tab, detailId } = parseRouteHash();
-
       setActiveTab(tab);
 
       if (tab === 'PROJECTS') {
         setSelectedProject(findProjectById(detailId));
-        setSelectedSkill(null);
-        setSelectedExperience(null);
-      } else if (tab === 'SKILLS') {
-        setSelectedProject(null);
-        setSelectedSkill(findSkillById(detailId));
-        setSelectedExperience(null);
-      } else if (tab === 'EXPERIENCE') {
-        setSelectedProject(null);
-        setSelectedSkill(null);
-        setSelectedExperience(findExperienceById(detailId));
       } else {
         setSelectedProject(null);
-        setSelectedSkill(null);
-        setSelectedExperience(null);
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -223,20 +124,7 @@ export const App: React.FC = () => {
     syncRouteState();
     window.addEventListener('hashchange', syncRouteState);
     return () => window.removeEventListener('hashchange', syncRouteState);
-  }, [PROJECTS, SKILLS, EXPERIENCE]);
-
-  // Handle cookie consent
-  const handleCookieAccept = () => {
-    setCookieConsent('accepted');
-    localStorage.setItem('cookieConsent', 'accepted');
-    setShowCookieDialog(false);
-  };
-
-  const handleCookieReject = () => {
-    setCookieConsent('rejected');
-    localStorage.setItem('cookieConsent', 'rejected');
-    setShowCookieDialog(false);
-  };
+  }, [PROJECTS]);
 
   const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -273,12 +161,9 @@ export const App: React.FC = () => {
     }
   };
 
-  // Helper to switch tabs and reset selected detail views
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     setSelectedProject(null);
-    setSelectedSkill(null);
-    setSelectedExperience(null);
     window.location.hash = tab.toLowerCase();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -286,8 +171,6 @@ export const App: React.FC = () => {
   const handleProjectSelect = (project: Project) => {
     setActiveTab('PROJECTS');
     setSelectedProject(project);
-    setSelectedSkill(null);
-    setSelectedExperience(null);
     window.location.hash = `projects/${project.id}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -298,174 +181,126 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSkillSelect = (skill: Skill) => {
-    setActiveTab('SKILLS');
-    setSelectedProject(null);
-    setSelectedSkill(skill);
-    setSelectedExperience(null);
-    window.location.hash = `skills/${skill.id}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleSkillBack = () => {
-    setSelectedSkill(null);
-    window.location.hash = 'skills';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleExperienceSelect = (experience: Experience) => {
-    setActiveTab('EXPERIENCE');
-    setSelectedProject(null);
-    setSelectedSkill(null);
-    setSelectedExperience(experience);
-    window.location.hash = `experience/${experience.id}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleExperienceBack = () => {
-    setSelectedExperience(null);
-    window.location.hash = 'experience';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <div className={`theme-highlight-root ${glitchMode ? 'glitch-root' : ''} ${keyCursor ? 'key-cursor-root' : ''} min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black`}>
+    <div className="min-h-screen bg-transparent text-white font-mono flex flex-col selection:bg-white selection:text-black">
       <VantaBackground />
-      
+
       {/* Accessibility Skip Link */}
-      <a 
-        href="#main-content" 
+      <a
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-white focus:text-black focus:p-2 focus:z-50 font-bold"
       >
         {HEADER_TEXT.skipToMain}
       </a>
 
-      {/* ASCII Top Header Banner */}
-      <header className="border-b-2 border-white px-4 py-6 sm:py-8 bg-black">
+      {/* Clean Top Header Banner */}
+      <header className="border-b-2 border-white px-4 py-5 sm:py-6 bg-black/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-6xl mx-auto flex flex-col gap-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div>
-                <div className="hidden sm:flex text-xs text-gray-400 mb-1 tracking-widest flex items-center gap-2" aria-hidden="true">
-                  <span>{HEADER_TEXT.systemStatus}</span>
-                  <span className="hidden sm:inline">{HEADER_TEXT.secureBoot}</span>
-                </div>
                 <button
                   type="button"
                   onClick={() => handleTabChange('LANDING')}
                   aria-label={HEADER_TEXT.skipToMain}
-                  className="text-left text-3xl sm:text-5xl font-extrabold tracking-tighter uppercase whitespace-pre-line leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                  className="text-left text-2xl sm:text-4xl font-extrabold tracking-tighter uppercase leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-white transition-opacity hover:opacity-90"
                 >
                   {HEADER_TEXT.siteName}
                 </button>
-                <p className="hidden sm:block text-sm sm:text-base tracking-widest text-gray-300 mt-2 font-bold">
+                <p className="text-xs sm:text-sm tracking-widest text-zinc-400 mt-1.5 font-bold">
                   {HEADER_TEXT.siteSubtitle}
                 </p>
               </div>
-
-              <button
-                type="button"
-                onClick={() => handleLanguageChange(language === 'EN' ? 'ES' : 'EN')}
-                className="sm:hidden inline-flex items-center justify-center rounded border border-white bg-white/10 px-3 py-2 text-xs uppercase text-white font-bold transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
-              >
-                {language === 'EN' ? 'ES' : 'EN'}
-              </button>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="hidden sm:inline-flex items-center gap-1 rounded border border-white bg-white/10 px-1 py-1 text-xs uppercase text-white font-bold">
+              {/* Language Switcher */}
+              <div className="inline-flex items-center rounded border border-white bg-black/80 p-0.5 text-xs uppercase text-white font-bold">
                 <button
                   type="button"
                   onClick={() => handleLanguageChange('EN')}
                   aria-pressed={language === 'EN'}
-                  className={`px-2 py-1 transition-colors ${language === 'EN' ? 'bg-black text-white' : 'text-white'}`}
+                  className={`px-2.5 py-1 transition-colors cursor-pointer ${
+                    language === 'EN' ? 'bg-white text-black font-extrabold' : 'text-zinc-400 hover:text-white'
+                  }`}
                 >
                   EN
                 </button>
-                <span className="text-gray-400">/</span>
+                <span className="text-zinc-600">/</span>
                 <button
                   type="button"
                   onClick={() => handleLanguageChange('ES')}
                   aria-pressed={language === 'ES'}
-                  className={`px-2 py-1 transition-colors ${language === 'ES' ? 'bg-black text-white' : 'text-white'}`}
+                  className={`px-2.5 py-1 transition-colors cursor-pointer ${
+                    language === 'ES' ? 'bg-white text-black font-extrabold' : 'text-zinc-400 hover:text-white'
+                  }`}
                 >
                   ES
                 </button>
               </div>
 
-              <div className="hidden sm:flex items-center gap-3 bg-white text-black px-3 py-1 text-xs font-bold shadow-md">
-                <span className="inline-block w-2 h-2 bg-black animate-ping" />
-                <span>
-                  {cookieConsent === 'rejected'
-                    ? HEADER_TEXT.dataAccepted
-                    : HEADER_TEXT.dataRejected}
-                </span>
-              </div>
-
+              {/* Mobile Menu Button */}
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen((value) => !value)}
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-navigation"
-                className="sm:hidden inline-flex items-center justify-center border border-white bg-black px-3 py-2 text-sm font-bold text-white transition hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+                className="sm:hidden inline-flex items-center justify-center border border-white bg-black px-3 py-2 text-sm font-bold text-white transition hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-white"
               >
                 {mobileMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-                <span className="sr-only">{mobileMenuOpen ? HEADER_TEXT.closeNavigationMenu : HEADER_TEXT.openNavigationMenu}</span>
+                <span className="sr-only">
+                  {mobileMenuOpen ? HEADER_TEXT.closeNavigationMenu : HEADER_TEXT.openNavigationMenu}
+                </span>
               </button>
             </div>
           </div>
-        </div>
 
-          {/* Top Navigation Menu */}
-        <nav 
-          className="max-w-6xl mx-auto mt-6 pt-4 border-t border-gray-800"
-          aria-label={HEADER_TEXT.mainNavigationLabel}
-        >
-          <div className="hidden sm:flex flex-wrap gap-2 sm:gap-3">
-              {NAV_ITEMS.map((item) => {
-                const iconMap = {
-                  LANDING: Terminal,
-                  PROJECTS: FileText,
-                  SKILLS: Cpu,
-                  EXPERIENCE: Briefcase,
-                  ABOUT: UserIcon,
-                  CONTACT: Mail,
-                  TOWER: Code2,
-                } as const;
-                const Icon = iconMap[item.id];
-                const isActive = activeTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleTabChange(item.id)}
-                    aria-label={ARIA_TEXT.navButton(item.label.split(' // ')[1])}
-                    aria-current={isActive ? 'page' : undefined}
-                    className={`px-3 sm:px-4 py-2 border border-white text-xs sm:text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
-                      isActive
-                        ? 'bg-white text-black font-extrabold translate-x-1 sm:translate-x-0 sm:-translate-y-1 shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
-                        : 'bg-black text-white hover:bg-gray-900'
-                    }`}
-                  >
-                    <Icon size={16} aria-hidden="true" />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+          {/* Desktop Navigation Menu */}
+          <nav
+            className="hidden sm:flex flex-wrap gap-2 sm:gap-3 border-t border-zinc-800 pt-3"
+            aria-label={HEADER_TEXT.mainNavigationLabel}
+          >
+            {NAV_ITEMS.map((item) => {
+              const iconMap = {
+                LANDING: Home,
+                PROJECTS: FileText,
+                ABOUT: UserIcon,
+                CONTACT: Mail,
+                TOWER: Code2,
+              } as const;
+              const Icon = iconMap[item.id] || FileText;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleTabChange(item.id)}
+                  aria-label={ARIA_TEXT.navButton(item.label)}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`px-4 py-2 border border-white text-xs sm:text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
+                    isActive
+                      ? 'bg-white text-black font-extrabold -translate-y-0.5 shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
+                      : 'bg-black text-white hover:bg-zinc-900'
+                  }`}
+                >
+                  <Icon size={16} aria-hidden="true" />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
 
+          {/* Mobile Navigation Menu */}
           {mobileMenuOpen && (
-            <div id="mobile-navigation" className="mt-4 flex flex-col gap-2 sm:hidden">
+            <div id="mobile-navigation" className="mt-2 flex flex-col gap-2 sm:hidden border-t border-zinc-800 pt-3">
               {NAV_ITEMS.map((item) => {
                 const iconMap = {
-                  LANDING: Terminal,
+                  LANDING: Home,
                   PROJECTS: FileText,
-                  SKILLS: Cpu,
-                  EXPERIENCE: Briefcase,
                   ABOUT: UserIcon,
                   CONTACT: Mail,
                   TOWER: Code2,
                 } as const;
-                const Icon = iconMap[item.id];
+                const Icon = iconMap[item.id] || FileText;
                 const isActive = activeTab === item.id;
                 return (
                   <button
@@ -474,12 +309,12 @@ export const App: React.FC = () => {
                       handleTabChange(item.id);
                       setMobileMenuOpen(false);
                     }}
-                    aria-label={ARIA_TEXT.navButton(item.label.split(' // ')[1])}
+                    aria-label={ARIA_TEXT.navButton(item.label)}
                     aria-current={isActive ? 'page' : undefined}
                     className={`w-full text-left px-4 py-3 border border-white text-sm font-bold tracking-wider flex items-center gap-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-white ${
                       isActive
                         ? 'bg-white text-black font-extrabold shadow-[2px_2px_0px_rgba(255,255,255,0.4)]'
-                        : 'bg-black text-white hover:bg-gray-900'
+                        : 'bg-black text-white hover:bg-zinc-900'
                     }`}
                   >
                     <Icon size={16} aria-hidden="true" />
@@ -489,7 +324,7 @@ export const App: React.FC = () => {
               })}
             </div>
           )}
-        </nav>
+        </div>
       </header>
 
       {/* Main Content Area */}
@@ -498,179 +333,159 @@ export const App: React.FC = () => {
         {/* ==================== 1. LANDING PAGE ==================== */}
         {activeTab === 'LANDING' && (
           <section className="space-y-8 animate-fade-in" aria-labelledby="landing-heading">
-            <h2 id="landing-heading" className="sr-only">{LANDING_TEXT.landingAria}</h2>
-            
-            {/* Terminal Hero Banner */}
-            <div className="border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
-              <div className="absolute top-2 right-2 text-xs text-gray-500 font-bold tracking-widest hidden sm:block">
-                {LANDING_TEXT.initMode}
-              </div>
-              
-              <div className="hidden sm:block text-gray-400 text-xs mb-4 uppercase tracking-widest border-b border-gray-800 pb-2">
-                {LANDING_TEXT.systemBroadcast}
-              </div>
+            <h2 id="landing-heading" className="sr-only">
+              {LANDING_TEXT.landingAria}
+            </h2>
 
-              {/* ASCII Header Art */}
-              <div className="hidden sm:block text-xs sm:text-sm font-mono whitespace-pre text-white overflow-x-auto select-none py-2 leading-none font-bold">
-                {LANDING_TEXT.heroAscii}
-              </div>
-
-              <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed max-w-4xl border-t border-white pt-6">
-                <p className="font-bold text-white tracking-wide">
+            {/* Clean Hero Presentation */}
+            <div className="border-2 border-white p-6 sm:p-10 bg-black/90 backdrop-blur-md text-white shadow-2xl">
+              <div className="space-y-5 max-w-4xl">
+                <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                   {LANDING_TEXT.welcome}
-                </p>
-                <p className="text-gray-300">
+                </h3>
+                <p className="text-base sm:text-lg text-zinc-300 leading-relaxed font-mono">
                   {LANDING_TEXT.overview}
                 </p>
-                <p className="text-sm text-gray-400 font-normal">
+                <p className="text-sm text-zinc-400 leading-relaxed border-l-2 border-white/60 pl-4 py-1">
                   {LANDING_TEXT.note}
                 </p>
               </div>
 
-              {/* Quick stats grid - Dynamic User System Information */}
-              <DynamicStatsGrid text={STAT_GRID_TEXT} />
+              <div className="flex flex-wrap gap-4 pt-8 border-t border-zinc-800 mt-8">
+                <button
+                  onClick={() => handleTabChange('PROJECTS')}
+                  className="bg-white text-black font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-zinc-200 transition-colors flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white shadow-md"
+                >
+                  <span>{LANDING_TEXT.exploreProjects}</span>
+                  <ChevronRight size={16} />
+                </button>
+                <button
+                  onClick={() => handleTabChange('CONTACT')}
+                  className="border-2 border-white text-white font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                >
+                  <span>{LANDING_TEXT.getInTouch}</span>
+                </button>
+              </div>
             </div>
 
-            {/* Featured Portrait & Intro Split */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start pt-4">
-              <div className="lg:col-span-2 border border-white p-6 space-y-6 bg-black">
-                <div className="flex items-center gap-2 border-b border-white pb-3">
-                  <Code2 size={20} />
-                  <h3 className="font-bold text-lg tracking-widest">{LANDING_TEXT.aboutThisSiteTitle}</h3>
+            {/* About This Site & Portrait Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+              <div className="lg:col-span-2 border-2 border-white p-6 sm:p-8 space-y-6 bg-black/90 backdrop-blur-md shadow-xl">
+                <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
+                  <Code2 size={20} className="text-white" />
+                  <h3 className="font-extrabold text-base sm:text-lg tracking-widest uppercase">
+                    {LANDING_TEXT.aboutThisSiteTitle}
+                  </h3>
                 </div>
-                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                <p className="text-zinc-300 leading-relaxed text-sm sm:text-base">
                   {LANDING_TEXT.aboutThisSiteDescription}
                 </p>
-                
-                <div className="bg-white text-black p-4 space-y-2">
-                  <p className="font-extrabold text-xs uppercase tracking-widest">{LANDING_TEXT.navigationTitle}</p>
-                  <p className="font-bold text-sm">
+
+                <div className="border border-white/40 bg-zinc-950 p-4 space-y-1.5">
+                  <p className="font-extrabold text-xs uppercase tracking-widest text-zinc-400">
+                    {LANDING_TEXT.navigationTitle}
+                  </p>
+                  <p className="text-sm text-zinc-200 font-bold">
                     {LANDING_TEXT.navigationHint}
                   </p>
                 </div>
-
-                <div className="flex flex-wrap gap-4 pt-2">
-                  <button
-                    onClick={() => handleTabChange('PROJECTS')}
-                    className="bg-white text-black font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-gray-200 transition-colors flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
-                  >
-                    <span>{LANDING_TEXT.exploreProjects}</span>
-                    <ChevronRight size={16} />
-                  </button>
-                  <button
-                    onClick={() => handleTabChange('CONTACT')}
-                    className="border border-white text-white font-extrabold px-6 py-3 text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
-                  >
-                    <span>{LANDING_TEXT.getInTouch}</span>
-                  </button>
-                </div>
               </div>
 
-              {/* Portrait Placeholder Outline */}
-              <div className="space-y-2">
-                <PortraitOutline 
-                  label={LANDING_TEXT.founderLabel} 
-                  height="min-h-[340px]" 
-                  imageUrl={glitchMode ? '/images/founder-glitch.webp' : '/images/founder.webp'}
+              {/* Founder Portrait */}
+              <div>
+                <PortraitOutline
+                  label={LANDING_TEXT.founderLabel}
+                  height="min-h-[320px]"
+                  imageUrl="/images/founder.webp"
                   text={PORTRAIT_TEXT}
                 />
               </div>
             </div>
-
-            {/* ASCII System Footer Accent */}
-            <div className="border border-white p-4 text-center text-xs tracking-widest text-gray-400 bg-black">
-              {LANDING_TEXT.secureFooter}
-            </div>
           </section>
         )}
 
-        {/* ==================== 2. PROJECT LIST & DESIGNATED PAGE ==================== */}
+        {/* ==================== 2. PROJECTS PAGE ==================== */}
         {activeTab === 'PROJECTS' && (
           <section className="animate-fade-in" aria-labelledby="projects-heading">
-            <h2 id="projects-heading" className="sr-only">{PROJECT_SECTION_TEXT.headingAria}</h2>
+            <h2 id="projects-heading" className="sr-only">
+              {PROJECT_SECTION_TEXT.headingAria}
+            </h2>
 
-            {/* If a project is selected, show its designated page */}
             {selectedProject ? (
-              <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
-                {/* Back button */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
+              // Project Detail View
+              <article className="space-y-8 border-2 border-white p-6 sm:p-10 bg-black/90 backdrop-blur-md shadow-2xl">
+                {/* Back button and Meta */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
                   <button
                     onClick={handleProjectBack}
                     aria-label={ARIA_TEXT.projectListBack}
-                    className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
+                    className="bg-white text-black px-4 py-2 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-zinc-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white shadow-md"
                   >
                     <ArrowLeft size={16} aria-hidden="true" />
                     <span>{PROJECT_SECTION_TEXT.detailBackButton}</span>
                   </button>
 
-                  <div className="text-xs text-gray-400">
-                    {PROJECT_SECTION_TEXT.projectMeta.replace('{id}', selectedProject.id)}
-                  </div>
+                  <a
+                    href={selectedProject.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={ARIA_TEXT.projectDetailExternalLink(selectedProject.title)}
+                    className="bg-white text-black px-4 py-2 font-extrabold text-xs tracking-widest flex items-center gap-2 hover:bg-zinc-200 transition-colors self-start sm:self-center border border-white"
+                  >
+                    <span>{PROJECT_SECTION_TEXT.openProjectWebPage}</span>
+                    <ExternalLink size={14} aria-hidden="true" />
+                  </a>
                 </div>
 
-                {/* Title & External Link */}
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-baseline gap-4">
-                    <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tighter">
-                      {selectedProject.title}
-                    </h3>
-                    <a
-                      href={selectedProject.externalUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={ARIA_TEXT.projectDetailExternalLink(selectedProject.title)}
-                      className="bg-white text-black px-3 py-1 font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-center border border-white"
-                    >
-                      <span>{PROJECT_SECTION_TEXT.openProjectWebPage}</span>
-                      <ExternalLink size={14} aria-hidden="true" />
-                    </a>
-                  </div>
-                  <p className="text-sm sm:text-base font-bold text-gray-300 border-l-2 border-white pl-3 py-1">
+                {/* Title & Subtitle */}
+                <div className="space-y-3">
+                  <h3 className="text-3xl sm:text-5xl font-extrabold tracking-tighter">
+                    {selectedProject.title}
+                  </h3>
+                  <p className="text-sm sm:text-base font-bold text-zinc-300 border-l-2 border-white pl-3 py-1">
                     {selectedProject.subtitle}
                   </p>
                 </div>
 
-                {/* ASCII Art Representation (lets center the ASCII) */}
-                <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">{PROJECT_SECTION_TEXT.asciiDiagramLabel(selectedProject.title)}</span>
-                  <div className="flex justify-center">
-                    {selectedProject.asciiArt}
-                  </div>
+                {/* Screenshot Frame */}
+                <div className="border-2 border-white p-4 sm:p-6 bg-zinc-950 text-center">
+                  <img
+                    src={selectedProject.imageUrl}
+                    alt={selectedProject.placeholderText}
+                    className="mx-auto max-h-96 max-w-full object-contain rounded-sm"
+                  />
                 </div>
 
                 {/* Description */}
-                <div className="space-y-4 text-sm sm:text-base leading-relaxed border-t border-gray-800 pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{PROJECT_SECTION_TEXT.systemOverviewHeading}</h4>
-                  <p className="text-gray-200">{selectedProject.longDescription}</p>
-                </div>
-
-                {/* Picture Outline */}
-                <div className="border border-white p-6 bg-black text-center my-6">
-                  <div className="flex justify-center">
-                    <img
-                      src={selectedProject.imageUrl}
-                      alt={selectedProject.placeholderText}
-                      className="mx-auto max-h-80 max-w-full object-contain"
-                    />
-                  </div>
+                <div className="space-y-4 text-sm sm:text-base leading-relaxed border-t border-zinc-800 pt-6">
+                  <h4 className="font-extrabold text-xs tracking-widest text-zinc-400 uppercase">
+                    {PROJECT_SECTION_TEXT.systemOverviewHeading}
+                  </h4>
+                  <p className="text-zinc-200 leading-relaxed font-mono">
+                    {selectedProject.longDescription}
+                  </p>
                 </div>
 
                 {/* Metrics & Stack */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-white pt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-white pt-6">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{PROJECT_SECTION_TEXT.skillsHeading}</h4>
-                    <ul className="space-y-2" aria-label={PROJECT_SECTION_TEXT.performanceMetricsAriaLabel}>
+                    <h4 className="font-extrabold text-xs tracking-widest text-zinc-400 uppercase">
+                      {PROJECT_SECTION_TEXT.skillsHeading}
+                    </h4>
+                    <ul className="space-y-2.5" aria-label={PROJECT_SECTION_TEXT.performanceMetricsAriaLabel}>
                       {selectedProject.metrics.map((m, index) => (
                         <li key={index} className="flex items-center gap-2 text-xs font-bold">
                           <span className="text-white font-extrabold">[+]</span>
-                          <span className="bg-white text-black px-2 py-0.5">{m}</span>
+                          <span className="bg-white text-black px-2.5 py-1">{m}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   <div className="space-y-3">
-                    <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{PROJECT_SECTION_TEXT.techStackHeading}</h4>
+                    <h4 className="font-extrabold text-xs tracking-widest text-zinc-400 uppercase">
+                      {PROJECT_SECTION_TEXT.techStackHeading}
+                    </h4>
                     <div className="flex flex-wrap gap-2" aria-label={PROJECT_SECTION_TEXT.technologiesUsedAriaLabel}>
                       {selectedProject.techStack.map((tech, index) => (
                         <span key={index} className="border border-white px-3 py-1 text-xs font-bold bg-black text-white">
@@ -682,74 +497,68 @@ export const App: React.FC = () => {
                 </div>
               </article>
             ) : (
-              // Project List View
-              <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
-                <div className="border-b border-white pb-4">
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
+              // Projects List View
+              <div className="space-y-8 border-2 border-white p-6 sm:p-10 bg-black/90 backdrop-blur-md text-white shadow-2xl">
+                <div className="border-b border-zinc-800 pb-4">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight uppercase">
                     {PROJECT_SECTION_TEXT.projectListTitle}
                   </h3>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs sm:text-sm text-zinc-400 mt-1">
                     {PROJECT_SECTION_TEXT.projectListDescription}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {PROJECTS.map((proj) => (
                     <div
                       key={proj.id}
-                      className="border-2 border-white p-6 bg-black flex flex-col justify-between hover:border-gray-300 transition-colors group cursor-pointer relative shadow-lg"
+                      className="border-2 border-white p-5 bg-black flex flex-col justify-between hover:border-zinc-300 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
                       onClick={() => handleProjectSelect(proj)}
                       role="article"
                       aria-labelledby={`proj-title-${proj.id}`}
                     >
                       <div className="space-y-4">
-                        <div className="flex items-start justify-between gap-4 border-b border-gray-800 pb-3">
-                          {/* Title link (Stops propagation so it doesn't open detail view, but goes to URL) */}
+                        <div className="flex items-start justify-between gap-3 border-b border-zinc-800 pb-3">
                           <div className="space-y-1">
-                            <a
+                            <h4
                               id={`proj-title-${proj.id}`}
-                              href={proj.externalUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              aria-label={ARIA_TEXT.projectExternalLink(proj.title)}
-                              className="inline-flex items-center gap-2 text-lg sm:text-xl font-extrabold tracking-tight underline hover:bg-white hover:text-black p-0.5 transition-colors"
+                              className="text-lg font-extrabold tracking-tight group-hover:underline"
                             >
-                              <span>{proj.title}</span>
-                              <ExternalLink size={16} aria-hidden="true" />
-                            </a>
-                            <p className="text-xs text-gray-400 font-bold">{proj.subtitle}</p>
+                              {proj.title}
+                            </h4>
+                            <p className="text-xs text-zinc-400 font-bold">{proj.subtitle}</p>
                           </div>
-
                           <span className="text-[10px] bg-white text-black px-2 py-0.5 font-bold uppercase tracking-widest shrink-0">
                             {PROJECT_SECTION_TEXT.viewDetailBadge}
                           </span>
                         </div>
 
-                        {/* Picture Outline */}
-                        <div className="border border-white p-0 bg-black text-center text-xs group-hover:bg-gray-900 transition-colors">
-                          <div className="relative h-40 w-full overflow-hidden bg-gray-900">
+                        {/* Image preview */}
+                        <div className="border border-zinc-700 overflow-hidden bg-zinc-950">
+                          <div className="relative h-40 w-full overflow-hidden">
                             <img
                               src={proj.imageUrl}
                               alt={proj.placeholderText}
-                              className="absolute inset-0 h-full w-full object-cover object-top"
+                              className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                             />
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-gray-300 leading-relaxed line-clamp-3">
+                        <p className="text-xs text-zinc-300 leading-relaxed line-clamp-3">
                           {proj.description}
                         </p>
                       </div>
 
-                      <div className="mt-6 pt-4 border-t border-gray-800 flex items-center justify-between text-xs font-bold">
+                      <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center justify-between text-xs font-bold">
                         <div className="flex flex-wrap gap-1.5">
                           {proj.techStack.slice(0, 3).map((t, idx) => (
-                            <span key={idx} className="border border-gray-700 px-1.5 py-0.5 text-[10px]">
+                            <span key={idx} className="border border-zinc-700 px-1.5 py-0.5 text-[10px] text-zinc-300">
                               {t}
                             </span>
                           ))}
-                          {proj.techStack.length > 3 && <span className="text-[10px] text-gray-500">+{proj.techStack.length - 3}</span>}
+                          {proj.techStack.length > 3 && (
+                            <span className="text-[10px] text-zinc-500">+{proj.techStack.length - 3}</span>
+                          )}
                         </div>
                         <span className="text-white group-hover:translate-x-1 transition-transform font-bold inline-flex items-center gap-1">
                           <span>{PROJECT_SECTION_TEXT.openPage}</span>
@@ -764,258 +573,43 @@ export const App: React.FC = () => {
           </section>
         )}
 
-        {/* ==================== 3. SKILLS LIST & DESIGNATED PAGE ==================== */}
-        {activeTab === 'SKILLS' && (
-          <section className="animate-fade-in" aria-labelledby="skills-heading">
-            <h2 id="skills-heading" className="sr-only">{SKILL_SECTION_TEXT.headingAria}</h2>
-
-            {selectedSkill ? (
-              <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
-                  <button
-                    onClick={handleSkillBack}
-                    aria-label={ARIA_TEXT.navButton(SKILL_SECTION_TEXT.backToSkills)}
-                    className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
-                  >
-                    <ArrowLeft size={16} aria-hidden="true" />
-                    <span>{SKILL_SECTION_TEXT.backToSkills}</span>
-                  </button>
-                  <span className="text-xs text-gray-400">{SKILL_SECTION_TEXT.categoryLabel} {selectedSkill.category.toUpperCase()}</span>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tighter">
-                    {selectedSkill.name}
-                  </h3>
-                  <div className="flex flex-wrap gap-3 text-xs font-bold">
-                    <span className="bg-white text-black px-3 py-1">{selectedSkill.level}</span>
-                    <span className="border border-white px-3 py-1 text-gray-300">{selectedSkill.experienceYears}</span>
-                  </div>
-                </div>
-
-                <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">{SKILL_SECTION_TEXT.asciiIconLabel(selectedSkill.name)}</span>
-                  {selectedSkill.asciiIcon}
-                </div>
-
-                <div className="space-y-4 border-t border-gray-800 pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{SKILL_SECTION_TEXT.capabilityHeading}</h4>
-                  <p className="text-sm sm:text-base text-gray-200 leading-relaxed">
-                    {selectedSkill.description}
-                  </p>
-                </div>
-
-                <div className="space-y-3 border-t border-white pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{SKILL_SECTION_TEXT.drilldownHeading}</h4>
-                  <ul className="space-y-2" aria-label={SKILL_SECTION_TEXT.drilldownAriaLabel}>
-                    {selectedSkill.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
-                        <span className="text-white font-extrabold mt-0.5">[&gt;]</span>
-                        <span className="text-gray-300 leading-normal">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ) : (
-              <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
-                <div className="border-b border-white pb-4">
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
-                    {SKILL_SECTION_TEXT.matrixHeading}
-                  </h3>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {SKILL_SECTION_TEXT.matrixDescription}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {SKILLS.map((skill) => (
-                    <div
-                      key={skill.id}
-                      onClick={() => handleSkillSelect(skill)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleSkillSelect(skill); }}
-                      aria-label={ARIA_TEXT.skillCard(skill.name)}
-                      className="border-2 border-white p-6 bg-black hover:border-gray-300 transition-all group cursor-pointer flex flex-col justify-between shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
-                    >
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between border-b border-gray-800 pb-3">
-                          <span className="text-xs text-gray-400 font-bold uppercase">{skill.category}</span>
-                          <span className="text-[10px] bg-white text-black px-2 py-0.5 font-bold uppercase tracking-widest">
-                            {SKILL_SECTION_TEXT.viewPageBadge}
-                          </span>
-                        </div>
-
-                        <h4 className="text-lg font-extrabold tracking-tight group-hover:underline">
-                          {skill.name}
-                        </h4>
-
-                        <div className="flex items-center gap-2 text-xs font-bold">
-                          <span className="border border-white px-2 py-0.5 text-white">{skill.level}</span>
-                          <span className="text-gray-400">{skill.experienceYears}</span>
-                        </div>
-
-                        <p className="text-xs text-gray-300 line-clamp-2 pt-2">
-                          {skill.description}
-                        </p>
-                      </div>
-
-                      <div className="mt-6 pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-400 group-hover:text-white transition-colors">
-                        <span>{SKILL_SECTION_TEXT.detailsAvailable}</span>
-                        <ChevronRight size={16} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* ==================== 4. EXPERIENCE LIST & DESIGNATED PAGE ==================== */}
-        {activeTab === 'EXPERIENCE' && (
-          <section className="animate-fade-in" aria-labelledby="experience-heading">
-            <h2 id="experience-heading" className="sr-only">{EXPERIENCE_SECTION_TEXT.headingAria}</h2>
-
-            {selectedExperience ? (
-              <article className="space-y-6 border-2 border-white p-6 sm:p-8 bg-black">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white pb-6">
-                  <button
-                    onClick={handleExperienceBack}
-                    aria-label={EXPERIENCE_SECTION_TEXT.backToExperience}
-                    className="bg-white text-black px-3 py-1.5 leading-none font-bold text-xs tracking-widest flex items-center gap-2 hover:bg-gray-200 transition-colors self-start cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
-                  >
-                    <ArrowLeft size={16} aria-hidden="true" />
-                    <span>{EXPERIENCE_SECTION_TEXT.backToExperience}</span>
-                  </button>
-                  <span className="text-xs text-gray-400">{selectedExperience.period}</span>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tighter">
-                    {selectedExperience.role}
-                  </h3>
-                  <div className="flex items-center gap-3 font-bold text-sm">
-                    <span className="bg-white text-black px-3 py-1 font-extrabold">{selectedExperience.company}</span>
-                    <span className="text-gray-300">// {selectedExperience.location}</span>
-                  </div>
-                </div>
-
-                <div className="hidden sm:block bg-black border border-white p-4 font-mono text-xs overflow-x-auto whitespace-pre select-none text-white">
-                  <span className="sr-only">{EXPERIENCE_SECTION_TEXT.asciiBadgeLabel(selectedExperience.company)}</span>
-                  {selectedExperience.asciiBadge}
-                </div>
-
-                <div className="space-y-4 border-t border-gray-800 pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{EXPERIENCE_SECTION_TEXT.roleSummaryHeading}</h4>
-                  <p className="text-sm sm:text-base text-gray-200 leading-relaxed">
-                    {selectedExperience.summary}
-                  </p>
-                </div>
-
-                <div className="space-y-3 border-t border-white pt-6">
-                  <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase">{EXPERIENCE_SECTION_TEXT.achievementsHeading}</h4>
-                  <ul className="space-y-3" aria-label={EXPERIENCE_SECTION_TEXT.achievementsAriaLabel}>
-                    {selectedExperience.achievements.map((ach, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm">
-                        <span className="text-white font-extrabold mt-0.5">[+]</span>
-                        <span className="text-gray-200 leading-relaxed">{ach}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ) : (
-              <div className="space-y-8 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
-                <div className="border-b border-white pb-4">
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight uppercase">
-                    {EXPERIENCE_SECTION_TEXT.engineeringChronology}
-                  </h3>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {EXPERIENCE_SECTION_TEXT.clickExperienceCard}
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  {EXPERIENCE.map((exp) => (
-                    <div
-                      key={exp.id}
-                      onClick={() => handleExperienceSelect(exp)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExperienceSelect(exp); }}
-                      aria-label={ARIA_TEXT.experienceCard(exp.role, exp.company)}
-                      className="border-2 border-white p-6 bg-black hover:border-gray-300 transition-all group cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
-                    >
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-3 text-xs text-gray-400 font-bold">
-                          <span>{exp.period}</span>
-                          <span>|</span>
-                          <span>{exp.location}</span>
-                        </div>
-
-                        <div className="flex flex-wrap items-baseline gap-3 pt-1">
-                          <h4 className="text-lg sm:text-xl font-extrabold tracking-tight group-hover:underline">
-                            {exp.role}
-                          </h4>
-                          <span className="bg-white text-black px-2 py-0.5 text-xs font-extrabold">
-                            {exp.company}
-                          </span>
-                        </div>
-
-                        <p className="text-xs sm:text-sm text-gray-300 leading-relaxed line-clamp-2 pt-1 max-w-3xl">
-                          {exp.summary}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-2 self-end sm:self-center shrink-0 bg-white text-black px-3 py-2 text-xs font-bold">
-                        <span>{EXPERIENCE_SECTION_TEXT.viewPageBadge}</span>
-                        <ChevronRight size={14} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* ==================== 5. ABOUT ME ==================== */}
+        {/* ==================== 3. ABOUT PAGE ==================== */}
         {activeTab === 'ABOUT' && (
-          <section className="animate-fade-in space-y-12" aria-labelledby="about-heading">
-            <h2 id="about-heading" className="sr-only">{ABOUT_SECTION_TEXT.headingAria}</h2>
+          <section className="animate-fade-in space-y-8" aria-labelledby="about-heading">
+            <h2 id="about-heading" className="sr-only">
+              {ABOUT_SECTION_TEXT.headingAria}
+            </h2>
 
             {/* Header section */}
-            <div className="border-b-2 border-white pb-6 space-y-2 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
+            <div className="border-2 border-white p-6 sm:p-8 bg-black/90 backdrop-blur-md text-white shadow-xl space-y-2">
               <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
                 {ABOUT_DATA.header}
               </h3>
-              <p className="text-base sm:text-lg text-gray-300 font-bold">
+              <p className="text-sm sm:text-base text-zinc-300 font-bold">
                 // {ABOUT_DATA.tagline}
               </p>
             </div>
 
-            {/* Split layout: Bio + Portraits */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
+            {/* Split layout: Bio + Portrait */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start border-2 border-white p-6 sm:p-8 bg-black/90 backdrop-blur-md text-white shadow-xl">
               <div className="lg:col-span-2 space-y-6">
-                <div className="space-y-4 text-sm sm:text-base leading-relaxed text-gray-200 font-mono">
+                <div className="space-y-4 text-sm sm:text-base leading-relaxed text-zinc-200 font-mono">
                   {ABOUT_DATA.bioParagraphs.map((para, index) => (
-                    <p key={index} className="border-l border-gray-600 pl-4 py-1">
+                    <p key={index} className="border-l-2 border-zinc-600 pl-4 py-1">
                       {para}
                     </p>
                   ))}
                 </div>
 
-                {/* Core Philosophy */}
+                {/* Core Tenets */}
                 <div className="border-2 border-white p-6 bg-black space-y-4 mt-8">
-                  <h4 className="font-extrabold text-xs tracking-widest text-white uppercase border-b border-gray-800 pb-2">
+                  <h4 className="font-extrabold text-xs tracking-widest text-white uppercase border-b border-zinc-800 pb-2">
                     {ABOUT_SECTION_TEXT.philosophyHeading}
                   </h4>
                   <ul className="space-y-3" aria-label={ABOUT_SECTION_TEXT.philosophyAriaLabel}>
                     {ABOUT_DATA.philosophy.map((tenet, idx) => (
-                      <li key={idx} className="text-xs sm:text-sm font-bold text-gray-200 flex items-start gap-2">
-                        <span className="text-white">&gt;</span>
+                      <li key={idx} className="text-xs sm:text-sm font-bold text-zinc-200 flex items-start gap-2">
+                        <span className="text-white font-extrabold">&gt;</span>
                         <span>{tenet}</span>
                       </li>
                     ))}
@@ -1023,8 +617,8 @@ export const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Portrait Stack - RIGHT SIDE */}
-              <div className="space-y-6">
+              {/* Portrait */}
+              <div>
                 <PortraitOutline
                   label={ABOUT_SECTION_TEXT.vectorPortraitLabel}
                   height="min-h-[340px]"
@@ -1036,17 +630,17 @@ export const App: React.FC = () => {
             </div>
 
             {/* Stats row */}
-            <div className="border-t-2 border-white pt-8">
-              <h4 className="font-bold text-xs tracking-widest text-gray-400 uppercase mb-6 bg-black p-4 border border-white inline-block">
-                // TELEMETRY SUMMARY
+            <div className="border-2 border-white p-6 bg-black/90 backdrop-blur-md shadow-xl">
+              <h4 className="font-extrabold text-xs tracking-widest text-zinc-400 uppercase mb-4">
+                {ABOUT_SECTION_TEXT.telemetryHeading}
               </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {ABOUT_DATA.stats.map((stat, idx) => (
                   <div key={idx} className="border border-white p-4 text-center bg-black">
-                    <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tighter mb-1">
+                    <div className="text-sm sm:text-base font-extrabold text-white tracking-tight mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest">
+                    <div className="text-[10px] sm:text-xs text-zinc-400 font-bold uppercase tracking-widest">
                       {stat.label}
                     </div>
                   </div>
@@ -1056,31 +650,34 @@ export const App: React.FC = () => {
           </section>
         )}
 
-        {/* ==================== 6. CONTACT PAGE ==================== */}
+        {/* ==================== 4. CONTACT PAGE ==================== */}
         {activeTab === 'CONTACT' && (
-          <section className="animate-fade-in space-y-10" aria-labelledby="contact-heading">
-            <h2 id="contact-heading" className="sr-only">{CONTACT_SECTION_TEXT.headingAria}</h2>
+          <section className="animate-fade-in space-y-8" aria-labelledby="contact-heading">
+            <h2 id="contact-heading" className="sr-only">
+              {CONTACT_SECTION_TEXT.headingAria}
+            </h2>
 
-            <div className="border-b-2 border-white pb-6 space-y-2 border-2 border-white p-6 sm:p-8 bg-black text-white relative shadow-xl overflow-hidden">
+            <div className="border-2 border-white p-6 sm:p-8 bg-black/90 backdrop-blur-md text-white shadow-xl space-y-2">
               <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
                 {CONTACT_SECTION_TEXT.contactTitle}
               </h3>
-              <p className="text-sm sm:text-base text-gray-300 font-bold">
+              <p className="text-sm sm:text-base text-zinc-300 font-bold">
                 {CONTACT_SECTION_TEXT.contactSubtitle}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               {/* Contact Form */}
-              <div className="border-2 border-white p-6 sm:p-8 bg-black space-y-6 shadow-xl">
-                <div className="border-b border-gray-800 pb-3 flex items-center justify-between text-xs">
-                  <span className="font-bold text-white">{CONTACT_SECTION_TEXT.formSectionTitle}</span>
-                  <span className="text-gray-400">{CONTACT_SECTION_TEXT.encryptionNotice}</span>
+              <div className="border-2 border-white p-6 sm:p-8 bg-black/90 backdrop-blur-md space-y-6 shadow-xl">
+                <div className="border-b border-zinc-800 pb-3">
+                  <span className="font-extrabold text-xs tracking-widest text-white uppercase">
+                    {CONTACT_SECTION_TEXT.formSectionTitle}
+                  </span>
                 </div>
 
                 <form onSubmit={handleContactSubmit} className="space-y-4">
                   <div className="space-y-1">
-                    <label htmlFor="contact-name" className="block text-xs font-bold text-gray-300">
+                    <label htmlFor="contact-name" className="block text-xs font-bold text-zinc-300">
                       {CONTACT_SECTION_TEXT.nameLabel}
                     </label>
                     <input
@@ -1091,12 +688,12 @@ export const App: React.FC = () => {
                       onChange={(event) => setContactName(event.target.value)}
                       disabled={contactStatus === 'sending'}
                       placeholder={CONTACT_SECTION_TEXT.namePlaceholder}
-                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
+                      className="w-full bg-black text-white border border-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label htmlFor="contact-email" className="block text-xs font-bold text-gray-300">
+                    <label htmlFor="contact-email" className="block text-xs font-bold text-zinc-300">
                       {CONTACT_SECTION_TEXT.emailLabel}
                     </label>
                     <input
@@ -1107,12 +704,12 @@ export const App: React.FC = () => {
                       onChange={(event) => setContactEmail(event.target.value)}
                       disabled={contactStatus === 'sending'}
                       placeholder={CONTACT_SECTION_TEXT.emailPlaceholder}
-                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
+                      className="w-full bg-black text-white border border-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono disabled:opacity-50"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label htmlFor="contact-message" className="block text-xs font-bold text-gray-300">
+                    <label htmlFor="contact-message" className="block text-xs font-bold text-zinc-300">
                       {CONTACT_SECTION_TEXT.messageLabel}
                     </label>
                     <textarea
@@ -1123,18 +720,18 @@ export const App: React.FC = () => {
                       onChange={(event) => setContactMessage(event.target.value)}
                       disabled={contactStatus === 'sending'}
                       placeholder={CONTACT_SECTION_TEXT.messagePlaceholder}
-                      className="w-full bg-black text-white border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono resize-none disabled:opacity-50"
+                      className="w-full bg-black text-white border border-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-white font-mono resize-none disabled:opacity-50"
                     />
                   </div>
 
                   {contactStatus === 'success' && (
-                    <div className="rounded border border-emerald-500 bg-emerald-950/30 p-3 text-emerald-200 text-xs font-bold">
+                    <div className="rounded border border-emerald-500 bg-emerald-950/40 p-3 text-emerald-200 text-xs font-bold">
                       {CONTACT_SECTION_TEXT.successMessage}
                     </div>
                   )}
 
                   {contactStatus === 'error' && contactError && (
-                    <div className="rounded border border-amber-500 bg-amber-950/30 p-3 text-amber-200 text-xs font-bold">
+                    <div className="rounded border border-rose-500 bg-rose-950/40 p-3 text-rose-200 text-xs font-bold">
                       {CONTACT_SECTION_TEXT.errorPrefix} {contactError}
                     </div>
                   )}
@@ -1142,50 +739,52 @@ export const App: React.FC = () => {
                   <button
                     type="submit"
                     disabled={contactStatus === 'sending'}
-                    className="w-full bg-white text-black font-extrabold py-3 text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-white cursor-pointer shadow-md disabled:opacity-50"
+                    className="w-full bg-white text-black font-extrabold py-3 text-xs uppercase tracking-widest hover:bg-zinc-200 transition-colors focus:outline-none focus:ring-2 focus:ring-white cursor-pointer shadow-md disabled:opacity-50"
                   >
-                    {contactStatus === 'sending' ? CONTACT_SECTION_TEXT.transmittingMessage : CONTACT_SECTION_TEXT.transmitPayload}
+                    {contactStatus === 'sending'
+                      ? CONTACT_SECTION_TEXT.transmittingMessage
+                      : CONTACT_SECTION_TEXT.transmitPayload}
                   </button>
                 </form>
               </div>
 
-              {/* Direct Vitals & ASCII Business Card */}
-              <div className="space-y-8">
-                <div className="border border-white p-6 bg-black space-y-6">
-                  <h4 className="font-extrabold text-xs tracking-widest text-white uppercase border-b border-gray-800 pb-2">
+              {/* Direct Channels */}
+              <div className="space-y-6">
+                <div className="border-2 border-white p-6 bg-black/90 backdrop-blur-md space-y-6 shadow-xl">
+                  <h4 className="font-extrabold text-xs tracking-widest text-white uppercase border-b border-zinc-800 pb-2">
                     {CONTACT_SECTION_TEXT.directChannelsTitle}
                   </h4>
 
                   <div className="space-y-4 text-xs sm:text-sm">
-                    <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.directEmailLabel}</span>
-                      <a href="mailto:info.2high2work@gmail.com" className="font-extrabold text-white underline hover:text-gray-300">
+                    <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+                      <span className="text-zinc-400 font-bold">{CONTACT_SECTION_TEXT.directEmailLabel}</span>
+                      <a
+                        href="mailto:info.2high2work@gmail.com"
+                        className="font-extrabold text-white underline hover:text-zinc-300"
+                      >
                         info.2high2work@gmail.com
                       </a>
                     </div>
-                    <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.githubLabel}</span>
-                      <a href="https://github.com/2high2work" target="_blank" rel="noopener noreferrer" className="font-extrabold text-white underline hover:text-gray-300 flex items-center gap-1">
-                        <span>github.com/2high2work</span>
-                        <ExternalLink size={12} />
-                      </a>
-                    </div>
-                    <div className="flex items-center justify-between border-b border-gray-800 pb-2">
-                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.pgpLabel}</span>
-                      <span className="font-mono text-[11px] text-gray-300">4F9A 82E1 C30B 77D2</span>
-                    </div>
                     <div className="flex items-center justify-between pb-1">
-                      <span className="text-gray-400">{CONTACT_SECTION_TEXT.locationLabel}</span>
-                      <span className="font-extrabold text-white">{CONTACT_SECTION_TEXT.locationValue}</span>
+                      <span className="text-zinc-400 font-bold">{CONTACT_SECTION_TEXT.githubLabel}</span>
+                      <a
+                        href="https://github.com/2high2work"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-extrabold text-white underline hover:text-zinc-300 flex items-center gap-1.5"
+                      >
+                        <span>github.com/2high2work</span>
+                        <ExternalLink size={13} />
+                      </a>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <PortraitOutline 
-                    label={CONTACT_SECTION_TEXT.contactPortraitLabel} 
-                    height="min-h-[220px]" 
-                    imageUrl='/images/portrait2.webp'
+                <div>
+                  <PortraitOutline
+                    label={CONTACT_SECTION_TEXT.contactPortraitLabel}
+                    height="min-h-[240px]"
+                    imageUrl="/images/portrait2.webp"
                     text={PORTRAIT_TEXT}
                   />
                 </div>
@@ -1194,21 +793,20 @@ export const App: React.FC = () => {
           </section>
         )}
 
-        {/* ==================== 7. SECRET TOWER PAGE ==================== */}
+        {/* ==================== 5. SECRET TOWER PAGE ==================== */}
         {activeTab === 'TOWER' && (
-          <section className="animate-fade-in min-h-[60vh] border-2 border-white p-8 bg-black text-white flex items-center justify-center">
+          <section className="animate-fade-in min-h-[50vh] border-2 border-white p-8 bg-black/90 backdrop-blur-md text-white flex items-center justify-center">
             <div className="text-center space-y-4">
-              <p className="text-xs uppercase text-gray-400 tracking-widest">{TOWER_TEXT.accessGranted}</p>
+              <p className="text-xs uppercase text-zinc-400 tracking-widest">{TOWER_TEXT.accessGranted}</p>
               <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">{TOWER_TEXT.title}</h2>
-              <p className="text-sm text-gray-500">{TOWER_TEXT.description}</p>
+              <p className="text-sm text-zinc-400">{TOWER_TEXT.description}</p>
             </div>
           </section>
         )}
-
       </main>
 
-      {/* Footer Area */}
-      <footer className="border-t-2 border-white mt-16 p-6 bg-black text-xs text-gray-400" aria-label={FOOTER_TEXT.ariaLabel}>
+      {/* Clean Footer Area */}
+      <footer className="border-t-2 border-white mt-16 p-6 bg-black text-xs text-zinc-400" aria-label={FOOTER_TEXT.ariaLabel}>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
             <p className="font-extrabold text-white tracking-widest">{FOOTER_TEXT.title}</p>
@@ -1217,48 +815,6 @@ export const App: React.FC = () => {
         </div>
       </footer>
 
-      {/* Fake AI Chat Widget (Bottom Right Box) */}
-      <FakeAiChat onSecretCode={handleSecretCode} messageText={MESSAGE_TEXT} />
-
-      {/* Cookie Consent Dialog */}
-      {showCookieDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
-          <div className="border-2 border-white bg-black p-6 sm:p-8 max-w-md w-full space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-                {COOKIE_TEXT.title}
-              </h2>
-              <p className="text-xs text-gray-400 tracking-widest">
-                {COOKIE_TEXT.notificationLabel}
-              </p>
-            </div>
-
-            <div className="space-y-4 text-sm leading-relaxed">
-              <p className="text-gray-300">
-                {COOKIE_TEXT.body}
-              </p>
-              <p className="text-gray-400 text-xs font-mono">
-                {COOKIE_TEXT.note}
-              </p>
-            </div>
-
-            <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={handleCookieAccept}
-                className="flex-1 bg-white text-black px-4 py-3 font-bold text-xs tracking-widest hover:bg-gray-200 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
-              >
-                {COOKIE_TEXT.accept}
-              </button>
-              <button
-                onClick={handleCookieReject}
-                className="flex-1 border border-white text-white px-4 py-3 font-bold text-xs tracking-widest hover:bg-white hover:text-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white"
-              >
-                {COOKIE_TEXT.reject}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       <Analytics />
     </div>
   );
